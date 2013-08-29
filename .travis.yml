@@ -1,0 +1,19 @@
+language: php
+
+php:
+ - 5.3
+ - 5.4
+
+before_script:
+ - curl -s https://getcomposer.org/installer | php
+ - php composer.phar install --dev
+
+script:
+ - mkdir -p build/logs
+ - php vendor/bin/phpunit -c phpunit.dist.xml
+
+after_script:
+ - php vendor/bin/coveralls
+
+notifications:
+  email: martin.aarhof@gmail.com
