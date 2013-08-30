@@ -13,14 +13,21 @@ use Datapump\Logger\Logger;
 class ItemHolder
 {
 
+	const MAGMI_CREATE = 'create';
+	const MAGMI_UPDATE = 'update';
+	const MAGMI_XCREATE = 'xcreate';
+
 	private $products = array();
 
+	/**
+	 * @var \Magmi_ProductImport_DataPump
+	 */
 	private $magmi;
 
-	public function setMagmi(\Magmi_DataPumpFactory $factory, $projectname, $type, Logger $log)
+	public function setMagmi(\Magmi_ProductImport_DataPump $magmi, $profile, $mode = self::MAGMI_CREATE, Logger $logger)
 	{
-		$this->magmi = $factory::getDataPumpInstance('productimport');
-		$this->magmi->beginImportSession($projectname, $type, $log);
+		$this->magmi = $magmi;
+		$this->magmi->beginImportSession($profile, $mode, $logger);
 	}
 
 	public function addProduct(ProductAbstract $product)
@@ -105,7 +112,7 @@ class ItemHolder
 	private function ingest(ProductAbstract $product)
 	{
 		$product->beforeImport();
-		$this->magmi->ingest($product);
+		$this->magmi->ingest($product->toArray());
 		$product->afterImport();
 	}
 

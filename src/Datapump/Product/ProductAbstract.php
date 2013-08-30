@@ -84,6 +84,7 @@ abstract class ProductAbstract
 	public function beforeImport()
 	{
 		$this->beforeImportCategories();
+		$this->beforeImportImages();
 		return $this->data;
 	}
 
@@ -92,11 +93,20 @@ abstract class ProductAbstract
 
 	}
 
+	public function toArray()
+	{
+		return $this->data;
+	}
+
 	private function beforeImportCategories()
 	{
 		if ($this->_isset('categories')) {
 			$this->data['categories'] = implode(';;', $this->getCategory());
 		}
+	}
+
+	private function beforeImportImages()
+	{
 	}
 
 }
