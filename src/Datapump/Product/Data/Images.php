@@ -1,16 +1,17 @@
 <?php
 /**
  * Created by lsv
- * Date: 8/29/13
- * Time: 6:47 PM
+ * Date: 8/30/13
+ * Time: 1:03 PM
  */
 
-namespace Datapump\Product\Setters;
+namespace Datapump\Product\Data;
 
 
-class Images
-	implements SetterInterface
+class Images extends DataAbstract
 {
+
+	protected $requiredMagmiPlugin = array('Image attributes processor');
 
 	public function setBaseImage($imagefile, $label = '', $addToGallery = true)
 	{
@@ -44,6 +45,24 @@ class Images
 	{
 		$this->data['gallery'][] = array('img' => $imagefile, 'label' => $label);
 		return $this;
+	}
+
+	public function getData()
+	{
+		if ($this->__isset('gallery')) {
+			$gallery = array();
+			$galleryimages = $this->get('gallery');
+			$this->set('gallery', '');
+			foreach($galleryimages AS $img) {
+				if (isset($img['img'])) {
+					$gallery[] = $img['img'] . (isset($img['label']) ? '::' . $img['label'] : '');
+				}
+			}
+			$this->set('gallery', implode(';', $gallery));
+		}
+
+		return $this->data;
+
 	}
 
 }

@@ -9,6 +9,7 @@ namespace Datapump\Product;
 
 use Datapump\Exception;
 use Datapump\Logger\Logger;
+use Datapump\Product\Data\DataAbstract;
 
 class ItemHolder
 {
@@ -30,33 +31,39 @@ class ItemHolder
 		$this->magmi->beginImportSession($profile, $mode, $logger);
 	}
 
-	public function addProduct(ProductAbstract $product)
+	/**
+	 * @param ProductAbstract|array $product
+	 *
+	 * @return $this
+	 * @throws \Datapump\Exception\ProductSkuAlreadyAdded
+	 * @throws \Datapump\Exception\ProductNotAnArrayOrProductAbstract
+	 */
+	public function addProduct($product)
 	{
-
-		$product->beforeAddingToHolder();
-
-		if (($missingdata = $product->checkMissingData()) !== true) {
-			throw new Exception\MissingProductData('Product does not have the all the required data' . "\n" . implode("\n", $missingdata));
-		}
-
-		foreach($this->products AS $p) {
-			/** @var ProductAbstract $p */
-			if ($p->getSku() == $product->getSku()) {
-				throw new Exception\ProductSkuAlreadyAdded('Product with SKU: ' . $product->getSku() . ' is already added');
+		if (is_array($product)) {
+			foreach($product AS $p) {
+				$this->addProduct($p);
 			}
-		}
-
-		if ($product instanceof Simple) {
-			$this->products[] = $product;
 			return $this;
 		}
 
-		if ($product instanceof Configurable) {
-			$this->products[] = $product;
+		if ($product instanceof ProductAbstract) {
+			$check = $product->check();
+			if ($check) {
+				$sku = $product->get('sku');
+				foreach($this->products AS $p) {
+					/** @var ProductAbstract $p */
+					if ($p->get('sku') == $sku) {
+						throw new Exception\ProductSkuAlreadyAdded('Product with SKU: ' . $product->get('sku') . ' is already added');
+					}
+				}
+				$this->products[] = $product;
+			}
+
 			return $this;
 		}
 
-		throw new Exception\MissingProductType(get_class($product) . ' does not implement any known product type');
+		throw new Exception\ProductNotAnArrayOrProductAbstract(get_class($product) . ' is not valid');
 
 	}
 
@@ -64,7 +71,7 @@ class ItemHolder
 	{
 		foreach($this->products AS $key => $product) {
 			/** @var ProductAbstract $product */
-			if ($product->getSku() == $sku) {
+			if ($product->getRequiredData()->getSku() == $sku) {
 				unset($this->products[$key]);
 				return true;
 			}
@@ -78,7 +85,7 @@ class ItemHolder
 	{
 		foreach($this->products AS $product) {
 			/** @var ProductAbstract $product */
-			if ($product->getSku() == $sku) {
+			if ($product->getRequiredData()->getSku() == $sku) {
 				return $product;
 			}
 		}
@@ -87,12 +94,15 @@ class ItemHolder
 
 	}
 
+	/**
+	 * @todo rewrite this, so it can be overwritten
+	 */
 	public function import()
 	{
 		foreach($this->products AS $product) {
 			/** @var ProductAbstract $product */
-			switch ($product->getType()) {
-				case ProductAbstract::TYPE_CONFIGURABLE:
+			switch ($product->getRequiredData()->getType()) {
+				case DataAbstract::TYPE_CONFIGURABLE:
 					/** @var Configurable $product */
 					foreach($product->getSimpleProducts() AS $simple) {
 						/** @var Simple $simple */
@@ -112,7 +122,7 @@ class ItemHolder
 	private function ingest(ProductAbstract $product)
 	{
 		$product->beforeImport();
-		$this->magmi->ingest($product->toArray());
+		$this->magmi->ingest($product->getData());
 		$product->afterImport();
 	}
 

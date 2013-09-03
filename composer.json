@@ -17,7 +17,9 @@
 	},
     "require-dev": {
         "phpunit/phpunit" : "3.7.*",
-        "satooshi/php-coveralls": "dev-master"
+        "satooshi/php-coveralls": "dev-master",
+        "phpmd/phpmd" : "1.4.*",
+        "phpdocumentor/phpdocumentor": "*"
     },
 	"autoload": {
 		"psr-0": {

@@ -7,6 +7,7 @@
 
 namespace Datapump\Tests;
 
+use Datapump\Product\Data\RequiredData;
 use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
 use Datapump\Product\Configurable;
@@ -14,21 +15,33 @@ use Datapump\Product\Configurable;
 class ConfigurableTest extends \PHPUnit_Framework_TestCase
 {
 
-	protected $productHolder;
-	protected $simpleProduct;
+	/**
+	 * @var RequiredData
+	 */
+	protected $configRequiredData;
+
+	/**
+	 * @var RequiredData
+	 */
+	protected $simpleRequiredData;
 
 	public function __construct()
 	{
-		$this->productHolder = new ItemHolder;
-
-		$this->simpleProduct = new Simple('sku');
-		$this->simpleProduct->setDescription('Description')
+		$this->simpleRequiredData = new RequiredData();
+		$this->simpleRequiredData->setSku('sku')
 			->setName('name')
 			->setPrice(100)
 			->setQty(100)
 			->setShortDescription('short description')
+			->setDescription('long description')
 			->setTax(1)
 			->setWeight(100);
+
+		$this->configRequiredData = new RequiredData();
+		$this->configRequiredData->setSku('sku')
+			->setName('name')
+			->setShortDescription('short description')
+			->setDescription('long description');
 
 		parent::__construct();
 	}
@@ -36,25 +49,25 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 	public function test_SimpleProductMissingKey()
 	{
 		$this->setExpectedException('Datapump\Exception\SimpleProductMissingConfigurableAttribute');
-		$product = new Configurable('config-sku', 'color');
-		$product->addSimpleProduct($this->simpleProduct);
+		$product = new Configurable($this->configRequiredData, 'color');
+		$product->addSimpleProduct(new Simple($this->simpleRequiredData));
 	}
 
 	public function test_SimpleProductHasKey()
 	{
-		$product = new Configurable('config-sku', 'color');
+		$product = new Configurable($this->configRequiredData, 'color');
 
-		$simpleproduct1 = clone $this->simpleProduct;
+		$simpleproduct1 = new Simple(clone $this->simpleRequiredData->setSku('sku'));
 		$simpleproduct1->set('color', 'blue');
 		$product->addSimpleProduct($simpleproduct1);
-
 		$this->assertEquals(1, $product->countSimpleProducts());
+		$this->assertEquals('sku', $simpleproduct1->get('sku'));
 
-		$simpleproduct2 = clone $this->simpleProduct;
-		$simpleproduct2->setSku('sku2');
+		$simpleproduct2 = new Simple(clone $this->simpleRequiredData->setSku('sku2'));
 		$simpleproduct2->set('color', 'green');
 		$product->addSimpleProduct($simpleproduct2);
 		$this->assertEquals(2, $product->countSimpleProducts());
+		$this->assertEquals('sku', $simpleproduct1->get('sku'));
 
 	}
 
@@ -62,8 +75,8 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->setExpectedException('Datapump\Exception\ProductSkuAlreadyAdded');
 
-		$product = new Configurable('config-sku', 'color');
-		$simpleproduct1 = clone $this->simpleProduct;
+		$product = new Configurable($this->configRequiredData, 'color');
+		$simpleproduct1 = new Simple(clone $this->simpleRequiredData);
 		$simpleproduct1->set('color', 'blue');
 		$product->addSimpleProduct($simpleproduct1);
 		$product->addSimpleProduct($simpleproduct1);
@@ -71,14 +84,14 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
 	public function test_GetSimpleproducts()
 	{
-		$product = new Configurable('config-sku', 'color');
+		$product = new Configurable($this->configRequiredData, 'color');
 
-		$simpleproduct1 = clone $this->simpleProduct;
+		$simpleproduct1 = new Simple(clone $this->simpleRequiredData);
 		$simpleproduct1->set('color', 'blue');
 		$product->addSimpleProduct($simpleproduct1);
 
-		$simpleproduct2 = clone $this->simpleProduct;
-		$simpleproduct2->setSku('sku2');
+		$simpleproduct2 = new Simple(clone $this->simpleRequiredData);
+		$simpleproduct2->set('sku','sku2');
 		$simpleproduct2->set('color', 'green');
 		$product->addSimpleProduct($simpleproduct2);
 
@@ -91,22 +104,20 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
 	public function test_AddConfigurableProductToHolder()
 	{
-		$product = new Configurable('config-sku', 'color');
-		$product->setVisibility(true, true)
-			->setDescription('Foobar')
-			->setShortDescription('Foobar')
-			->setName('Foobar');
+		$product = new Configurable($this->configRequiredData, 'color');
 
-		$simpleproduct1 = clone $this->simpleProduct;
+		$simpleproduct1 = new Simple(clone $this->simpleRequiredData);
 		$simpleproduct1->set('color', 'blue');
 		$product->addSimpleProduct($simpleproduct1);
 
-		$simpleproduct2 = clone $this->simpleProduct;
-		$simpleproduct2->setSku('sku2');
+		$simpleproduct2 = new Simple(clone $this->simpleRequiredData);
+		$simpleproduct2->set('sku','sku2');
 		$simpleproduct2->set('color', 'green');
 		$product->addSimpleProduct($simpleproduct2);
 
-		$this->productHolder->addProduct($product);
+		$productholder = new ItemHolder;
+		$productholder->addProduct($simpleproduct1)
+			->addProduct($simpleproduct2);
 	}
 
 }

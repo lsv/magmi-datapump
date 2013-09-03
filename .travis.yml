@@ -10,7 +10,7 @@ before_script:
 
 script:
  - mkdir -p build/logs
- - php vendor/bin/phpunit -c phpunit.dist.xml
+ - php vendor/bin/phpunit -c .phpunit.dist.xml
 
 after_script:
  - php vendor/bin/coveralls

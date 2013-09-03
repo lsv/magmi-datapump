@@ -7,6 +7,7 @@
 
 namespace Datapump\Tests;
 
+use Datapump\Product\Data\RequiredData;
 use Datapump\Product\Simple;
 use Datapump\Product\ItemHolder;
 
@@ -14,83 +15,97 @@ class ProductsHolderTest extends \PHPUnit_Framework_TestCase
 {
 
 	/**
-	 * @var Simple
+	 * @var RequiredData
 	 */
-	private $product;
-
-	/**
-	 * @var ItemHolder
-	 */
-	private $holder;
+	private $requiredData;
 
 	public function __construct()
 	{
-		$this->product = new Simple('sku');
-		$this->product->setDescription('Description')
+
+		$this->requiredData = new RequiredData();
+		$this->requiredData->setSku('sku')
 			->setName('name')
 			->setPrice(100)
 			->setQty(100)
 			->setShortDescription('short description')
+			->setDescription('long description')
 			->setTax(1)
 			->setWeight(100);
-
-		$this->holder = new ItemHolder;
 
 		parent::__construct();
 	}
 
 	public function test_canRemoveProduct()
 	{
-		$product1 = clone $this->product;
-		$product1->setSku('sku-1');
-		$product2 = clone $this->product;
-		$product2->setSku('sku-2');
-		$product3 = clone $this->product;
-		$product3->setSku('sku-3');
+		$holder = new ItemHolder;
 
-		$this->holder->addProduct($product1)
+		$product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
+		$product2 = new Simple(clone $this->requiredData->setSku('sku-2'));
+		$product3 = new Simple(clone $this->requiredData->setSku('sku-3'));
+
+		$holder->addProduct($product1)
 			->addProduct($product2)
 			->addProduct($product3);
 
-		$this->assertTrue($this->holder->removeProduct('sku-2'));
+		$this->assertTrue($holder->removeProduct('sku-2'), 'remove product');
 
-		$this->assertInstanceOf('Datapump\Product\ProductAbstract', $this->holder->findProduct('sku-1'));
-		$this->assertFalse($this->holder->removeProduct('foobar'));
+		$this->assertInstanceOf('Datapump\Product\ProductAbstract', $holder->findProduct('sku-1'), 'find product');
+		$this->assertFalse($holder->removeProduct('foobar'), 'remove product foobar');
 
-		$this->assertInstanceOf('Datapump\Product\ItemHolder', $this->holder->addProduct($product2));
+		$this->assertInstanceOf('Datapump\Product\ItemHolder', $holder->addProduct($product2));
 
 	}
 
 	public function test_canFindProduct()
 	{
-		$product1 = clone $this->product;
-		$product1->setSku('sku-1');
-		$product2 = clone $this->product;
-		$product2->setSku('sku-2');
-		$product3 = clone $this->product;
-		$product3->setSku('sku-3');
+		$holder = new ItemHolder;
 
-		$this->holder->addProduct($product1)
-			->addProduct($product2)
-			->addProduct($product3);
+		$product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
+		$product2 = new Simple(clone $this->requiredData->setSku('sku-2'));
+		$product3 = new Simple(clone $this->requiredData->setSku('sku-3'));
 
-		$this->assertInstanceOf('Datapump\Product\ProductAbstract', $this->holder->findProduct('sku-1'));
-		$this->assertTrue($this->holder->removeProduct('sku-2'));
-		$this->assertFalse($this->holder->findProduct('sku-2'));
+		$holder->addProduct(array($product1, $product2, $product3));
+
+		$this->assertInstanceOf('Datapump\Product\ProductAbstract', $holder->findProduct('sku-1'));
+		$this->assertTrue($holder->removeProduct('sku-2'));
+		$this->assertFalse($holder->findProduct('sku-2'));
 
 	}
 
 	public function test_canNotAddMoreWithSameSku()
 	{
+		$holder = new ItemHolder;
+
 		$this->setExpectedException('Datapump\Exception\ProductSkuAlreadyAdded');
 
-		$product1 = clone $this->product;
-		$product1->setSku('sku-1');
-		$product2 = clone $this->product;
-		$product2->setSku('sku-1');
+		$product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
+		$product2 = new Simple(clone $this->requiredData->setSku('sku-1'));
 
-		$this->holder->addProduct($product1);
-		$this->holder->addProduct($product2);
+		$holder->addProduct($product1)
+			->addProduct($product2);
 	}
 
+	public function test_canNotAddMoreWithSameSkuFromArray()
+	{
+		$holder = new ItemHolder;
+
+		$this->setExpectedException('Datapump\Exception\ProductSkuAlreadyAdded');
+
+		$product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
+		$product2 = new Simple(clone $this->requiredData->setSku('sku-1'));
+
+		$holder->addProduct(array($product1, $product2));
+	}
+
+	public function test_canNotAddAObjectWhichIsNotAProductAbstract()
+	{
+		$this->setExpectedException('Datapump\Exception\ProductNotAnArrayOrProductAbstract');
+
+		$holder = new ItemHolder;
+		$product1 = new \stdClass();
+		$product2 = new \stdClass();
+		$holder->addProduct($product1);
+
+		$holder->addProduct(array($product1, $product2));
+	}
 }

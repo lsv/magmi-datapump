@@ -7,13 +7,15 @@
 
 namespace Datapump\Product;
 
+use Datapump\Product\Data\DataInterface;
+use Datapump\Product\Data\RequiredData;
 
 class Simple extends ProductAbstract
 {
 
-	protected $type = self::TYPE_SIMPLE;
+	protected $type = DataInterface::TYPE_SIMPLE;
 
-	protected $requiredData = array(
+	protected $requiredFields = array(
 		'Type'				=> 'Missing product type',
 		'Sku' 				=> 'Missing SKU number',
 		'Visibility'		=> 'Missing visibility status',
@@ -27,10 +29,9 @@ class Simple extends ProductAbstract
 		'Qty'				=> 'Missing product quantity',
 	);
 
-	public function __construct($sku, $visibleInFrontend = true, $searchable = true)
+	public function __construct(RequiredData $data)
 	{
-		parent::__construct($sku);
-		$this->setVisibility($visibleInFrontend, $searchable);
+		parent::__construct($data);
 	}
 
 }

@@ -7,6 +7,8 @@
 
 namespace Datapump\Tests;
 
+use Datapump\Product\Data\DataInterface;
+use Datapump\Product\Data\RequiredData;
 use Datapump\Product\ProductAbstract;
 use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
@@ -28,52 +30,49 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 	{
 		$this->productholder = new ItemHolder();
 
-		$this->product = new Simple('sku');
-		$this->product->setDescription('Description')
+		$requiredData = new RequiredData();
+		$requiredData->setSku('sku')
 			->setName('name')
 			->setPrice(100)
 			->setQty(100)
 			->setShortDescription('short description')
+			->setDescription('long description')
 			->setTax(1)
 			->setWeight(100);
+
+		$this->product = new Simple($requiredData);
 
 		parent::__construct();
 	}
 
 	public function test_CanCreateSimpleProduct()
 	{
-
-		$product = new Simple('sku');
-		$product->setDescription('Description')
-			->setName('name')
-			->setPrice(100)
-			->setQty(100)
-			->setShortDescription('short description')
-			->setTax(1)
-			->setWeight(100);
+		$product = clone $this->product;
 
 		$this->productholder->addProduct($product);
 
-		$this->assertEquals(1, $product->getStatus());
-		$this->assertEquals(100, $product->getPrice());
-		$this->assertEquals('sku', $product->getSku());
-
+		$this->assertEquals(1, $product->getRequiredData()->getStatus(), 'status error');
+		$this->assertEquals(100, $product->getRequiredData()->getPrice(), 'price error');
+		$this->assertEquals('sku', $product->getRequiredData()->getSku(), 'sku error');
 	}
 
 	public function test_CanTestForMissingFields()
 	{
 		$this->setExpectedException('Datapump\Exception\MissingProductData');
 
-		$product = new Simple('sku');
+		$requiredData = new RequiredData();
+		$requiredData->setSku('sku');
+
+		$product = new Simple($requiredData);
 		$this->productholder->addProduct($product);
 	}
 
 	public function test_CanDisableProduct()
 	{
-		$this->product->setDisabled();
-		$this->assertEquals(2, $this->product->getStatus());
-		$this->product->setEnabled();
-		$this->assertEquals(1, $this->product->getStatus());
+		$this->product->getRequiredData()->setDisabled();
+		$this->assertEquals(2, $this->product->getRequiredData()->getStatus());
+		$this->product->getRequiredData()->setEnabled();
+		$this->assertEquals(1, $this->product->getRequiredData()->getStatus());
 	}
 
 	public function test_CanSetKey()
@@ -84,8 +83,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
 	public function test_CanSetOutOfStock()
 	{
-		$this->product->setQty(0);
-		$this->assertEquals(0, $this->product->getQty());
+		$this->product->getRequiredData()->setQty(0);
+		$this->assertEquals(0, $this->product->getRequiredData()->getQty());
 		$data = $this->product->getData();
 
 		$this->assertContains('is_in_stock', $data);
@@ -95,8 +94,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
 	public function test_canSetManageStock()
 	{
-		$this->product->setQty(null);
-		$this->assertEquals(0, $this->product->getQty());
+		$this->product->getRequiredData()->setQty(null);
+		$this->assertEquals(0, $this->product->getRequiredData()->getQty());
 		$data = $this->product->getData();
 
 		$this->assertContains('manage_stock', $data);
@@ -105,17 +104,17 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
 	public function test_canSetVisibility()
 	{
-		$this->product->setVisibility(true, true);
-		$this->assertEquals(ProductAbstract::VISIBILITY_CATALOG_SEARCH, $this->product->getVisibility(), 'Visibility both catalog and search');
+		$this->product->getRequiredData()->setVisibility(true, true);
+		$this->assertEquals(DataInterface::VISIBILITY_CATALOG_SEARCH, $this->product->getRequiredData()->getVisibility(), 'Visibility both catalog and search');
 
-		$this->product->setVisibility(false, true);
-		$this->assertEquals(ProductAbstract::VISIBILITY_SEARCH, $this->product->getVisibility(), 'Visibility only search');
+		$this->product->getRequiredData()->setVisibility(false, true);
+		$this->assertEquals(DataInterface::VISIBILITY_SEARCH, $this->product->getRequiredData()->getVisibility(), 'Visibility only search');
 
-		$this->product->setVisibility(true, false);
-		$this->assertEquals(ProductAbstract::VISIBILITY_CATALOG, $this->product->getVisibility(), 'Visibility only catalog');
+		$this->product->getRequiredData()->setVisibility(true, false);
+		$this->assertEquals(DataInterface::VISIBILITY_CATALOG, $this->product->getRequiredData()->getVisibility(), 'Visibility only catalog');
 
-		$this->product->setVisibility(false, false);
-		$this->assertEquals(ProductAbstract::VISIBILITY_NOTVISIBLE, $this->product->getVisibility(), 'No visibility');
+		$this->product->getRequiredData()->setVisibility(false, false);
+		$this->assertEquals(DataInterface::VISIBILITY_NOTVISIBLE, $this->product->getRequiredData()->getVisibility(), 'No visibility');
 
 	}
 
@@ -126,11 +125,41 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('random', $this->product->foobar);
 	}
 
-	public function test_canDebug()
+	public function test_canOverwriteSku()
 	{
-		$data = $this->product->debug();
-		$this->assertNotEmpty($data);
-		$this->assertStringStartsWith('array', $data);
+		$this->assertEquals('sku', $this->product->get('sku'));
+		$this->product->set('sku', 'sku3');
+		$this->assertEquals('sku3', $this->product->get('sku'));
+	}
+
+	public function test_canSetAllRequiredData()
+	{
+		$this->product->getRequiredData()->setStore('mystore');
+		$this->assertEquals('mystore', $this->product->getRequiredData()->getStore(), 'store');
+
+		$this->product->getRequiredData()->setAttributeSet('myattrset');
+		$this->assertEquals('myattrset', $this->product->getRequiredData()->getAttributeSet(), 'attr set');
+
+		$this->product->getRequiredData()->setDescription('mylongdesc');
+		$this->assertEquals('mylongdesc', $this->product->getRequiredData()->getDescription(), 'desc');
+
+		$this->product->getRequiredData()->setShortDescription('myshortdesc');
+		$this->assertEquals('myshortdesc', $this->product->getRequiredData()->getShortDescription(), 'short desc');
+
+		$this->product->getRequiredData()->setName('myname');
+		$this->assertEquals('myname', $this->product->getRequiredData()->getName(), 'name');
+
+		$this->product->getRequiredData()->setWeight(2.3);
+		$this->assertEquals(2.3, $this->product->getRequiredData()->getWeight(), 'weight');
+
+		$this->product->getRequiredData()->setPrice(200.12);
+		$this->assertEquals(200.12, $this->product->getRequiredData()->getPrice(), 'price');
+
+		$this->product->getRequiredData()->setTax(5);
+		$this->assertEquals(5, $this->product->getRequiredData()->getTax(), 'tax');
+
+		$this->product->getRequiredData()->setQty(25);
+		$this->assertEquals(25, $this->product->getRequiredData()->getQty(), 'qty');
 	}
 
 }

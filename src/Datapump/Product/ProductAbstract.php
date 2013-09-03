@@ -7,106 +7,101 @@
 
 namespace Datapump\Product;
 
-use Datapump\Exception\MissingGetter;
-use Datapump\Product\Setters\ProductData;
+use Datapump\Product\Data\RequiredData;
+use Datapump\Product\Data\DataInterface;
+use Datapump\Exception;
 
 abstract class ProductAbstract
-	extends ProductData
 {
-
-	const VISIBILITY_CATALOG_SEARCH = 4;
-	const VISIBILITY_CATALOG = 2;
-	const VISIBILITY_SEARCH = 3;
-	const VISIBILITY_NOTVISIBLE = 1;
-
-	const TYPE_CONFIGURABLE = 'configurable';
-	const TYPE_SIMPLE = 'simple';
-
-	protected $data = array();
 
 	protected $type = '';
 
-	protected $requiredData = array();
+	protected $requiredFields = array();
 
-	public function __construct($sku)
+	/**
+	 * @var RequiredData
+	 */
+	protected $requiredData;
+
+	private $data = array();
+
+	public function __construct(RequiredData $data)
 	{
-		$this->setSku($sku)
-			->setType($this->type)
-			->setEnabled();
+		$data->setType($this->type);
+		$this->injectData($data);
 	}
 
-	protected function checkRequired()
+	public function injectData(DataInterface $data)
 	{
-		return true;
+		if ($data instanceof RequiredData) {
+			$this->requiredData = $data;
+			return $this;
+		}
+
+		$this->data = array_merge($this->data, $data->getData());
+		return $this;
 	}
 
-	public function beforeAddingToHolder()
+	public function getRequiredData()
 	{
-
+		return $this->requiredData;
 	}
 
-	public function checkMissingData()
+	public function set($key, $value)
 	{
-		$errors = array();
-		foreach($this->requiredData AS $key => $msg) {
-			$method = 'get' . $key;
-			if (method_exists($this, $method)) {
-				if ($this->$method() === null) {
-					$errors[] = $msg;
-				}
-			} else {
-				throw new MissingGetter('Could not find the data getter for ' . $key . ' (should be: ' . $method . ')');
+		$this->getRequiredData()->set($key, $value);
+		return $this;
+	}
+
+	public function __set($key, $value)
+	{
+		return $this->set($key, $value);
+	}
+
+	public function get($key)
+	{
+		return $this->getRequiredData()->get($key);
+	}
+
+	public function __get($key)
+	{
+		return $this->get($key);
+	}
+
+	public function check()
+	{
+		$missingFields = array();
+
+		foreach($this->requiredFields AS $key => $msg) {
+			$method = 'get' . ucfirst($key);
+
+			if (! $this->getRequiredData()->{$method}()) {
+				$missingFields[] = $msg;
 			}
 		}
 
-		$required = $this->checkRequired();
-		if ($required && is_array($required)) {
-			$errors = array_merge($errors, $required);
-		}
-
-		if ($errors) {
-			return $errors;
+		if ($missingFields) {
+			throw new Exception\MissingProductData('Product with SKU: "' . $this->getRequiredData()->getSku() . '" does not have the all the required data' . "\n" . implode("\n", $missingFields));
 		}
 
 		return true;
-	}
 
-	public function debug()
-	{
-		/** OB is used for Tests */
-		ob_start();
-		var_dump($this->beforeImport());
-		$content = ob_get_contents();
-		ob_end_clean();
-		return $content;
 	}
 
 	public function beforeImport()
 	{
-		$this->beforeImportCategories();
-		$this->beforeImportImages();
-		return $this->data;
+		$this->data = array_merge($this->data, $this->requiredData->getData());
+		return $this;
 	}
 
 	public function afterImport()
 	{
-
 	}
 
-	public function toArray()
+	public function getData()
 	{
+		$this->beforeImport();
 		return $this->data;
-	}
-
-	private function beforeImportCategories()
-	{
-		if ($this->_isset('categories')) {
-			$this->data['categories'] = implode(';;', $this->getCategory());
-		}
-	}
-
-	private function beforeImportImages()
-	{
 	}
 
 }
