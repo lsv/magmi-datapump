@@ -19,7 +19,8 @@
         "phpunit/phpunit" : "3.7.*",
         "satooshi/php-coveralls": "dev-master",
         "phpmd/phpmd" : "1.4.*",
-        "phpdocumentor/phpdocumentor": "*"
+        "phpdocumentor/phpdocumentor": "*",
+        "squizlabs/php_codesniffer": "1.*"
     },
 	"autoload": {
 		"psr-0": {

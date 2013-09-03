@@ -7,13 +7,10 @@
 
 namespace Datapump\Logger;
 
-
 class Log implements Logger
 {
 
-	public function log($data, $type)
-	{
-
-	}
-
+    public function log($data, $type)
+    {
+    }
 }

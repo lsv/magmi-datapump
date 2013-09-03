@@ -7,10 +7,8 @@
 
 namespace Datapump\Logger;
 
-
 interface Logger
 {
 
-	public function log($data, $type);
-
+    public function log($data, $type);
 }

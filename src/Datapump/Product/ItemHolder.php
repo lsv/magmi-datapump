@@ -14,116 +14,125 @@ use Datapump\Product\Data\DataAbstract;
 class ItemHolder
 {
 
-	const MAGMI_CREATE = 'create';
-	const MAGMI_UPDATE = 'update';
-	const MAGMI_XCREATE = 'xcreate';
+    const MAGMI_CREATE = 'create';
 
-	private $products = array();
+    const MAGMI_UPDATE = 'update';
 
-	/**
-	 * @var \Magmi_ProductImport_DataPump
-	 */
-	private $magmi;
+    const MAGMI_XCREATE = 'xcreate';
 
-	public function setMagmi(\Magmi_ProductImport_DataPump $magmi, $profile, $mode = self::MAGMI_CREATE, Logger $logger)
-	{
-		$this->magmi = $magmi;
-		$this->magmi->beginImportSession($profile, $mode, $logger);
-	}
+    private $products = array();
 
-	/**
-	 * @param ProductAbstract|array $product
-	 *
-	 * @return $this
-	 * @throws \Datapump\Exception\ProductSkuAlreadyAdded
-	 * @throws \Datapump\Exception\ProductNotAnArrayOrProductAbstract
-	 */
-	public function addProduct($product)
-	{
-		if (is_array($product)) {
-			foreach($product AS $p) {
-				$this->addProduct($p);
-			}
-			return $this;
-		}
+    /**
+     * @var \Magmi_ProductImport_DataPump
+     */
+    private $magmi;
 
-		if ($product instanceof ProductAbstract) {
-			$check = $product->check();
-			if ($check) {
-				$sku = $product->get('sku');
-				foreach($this->products AS $p) {
-					/** @var ProductAbstract $p */
-					if ($p->get('sku') == $sku) {
-						throw new Exception\ProductSkuAlreadyAdded('Product with SKU: ' . $product->get('sku') . ' is already added');
-					}
-				}
-				$this->products[] = $product;
-			}
+    public function setMagmi(
+        \Magmi_ProductImport_DataPump $magmi,
+        $profile,
+        $mode = self::MAGMI_CREATE,
+        Logger $logger = null
+    ) {
+        $this->magmi = $magmi;
+        $this->magmi->beginImportSession($profile, $mode, $logger);
+    }
 
-			return $this;
-		}
+    /**
+     * @param ProductAbstract|array $product
+     *
+     * @return $this
+     * @throws \Datapump\Exception\ProductSkuAlreadyAdded
+     * @throws \Datapump\Exception\ProductNotAnArrayOrProductAbstract
+     */
+    public function addProduct($product)
+    {
+        if (is_array($product)) {
+            foreach ($product as $p) {
+                $this->addProduct($p);
+            }
 
-		throw new Exception\ProductNotAnArrayOrProductAbstract(get_class($product) . ' is not valid');
+            return $this;
+        }
 
-	}
+        if ($product instanceof ProductAbstract) {
+            $check = $product->check();
+            if ($check) {
+                $sku = $product->get('sku');
+                foreach ($this->products as $p) {
+                    /** @var ProductAbstract $p */
+                    if ($p->get('sku') == $sku) {
+                        throw new Exception\ProductSkuAlreadyAdded(
+                            sprintf(
+                                'Product with SKU: %s is already added',
+                                $product->get('sku')
+                            )
+                        );
+                    }
+                }
+                $this->products[] = $product;
+            }
 
-	public function removeProduct($sku)
-	{
-		foreach($this->products AS $key => $product) {
-			/** @var ProductAbstract $product */
-			if ($product->getRequiredData()->getSku() == $sku) {
-				unset($this->products[$key]);
-				return true;
-			}
-		}
+            return $this;
+        }
 
-		return false;
+        throw new Exception\ProductNotAnArrayOrProductAbstract(get_class($product) . ' is not valid');
+    }
 
-	}
+    public function removeProduct($sku)
+    {
+        foreach ($this->products as $key => $product) {
+            /** @var ProductAbstract $product */
+            if ($product->getRequiredData()->getSku() == $sku) {
+                unset($this->products[$key]);
 
-	public function findProduct($sku)
-	{
-		foreach($this->products AS $product) {
-			/** @var ProductAbstract $product */
-			if ($product->getRequiredData()->getSku() == $sku) {
-				return $product;
-			}
-		}
+                return true;
+            }
+        }
 
-		return false;
+        return false;
+    }
 
-	}
+    public function findProduct($sku)
+    {
+        foreach ($this->products as $product) {
+            /** @var ProductAbstract $product */
+            if ($product->getRequiredData()->getSku() == $sku) {
+                return $product;
+            }
+        }
 
-	/**
-	 * @todo rewrite this, so it can be overwritten
-	 */
-	public function import()
-	{
-		foreach($this->products AS $product) {
-			/** @var ProductAbstract $product */
-			switch ($product->getRequiredData()->getType()) {
-				case DataAbstract::TYPE_CONFIGURABLE:
-					/** @var Configurable $product */
-					foreach($product->getSimpleProducts() AS $simple) {
-						/** @var Simple $simple */
-						$this->ingest($simple);
-					}
-					$this->ingest($product);
-					break;
-				default:
-					$this->ingest($product);
-					break;
-			}
-		}
+        return false;
+    }
 
-		$this->magmi->endImportSession();
-	}
+    /**
+     * @todo rewrite this, so it can be overwritten
+     */
+    public function import()
+    {
+        foreach ($this->products as $product) {
+            /** @var ProductAbstract $product */
+            switch ($product->getRequiredData()->getType()) {
+                case DataAbstract::TYPE_CONFIGURABLE:
+                    /** @var Configurable $product */
+                    foreach ($product->getSimpleProducts() as $simple) {
+                        /** @var Simple $simple */
+                        $this->ingest($simple);
+                    }
+                    $this->ingest($product);
+                    break;
+                default:
+                    $this->ingest($product);
+                    break;
+            }
+        }
 
-	private function ingest(ProductAbstract $product)
-	{
-		$product->beforeImport();
-		$this->magmi->ingest($product->getData());
-		$product->afterImport();
-	}
+        $this->magmi->endImportSession();
+    }
 
+    private function ingest(ProductAbstract $product)
+    {
+        $product->beforeImport();
+        $this->magmi->ingest($product->getData());
+        $product->afterImport();
+    }
 }

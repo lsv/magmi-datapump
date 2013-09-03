@@ -14,94 +14,103 @@ use Datapump\Exception;
 abstract class ProductAbstract
 {
 
-	protected $type = '';
+    protected $type = '';
 
-	protected $requiredFields = array();
+    protected $requiredFields = array();
 
-	/**
-	 * @var RequiredData
-	 */
-	protected $requiredData;
+    /**
+     * @var RequiredData
+     */
+    protected $requiredData;
 
-	private $data = array();
+    private $data = array();
 
-	public function __construct(RequiredData $data)
-	{
-		$data->setType($this->type);
-		$this->injectData($data);
-	}
+    public function __construct(RequiredData $data)
+    {
+        $data->setType($this->type);
+        $this->injectData($data);
+    }
 
-	public function injectData(DataInterface $data)
-	{
-		if ($data instanceof RequiredData) {
-			$this->requiredData = $data;
-			return $this;
-		}
+    public function injectData(DataInterface $data)
+    {
+        if ($data instanceof RequiredData) {
+            $this->requiredData = $data;
 
-		$this->data = array_merge($this->data, $data->getData());
-		return $this;
-	}
+            return $this;
+        }
 
-	public function getRequiredData()
-	{
-		return $this->requiredData;
-	}
+        $this->data = array_merge($this->data, $data->getData());
 
-	public function set($key, $value)
-	{
-		$this->getRequiredData()->set($key, $value);
-		return $this;
-	}
+        return $this;
+    }
 
-	public function __set($key, $value)
-	{
-		return $this->set($key, $value);
-	}
+    public function getRequiredData()
+    {
+        return $this->requiredData;
+    }
 
-	public function get($key)
-	{
-		return $this->getRequiredData()->get($key);
-	}
+    public function set($key, $value)
+    {
+        $this->getRequiredData()->set($key, $value);
 
-	public function __get($key)
-	{
-		return $this->get($key);
-	}
+        return $this;
+    }
 
-	public function check()
-	{
-		$missingFields = array();
+    public function __set($key, $value)
+    {
+        return $this->set($key, $value);
+    }
 
-		foreach($this->requiredFields AS $key => $msg) {
-			$method = 'get' . ucfirst($key);
+    public function get($key)
+    {
+        return $this->getRequiredData()->get($key);
+    }
 
-			if (! $this->getRequiredData()->{$method}()) {
-				$missingFields[] = $msg;
-			}
-		}
+    public function __get($key)
+    {
+        return $this->get($key);
+    }
 
-		if ($missingFields) {
-			throw new Exception\MissingProductData('Product with SKU: "' . $this->getRequiredData()->getSku() . '" does not have the all the required data' . "\n" . implode("\n", $missingFields));
-		}
+    public function check()
+    {
+        $missingFields = array();
 
-		return true;
+        foreach ($this->requiredFields as $key => $msg) {
+            $method = 'get' . ucfirst($key);
 
-	}
+            if (!$this->getRequiredData()->{$method}()) {
+                $missingFields[] = $msg;
+            }
+        }
 
-	public function beforeImport()
-	{
-		$this->data = array_merge($this->data, $this->requiredData->getData());
-		return $this;
-	}
+        if ($missingFields) {
+            throw new Exception\MissingProductData(
+                sprintf(
+                    'Product with SKU: %s does not have the all the required data %s',
+                    $this->getRequiredData()->getSku(),
+                    implode("\n<br />", $missingFields)
+                )
+            );
+        }
 
-	public function afterImport()
-	{
-	}
+        return true;
+    }
 
-	public function getData()
-	{
-		$this->beforeImport();
-		return $this->data;
-	}
+    public function beforeImport()
+    {
+        $this->data = array_merge($this->data, $this->requiredData->getData());
 
+        return $this;
+    }
+
+    public function afterImport()
+    {
+    }
+
+    public function getData()
+    {
+        $this->beforeImport();
+
+        return $this->data;
+    }
 }
