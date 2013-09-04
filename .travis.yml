@@ -11,7 +11,7 @@ before_script:
  - php composer.phar install --dev
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/releases/magmi_0.7.18.zip
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/plugins/packages/magmi_extra_plugins_20130131.zip
- - wget http://www.magentocommerce.com/getmagento/1.7.0.2/magento-1.7.0.2.tar.gz
+ - wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
  - unzip magmi_0.7.18.zip
  - unzip magmi_extra_plugins_20130131.zip
  - tar xf magento-1.7.0.2.tar.gz
