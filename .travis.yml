@@ -6,13 +6,11 @@ php:
 before_script:
  - mysql -e 'create database magento;'
  - mysql -u travis magento < .travis/magento.sql
- - curl -s https://getcomposer.org/installer | php
- - php composer.phar selfupdate
- - php composer.phar install --dev
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/releases/magmi_0.7.18.zip
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/plugins/packages/magmi_extra_plugins_20130131.zip
  - wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
  - unzip magmi_0.7.18.zip
+ - mv magmi_extra_plugins_20130131.zip magmi/plugins/base
  - unzip magmi/plugins/base/magmi_extra_plugins_20130131.zip
  - tar xf magento-1.7.0.2.tar.gz
  - rm magento-1.7.0.2.tar.gz
@@ -21,6 +19,9 @@ before_script:
  - mv .travis/magmi/configuration/travis magmi/conf
  - mv .travis/magmi/configuration/magmi.ini magmi/conf
  - mkdir -p build/logs
+ - curl -s https://getcomposer.org/installer | php
+ - php composer.phar selfupdate
+ - php composer.phar install --dev
 
 script:
  - php vendor/bin/phpunit -c .phpunit.dist.xml
