@@ -50,6 +50,8 @@ class ItemHolder
      * @param string $profile
      * @param string $mode
      * @param Logger $logger
+     *
+     * @return $this
      */
     public function setMagmi(
         \Magmi_ProductImport_DataPump $magmi,
@@ -59,6 +61,7 @@ class ItemHolder
     ) {
         $this->magmi = $magmi;
         $this->magmi->beginImportSession($profile, $mode, $logger);
+        return $this;
     }
 
     /**
@@ -147,6 +150,10 @@ class ItemHolder
      */
     public function import()
     {
+        if (! $this->magmi instanceof \Magmi_ProductImport_DataPump) {
+            throw new Exception\MagmiHasNotBeenSetup('Magmi has not been setup yet, use setMagmi()');
+        }
+
         foreach ($this->products as $product) {
             /** @var ProductAbstract $product */
             switch ($product->getRequiredData()->getType()) {

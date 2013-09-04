@@ -4,8 +4,8 @@ php:
  - 5.3
 
 before_script:
- - mysql -e 'create database magento;'
- - mysql -u travis magento < .travis/magento.sql
+ - mysql -e 'create database magento_travis;'
+ - mysql -u travis magento_travis < .travis/magento/magento.sql
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/releases/magmi_0.7.18.zip
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/plugins/packages/magmi_extra_plugins_20130131.zip
  - wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
@@ -13,6 +13,8 @@ before_script:
  - mv magmi_extra_plugins_20130131.zip magmi/plugins/base
  - unzip magmi/plugins/base/magmi_extra_plugins_20130131.zip
  - tar xf magento-1.7.0.2.tar.gz
+ - chmod 777 -R magento
+ - mv .travis/magento/local.xml magento/app/etc
  - rm magento-1.7.0.2.tar.gz
  - rm magmi_0.7.18.zip
  - rm magmi/plugins/base/magmi_extra_plugins_20130131.zip
