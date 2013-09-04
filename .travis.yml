@@ -13,14 +13,11 @@ before_script:
  - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/plugins/packages/magmi_extra_plugins_20130131.zip
  - wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
  - unzip magmi_0.7.18.zip
- - unzip magmi_extra_plugins_20130131.zip
+ - unzip magmi/plugins/base/magmi_extra_plugins_20130131.zip
  - tar xf magento-1.7.0.2.tar.gz
  - rm magento-1.7.0.2.tar.gz
  - rm magmi_0.7.18.zip
  - rm magmi_extra_plugins_20130131.zip
- - mv extra/datasources/* magmi/plugins/base/datasources
- - mv extra/general/* magmi/plugins/base/general
- - mv extra/itemprocessors/* magmi/plugins/base/itemprocessors
  - mv .travis/magmi/configuration/travis magmi/conf
  - mv .travis/magmi/configuration/magmi.ini magmi/conf
  - mkdir -p build/logs
