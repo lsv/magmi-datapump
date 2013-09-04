@@ -15,7 +15,7 @@ before_script:
  - tar xf magento-1.7.0.2.tar.gz
  - rm magento-1.7.0.2.tar.gz
  - rm magmi_0.7.18.zip
- - rm magmi_extra_plugins_20130131.zip
+ - rm magmi/plugins/base/magmi_extra_plugins_20130131.zip
  - mv .travis/magmi/configuration/travis magmi/conf
  - mv .travis/magmi/configuration/magmi.ini magmi/conf
  - mkdir -p build/logs
