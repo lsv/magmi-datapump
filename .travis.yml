@@ -2,16 +2,30 @@ language: php
 
 php:
  - 5.3
- - 5.4
- - 5.5
 
 before_script:
+ - mysql -e 'create database magento;'
+ - mysql -u travis magento < .travis/magento.sql
  - curl -s https://getcomposer.org/installer | php
  - php composer.phar selfupdate
  - php composer.phar install --dev
+ - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/releases/magmi_0.7.18.zip
+ - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/plugins/packages/magmi_extra_plugins_20130131.zip
+ - wget http://www.magentocommerce.com/getmagento/1.7.0.2/magento-1.7.0.2.tar.gz
+ - unzip magmi_0.7.18.zip
+ - unzip magmi_extra_plugins_20130131.zip
+ - tar xf magento-1.7.0.2.tar.gz
+ - rm magento-1.7.0.2.tar.gz
+ - rm magmi_0.7.18.zip
+ - rm magmi_extra_plugins_20130131.zip
+ - mv extra/datasources/* magmi/plugins/base/datasources
+ - mv extra/general/* magmi/plugins/base/general
+ - mv extra/itemprocessors/* magmi/plugins/base/itemprocessors
+ - mv .travis/magmi/configuration/travis magmi/conf
+ - mv .travis/magmi/configuration/magmi.ini magmi/conf
+ - mkdir -p build/logs
 
 script:
- - mkdir -p build/logs
  - php vendor/bin/phpunit -c .phpunit.dist.xml
 
 after_script:
