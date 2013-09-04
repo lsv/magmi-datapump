@@ -1,17 +1,34 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/30/13
- * Time: 1:02 PM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product\Data;
 
+/**
+ * Class Category
+ * @package Datapump\Product\Data
+ */
 class Category extends DataAbstract
 {
 
+    /**
+     * Required Magmi plugins
+     * @var array
+     */
     protected $requiredMagmiPlugin = array('On the fly category creator/importer');
 
+    /**
+     * Add a category to the product
+     * @param string $category Category name
+     * @param bool $is_active Is the category active?
+     * @param bool $is_anchor Is the category a anchor?
+     * @param bool $include_in_menu Should the category be included in menu?
+     * @param string $levelDemiliter Which string are you using for demiliter between the levels of the categories?
+     *
+     * @return $this|DataAbstract
+     */
     public function set($category, $is_active = true, $is_anchor = true, $include_in_menu = true, $levelDemiliter = '/')
     {
         if (!is_array($category)) {
@@ -29,6 +46,15 @@ class Category extends DataAbstract
         return $this;
     }
 
+    /**
+     * Returns the category array
+     * @param string $category Category name
+     * @param bool $is_active Is the category active?
+     * @param bool $is_anchor Is the category a anchor?
+     * @param bool $include_in_menu Should the category be included in menu?
+     *
+     * @return array
+     */
     private function addCategory($category, $is_active, $is_anchor, $include_in_menu)
     {
         return array(
@@ -39,6 +65,10 @@ class Category extends DataAbstract
         );
     }
 
+    /**
+     * Get the category data
+     * @return array
+     */
     public function getData()
     {
         if ($this->__isset('categories')) {

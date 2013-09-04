@@ -1,36 +1,60 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/29/13
- * Time: 2:35 AM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product;
 
 use Datapump\Exception;
 use Datapump\Logger\Logger;
 use Datapump\Product\Data\DataAbstract;
 
+/**
+ * Class ItemHolder
+ * @package Datapump\Product
+ */
 class ItemHolder
 {
 
-    const MAGMI_CREATE = 'create';
+    /**
+     * Creates and update
+     */
+    const MAGMI_CREATE_UPDATE = 'create';
 
+    /**
+     * Update only
+     */
     const MAGMI_UPDATE = 'update';
 
-    const MAGMI_XCREATE = 'xcreate';
+    /**
+     * Create only
+     */
+    const MAGMI_CREATE = 'xcreate';
 
+    /**
+     * Item holder
+     * @var array
+     */
     private $products = array();
 
     /**
+     * Magmi interface
      * @var \Magmi_ProductImport_DataPump
      */
     private $magmi;
 
+    /**
+     * Setup Magmi
+     * @param \Magmi_ProductImport_DataPump $magmi
+     * @param string $profile
+     * @param string $mode
+     * @param Logger $logger
+     */
     public function setMagmi(
         \Magmi_ProductImport_DataPump $magmi,
         $profile,
-        $mode = self::MAGMI_CREATE,
+        $mode = self::MAGMI_CREATE_UPDATE,
         Logger $logger = null
     ) {
         $this->magmi = $magmi;
@@ -38,6 +62,7 @@ class ItemHolder
     }
 
     /**
+     * Adds product to our item holder
      * @param ProductAbstract|array $product
      *
      * @return $this
@@ -78,6 +103,12 @@ class ItemHolder
         throw new Exception\ProductNotAnArrayOrProductAbstract(get_class($product) . ' is not valid');
     }
 
+    /**
+     * Remove a product from our item holder
+     * @param string $sku
+     *
+     * @return bool
+     */
     public function removeProduct($sku)
     {
         foreach ($this->products as $key => $product) {
@@ -92,6 +123,12 @@ class ItemHolder
         return false;
     }
 
+    /**
+     * Find a product in our item holder
+     * @param string $sku
+     *
+     * @return bool|ProductAbstract
+     */
     public function findProduct($sku)
     {
         foreach ($this->products as $product) {
@@ -105,7 +142,8 @@ class ItemHolder
     }
 
     /**
-     * @todo rewrite this, so it can be overwritten
+     * Do the actual import to our database
+     * @todo rewrite this, so it can be overwritten - maybe add required import to product?
      */
     public function import()
     {
@@ -116,12 +154,12 @@ class ItemHolder
                     /** @var Configurable $product */
                     foreach ($product->getSimpleProducts() as $simple) {
                         /** @var Simple $simple */
-                        $this->ingest($simple);
+                        $this->inject($simple);
                     }
-                    $this->ingest($product);
+                    $this->inject($product);
                     break;
                 default:
-                    $this->ingest($product);
+                    $this->inject($product);
                     break;
             }
         }
@@ -129,7 +167,11 @@ class ItemHolder
         $this->magmi->endImportSession();
     }
 
-    private function ingest(ProductAbstract $product)
+    /**
+     * Inject our product to Magmi
+     * @param ProductAbstract $product
+     */
+    private function inject(ProductAbstract $product)
     {
         $product->beforeImport();
         $this->magmi->ingest($product->getData());

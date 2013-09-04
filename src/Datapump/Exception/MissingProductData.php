@@ -1,8 +1,15 @@
 <?php
+/**
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
+
+ * @version GIT: $Id$
+ */
 namespace Datapump\Exception;
 
-use \Exception;
-
+/**
+ * Class MissingProductData
+ * @package Datapump\Exception
+ */
 class MissingProductData extends Exception
 {
 

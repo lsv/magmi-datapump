@@ -6,11 +6,13 @@
  */
 namespace Datapump\Exception;
 
+use \Exception as E;
+
 /**
- * Class ProductNotAnArrayOrProductAbstract
+ * Class Exception
  * @package Datapump\Exception
  */
-class ProductNotAnArrayOrProductAbstract extends Exception
+class Exception extends E
 {
 
 }

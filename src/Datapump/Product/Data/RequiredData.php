@@ -1,15 +1,22 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/30/13
- * Time: 12:55 PM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product\Data;
 
+/**
+ * Class RequiredData
+ * @package Datapump\Product\Data
+ */
 class RequiredData extends DataAbstract
 {
 
+    /**
+     * Standard data
+     * @var array
+     */
     protected $data = array(
         'attribute_set' => 'Default',
         'type' => DataInterface::TYPE_SIMPLE,
@@ -19,6 +26,12 @@ class RequiredData extends DataAbstract
         'store' => 'admin'
     );
 
+    /**
+     * Sets the store name
+     * @param string $store
+     *
+     * @return $this
+     */
     public function setStore($store)
     {
         $this->set('store', $store);
@@ -26,11 +39,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Get the store name
+     * @return string|null
+     */
     public function getStore()
     {
         return $this->get('store');
     }
 
+    /**
+     * Sets the attribute set
+     * @param string $set
+     *
+     * @return $this
+     */
     public function setAttributeSet($set)
     {
         $this->set('attribute_set', $set);
@@ -38,11 +61,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the attribute set name
+     * @return string|null
+     */
     public function getAttributeSet()
     {
         return $this->get('attribute_set');
     }
 
+    /**
+     * Sets the type of the product
+     * @param string $type
+     *
+     * @return $this
+     */
     public function setType($type)
     {
         $this->set('type', $type);
@@ -50,15 +83,20 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the type of the product
+     * @return string|null
+     */
     public function getType()
     {
         return $this->get('type');
     }
 
     /**
+     * Sets the SKU of the product
      * @param string $sku
      *
-     * @return RequiredData
+     * @return $this
      */
     public function setSku($sku)
     {
@@ -68,13 +106,21 @@ class RequiredData extends DataAbstract
     }
 
     /**
-     * @return null|string
+     * Gets the SKU of the product
+     * @return string|null
      */
     public function getSku()
     {
         return $this->get('sku');
     }
 
+    /**
+     * Sets the visibility of the product
+     * @param bool $visibleInCatalog
+     * @param bool $searchable
+     *
+     * @return $this
+     */
     public function setVisibility($visibleInCatalog = true, $searchable = true)
     {
         $vis = self::VISIBILITY_NOTVISIBLE;
@@ -91,11 +137,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the visibility of the product
+     * @return string|null
+     */
     public function getVisibility()
     {
         return $this->get('visibility');
     }
 
+    /**
+     * Sets the long description of the product
+     * @param string $description
+     *
+     * @return $this
+     */
     public function setDescription($description)
     {
         $this->set('description', $description);
@@ -103,11 +159,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the long description of the product
+     * @return string|null
+     */
     public function getDescription()
     {
         return $this->get('description');
     }
 
+    /**
+     * Sets the short description of the product
+     * @param string $description
+     *
+     * @return $this
+     */
     public function setShortDescription($description)
     {
         $this->set('short_description', $description);
@@ -115,11 +181,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the short description of the product
+     * @return string|null
+     */
     public function getShortDescription()
     {
         return $this->get('short_description');
     }
 
+    /**
+     * Sets the name
+     * @param string $name
+     *
+     * @return $this
+     */
     public function setName($name)
     {
         $this->set('name', $name);
@@ -127,11 +203,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the name
+     * @return string|null
+     */
     public function getName()
     {
         return $this->get('name');
     }
 
+    /**
+     * Sets the weight
+     * @param float $weight
+     *
+     * @return $this
+     */
     public function setWeight($weight)
     {
         $this->set('weight', (float)$weight);
@@ -139,11 +225,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the weight of the product
+     * @return float|null
+     */
     public function getWeight()
     {
         return $this->get('weight');
     }
 
+    /**
+     * Set the status
+     * @param bool $enabled
+     *
+     * @return $this
+     */
     public function setStatus($enabled)
     {
         $this->set('status', ($enabled ? 1 : 2));
@@ -151,6 +247,10 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Get the status
+     * @return int|null (1 = enabled, 2 = disabled)
+     */
     public function getStatus()
     {
         $status = $this->get('status');
@@ -159,6 +259,10 @@ class RequiredData extends DataAbstract
         return $status;
     }
 
+    /**
+     * Set product as enabled
+     * @return $this
+     */
     public function setEnabled()
     {
         $this->setStatus(true);
@@ -166,6 +270,10 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Set product as disabled
+     * @return $this
+     */
     public function setDisabled()
     {
         $this->setStatus(false);
@@ -173,6 +281,12 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Sets the price
+     * @param float $price
+     *
+     * @return $this
+     */
     public function setPrice($price)
     {
         $this->set('price', (float)$price);
@@ -180,11 +294,21 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Gets the price
+     * @return float|null
+     */
     public function getPrice()
     {
         return $this->get('price');
     }
 
+    /**
+     * Set the tax ID (Magento ID)
+     * @param int $tax
+     *
+     * @return $this
+     */
     public function setTax($tax)
     {
         $this->set('tax_class_id', (int)$tax);
@@ -192,11 +316,25 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Get the tax ID
+     * @return int|null
+     */
     public function getTax()
     {
         return $this->get('tax_class_id');
     }
 
+    /**
+     * Set the quantity
+     * * null - quantity should not be managed by Magento
+     * * integer - The product is managed
+     * * <=0 - the product is not in stock)
+     *
+     * @param null|int $qty
+     *
+     * @return $this
+     */
     public function setQty($qty)
     {
         if ($qty === null) {
@@ -220,11 +358,19 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    /**
+     * Get the quantity
+     * @return int|null
+     */
     public function getQty()
     {
         return $this->get('qty');
     }
 
+    /**
+     * Get the required data array for the product
+     * @return array
+     */
     public function getData()
     {
         return $this->data;

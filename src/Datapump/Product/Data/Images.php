@@ -1,17 +1,32 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/30/13
- * Time: 1:03 PM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product\Data;
 
+/**
+ * Class Images
+ * @package Datapump\Product\Data
+ */
 class Images extends DataAbstract
 {
 
+    /**
+     * Set required Magmi plugins
+     * @var array
+     */
     protected $requiredMagmiPlugin = array('Image attributes processor');
 
+    /**
+     * Sets the base image
+     * @param $imagefile
+     * @param string $label
+     * @param bool $addToGallery
+     *
+     * @return $this
+     */
     public function setBaseImage($imagefile, $label = '', $addToGallery = true)
     {
         $this->set('image', ($addToGallery ? '+' : '-') . $imagefile);
@@ -22,6 +37,13 @@ class Images extends DataAbstract
         return $this;
     }
 
+    /**
+     * Sets the small image
+     * @param string $imagefile
+     * @param string $label
+     *
+     * @return $this
+     */
     public function setSmallImage($imagefile, $label = '')
     {
         $this->set('small_image', $imagefile);
@@ -32,6 +54,13 @@ class Images extends DataAbstract
         return $this;
     }
 
+    /**
+     * Sets the thumbnail
+     * @param string $imagefile
+     * @param string $label
+     *
+     * @return $this
+     */
     public function setThumbnail($imagefile, $label = '')
     {
         $this->set('thumbnail', $imagefile);
@@ -42,6 +71,13 @@ class Images extends DataAbstract
         return $this;
     }
 
+    /**
+     * Adding image to gallery
+     * @param string $imagefile
+     * @param string $label
+     *
+     * @return $this
+     */
     public function addImageToGallery($imagefile, $label = '')
     {
         $this->data['gallery'][] = array('img' => $imagefile, 'label' => $label);
@@ -49,6 +85,10 @@ class Images extends DataAbstract
         return $this;
     }
 
+    /**
+     * Get the image array
+     * @return array
+     */
     public function getData()
     {
         if ($this->__isset('gallery')) {

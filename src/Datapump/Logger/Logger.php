@@ -1,14 +1,24 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/29/13
- * Time: 6:04 PM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Logger;
 
+/**
+ * Class Logger
+ * @package Datapump\Logger
+ */
 interface Logger
 {
 
+    /**
+     * Log data
+     * @param string $data
+     * @param string $type
+     *
+     * @return Logger
+     */
     public function log($data, $type);
 }

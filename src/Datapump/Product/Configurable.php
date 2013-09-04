@@ -1,25 +1,43 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/29/13
- * Time: 2:39 AM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product;
 
 use Datapump\Exception;
 use Datapump\Product\Data\DataInterface;
 use Datapump\Product\Data\RequiredData;
 
+/**
+ * Class Configurable
+ * @package Datapump\Product
+ */
 class Configurable extends ProductAbstract
 {
 
+    /**
+     * Magmi confiurable attribute key
+     */
     const CONFIG_ATTR_KEY = 'configurable_attributes';
 
+    /**
+     * Product type
+     * @var string
+     */
     protected $type = DataInterface::TYPE_CONFIGURABLE;
 
+    /**
+     * The simple products added to this configurable product
+     * @var array
+     */
     protected $simpleProducts = array();
 
+    /**
+     * The required fields for a configurable product
+     * @var array
+     */
     protected $requiredFields = array(
         'Type' => 'Missing product type',
         'Sku' => 'Missing SKU number',
@@ -31,6 +49,11 @@ class Configurable extends ProductAbstract
         'Price' => 'Missing product price',
     );
 
+    /**
+     * Our configurable product
+     * @param RequiredData $data
+     * @param string|array $configurableAttribute : The attribute we should look for on the simple products
+     */
     public function __construct(RequiredData $data, $configurableAttribute)
     {
         if (!is_array($configurableAttribute)) {
@@ -41,6 +64,16 @@ class Configurable extends ProductAbstract
         parent::__construct($data);
     }
 
+    /**
+     * Add simple product to our configurable product
+     * @param Simple $product
+     * @param bool $visibleInFrontend
+     * @param bool $searchable
+     *
+     * @return $this
+     * @throws \Datapump\Exception\ProductSkuAlreadyAdded
+     * @throws \Datapump\Exception\SimpleProductMissingConfigurableAttribute
+     */
     public function addSimpleProduct(Simple $product, $visibleInFrontend = false, $searchable = false)
     {
         $product->check();
@@ -70,6 +103,12 @@ class Configurable extends ProductAbstract
         return $this;
     }
 
+    /**
+     * Find our simple product
+     * @param string $sku
+     *
+     * @return Simple|null
+     */
     public function getSimpleProduct($sku)
     {
         foreach ($this->simpleProducts as $product) {
@@ -82,28 +121,47 @@ class Configurable extends ProductAbstract
         return null;
     }
 
+    /**
+     * List the simple products added to this configurable product
+     * @return array
+     */
     public function getSimpleProducts()
     {
         return $this->simpleProducts;
     }
 
+    /**
+     * Count the number of simple products added to this configurable product
+     * @return int
+     */
     public function countSimpleProducts()
     {
         return count($this->getSimpleProducts());
     }
 
+    /**
+     * Get the configurable values
+     * @return array
+     */
     public function getConfigurableAttribute()
     {
         return $this->getRequiredData()->get(self::CONFIG_ATTR_KEY);
     }
 
+    /**
+     * This will be runned before the importer
+     * @return $this
+     */
     public function beforeImport()
     {
         $this->setConfigPrice();
-        parent::beforeImport();
+        return parent::beforeImport();
     }
 
-    protected function setConfigPrice()
+    /**
+     * Sets the configurable product price, before import, magento needs a price on the configurable product :(
+     */
+    private function setConfigPrice()
     {
         $price = 0;
         foreach ($this->simpleProducts as $p) {
@@ -116,9 +174,15 @@ class Configurable extends ProductAbstract
         $this->getRequiredData()->setPrice($price);
     }
 
+    /**
+     * Check to see if the added simple product has the keys to our configurable product
+     * @param Simple $product
+     *
+     * @return bool
+     */
     private function simpleProductConfigAttributeTest(Simple $product)
     {
-        foreach ($this->get(self::CONFIG_ATTR_KEY) as $key) {
+        foreach ($this->getConfigurableAttribute() as $key) {
             if ($product->get($key) === null) {
                 return false;
             }

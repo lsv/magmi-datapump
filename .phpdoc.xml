@@ -12,6 +12,13 @@
         <ignore>src/Datapump/Tests/*</ignore>
     </files>
     <transformations>
-        <template name="responsive"/>
+        <template name="new-black"/>
     </transformations>
+    <logging>
+        <level>warn</level>
+        <paths>
+            <default>build/logs/{DATE}.log</default>
+            <errors>build/logs/{DATE}.errors.log</errors>
+        </paths>
+    </logging>
 </phpdocumentor>

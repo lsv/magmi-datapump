@@ -1,36 +1,62 @@
 <?php
 /**
- * Created by lsv
- * Date: 8/29/13
- * Time: 2:32 AM
- */
+ * @author Martin Aarhof <martin.aarhof@gmail.com>
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product;
 
 use Datapump\Product\Data\RequiredData;
 use Datapump\Product\Data\DataInterface;
 use Datapump\Exception;
 
+/**
+ * Class ProductAbstract
+ * @package Datapump\Product
+ */
 abstract class ProductAbstract
 {
 
+    /**
+     * Product type
+     * @var string
+     */
     protected $type = '';
 
+    /**
+     * The required fields for a product
+     * @var array
+     */
     protected $requiredFields = array();
 
     /**
+     * Required data holder
      * @var RequiredData
      */
-    protected $requiredData;
+    private $requiredData;
 
+    /**
+     * Injected data holder for our product
+     * @var array
+     */
     private $data = array();
 
+    /**
+     * Build our product
+     * @param RequiredData $data
+     */
     public function __construct(RequiredData $data)
     {
         $data->setType($this->type);
         $this->injectData($data);
     }
 
+    /**
+     * Inject data into our product
+     * @param DataInterface $data
+     *
+     * @return $this
+     */
     public function injectData(DataInterface $data)
     {
         if ($data instanceof RequiredData) {
@@ -44,11 +70,22 @@ abstract class ProductAbstract
         return $this;
     }
 
+    /**
+     * Gets the required data
+     * @return RequiredData
+     */
     public function getRequiredData()
     {
         return $this->requiredData;
     }
 
+    /**
+     * Add data to our product
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return $this
+     */
     public function set($key, $value)
     {
         $this->getRequiredData()->set($key, $value);
@@ -56,21 +93,45 @@ abstract class ProductAbstract
         return $this;
     }
 
+    /**
+     * Add data to our product
+     * @param string $key
+     * @param mixed $value
+     *
+     * @return $this
+     */
     public function __set($key, $value)
     {
         return $this->set($key, $value);
     }
 
+    /**
+     * Get data from our product
+     * @param string $key
+     *
+     * @return mixed|null
+     */
     public function get($key)
     {
         return $this->getRequiredData()->get($key);
     }
 
+    /**
+     * Get data from our product
+     * @param string $key
+     *
+     * @return mixed|null
+     */
     public function __get($key)
     {
         return $this->get($key);
     }
 
+    /**
+     * Check our product for missing fields
+     * @return bool
+     * @throws \Datapump\Exception\MissingProductData
+     */
     public function check()
     {
         $missingFields = array();
@@ -96,6 +157,10 @@ abstract class ProductAbstract
         return true;
     }
 
+    /**
+     * Before import runner
+     * @return $this
+     */
     public function beforeImport()
     {
         $this->data = array_merge($this->data, $this->requiredData->getData());
@@ -103,10 +168,17 @@ abstract class ProductAbstract
         return $this;
     }
 
+    /**
+     * Do stuff after import
+     */
     public function afterImport()
     {
     }
 
+    /**
+     * Get data from our product
+     * @return array
+     */
     public function getData()
     {
         $this->beforeImport();

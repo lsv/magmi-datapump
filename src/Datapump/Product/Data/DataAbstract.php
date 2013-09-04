@@ -1,15 +1,14 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
- * @copyright Copyright (c) 2013, Martin Aarhof
- * @version 0.2
- */
 
+ * @version GIT: $Id$
+ */
 namespace Datapump\Product\Data;
 
 /**
  * Class DataAbstract
- * @package Datapump
+ * @package Datapump\Product\Data
  */
 abstract class DataAbstract implements DataInterface
 {
