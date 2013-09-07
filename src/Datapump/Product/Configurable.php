@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product;
@@ -51,6 +50,7 @@ class Configurable extends ProductAbstract
 
     /**
      * Our configurable product
+     *
      * @param RequiredData $data
      * @param string|array $configurableAttribute : The attribute we should look for on the simple products
      */
@@ -66,6 +66,7 @@ class Configurable extends ProductAbstract
 
     /**
      * Add simple product to our configurable product
+     *
      * @param Simple $product
      * @param bool $visibleInFrontend
      * @param bool $searchable
@@ -105,6 +106,7 @@ class Configurable extends ProductAbstract
 
     /**
      * Find our simple product
+     *
      * @param string $sku
      *
      * @return Simple|null
@@ -155,7 +157,11 @@ class Configurable extends ProductAbstract
     public function beforeImport()
     {
         $this->setConfigPrice();
-        return parent::beforeImport();
+    }
+
+    public function afterImport()
+    {
+
     }
 
     /**
@@ -171,11 +177,12 @@ class Configurable extends ProductAbstract
             }
         }
 
-        $this->getRequiredData()->setPrice($price);
+        $this->set('price', $price);
     }
 
     /**
      * Check to see if the added simple product has the keys to our configurable product
+     *
      * @param Simple $product
      *
      * @return bool

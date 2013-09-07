@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product\Data;
@@ -21,6 +20,7 @@ class Images extends DataAbstract
 
     /**
      * Sets the base image
+     *
      * @param $imagefile
      * @param string $label
      * @param bool $addToGallery
@@ -39,6 +39,7 @@ class Images extends DataAbstract
 
     /**
      * Sets the small image
+     *
      * @param string $imagefile
      * @param string $label
      *
@@ -56,6 +57,7 @@ class Images extends DataAbstract
 
     /**
      * Sets the thumbnail
+     *
      * @param string $imagefile
      * @param string $label
      *
@@ -73,6 +75,7 @@ class Images extends DataAbstract
 
     /**
      * Adding image to gallery
+     *
      * @param string $imagefile
      * @param string $label
      *

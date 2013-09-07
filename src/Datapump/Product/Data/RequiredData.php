@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product\Data;
@@ -28,9 +27,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the store name
+     *
      * @param string $store
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setStore($store)
     {
@@ -50,9 +50,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the attribute set
+     *
      * @param string $set
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setAttributeSet($set)
     {
@@ -72,9 +73,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the type of the product
+     *
      * @param string $type
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setType($type)
     {
@@ -94,9 +96,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the SKU of the product
+     *
      * @param string $sku
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setSku($sku)
     {
@@ -116,10 +119,11 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the visibility of the product
+     *
      * @param bool $visibleInCatalog
      * @param bool $searchable
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setVisibility($visibleInCatalog = true, $searchable = true)
     {
@@ -148,9 +152,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the long description of the product
+     *
      * @param string $description
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setDescription($description)
     {
@@ -170,9 +175,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the short description of the product
+     *
      * @param string $description
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setShortDescription($description)
     {
@@ -192,9 +198,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the name
+     *
      * @param string $name
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setName($name)
     {
@@ -214,9 +221,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the weight
+     *
      * @param float $weight
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setWeight($weight)
     {
@@ -236,9 +244,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Set the status
+     *
      * @param bool $enabled
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setStatus($enabled)
     {
@@ -261,7 +270,7 @@ class RequiredData extends DataAbstract
 
     /**
      * Set product as enabled
-     * @return $this
+     * @return RequiredData
      */
     public function setEnabled()
     {
@@ -272,7 +281,7 @@ class RequiredData extends DataAbstract
 
     /**
      * Set product as disabled
-     * @return $this
+     * @return RequiredData
      */
     public function setDisabled()
     {
@@ -283,9 +292,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Sets the price
+     *
      * @param float $price
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setPrice($price)
     {
@@ -305,9 +315,10 @@ class RequiredData extends DataAbstract
 
     /**
      * Set the tax ID (Magento ID)
+     *
      * @param int $tax
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setTax($tax)
     {
@@ -333,7 +344,7 @@ class RequiredData extends DataAbstract
      *
      * @param null|int $qty
      *
-     * @return $this
+     * @return RequiredData
      */
     public function setQty($qty)
     {
@@ -341,12 +352,10 @@ class RequiredData extends DataAbstract
             $this->set('manage_stock', 0);
             $this->set('is_in_stock', 1);
             $this->set('qty', (int)0);
-
             return $this;
-        } else {
-            $this->set('manage_stock', 1);
         }
 
+        $this->set('manage_stock', 1);
         if ($qty <= 0) {
             $this->set('is_in_stock', 0);
         } else {

@@ -1,7 +1,7 @@
 <?php
 namespace Datapump\Exception;
 
-
-class MagmiHasNotBeenSetup extends Exception {
+class MagmiHasNotBeenSetup extends Exception
+{
 
 }

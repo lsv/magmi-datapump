@@ -1,9 +1,100 @@
--- Adminer 3.6.4 MySQL dump
+-- Adminer 4.0.0-dev MySQL dump
 
 SET NAMES utf8;
 SET foreign_key_checks = 0;
 SET time_zone = '+02:00';
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `adminnotification_inbox`;
+CREATE TABLE `adminnotification_inbox` (
+  `notification_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Notification id',
+  `severity` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Problem type',
+  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Create date',
+  `title` varchar(255) NOT NULL COMMENT 'Title',
+  `description` text COMMENT 'Description',
+  `url` varchar(255) DEFAULT NULL COMMENT 'Url',
+  `is_read` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Flag if notification read',
+  `is_remove` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Flag if notification might be removed',
+  PRIMARY KEY (`notification_id`),
+  KEY `IDX_ADMINNOTIFICATION_INBOX_SEVERITY` (`severity`),
+  KEY `IDX_ADMINNOTIFICATION_INBOX_IS_READ` (`is_read`),
+  KEY `IDX_ADMINNOTIFICATION_INBOX_IS_REMOVE` (`is_remove`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Adminnotification Inbox';
+
+INSERT INTO `adminnotification_inbox` (`notification_id`, `severity`, `date_added`, `title`, `description`, `url`, `is_read`, `is_remove`) VALUES
+(1,	4,	'2008-07-25 05:24:40',	'Magento 1.1 Production Version Now Available',	'We are thrilled to announce the availability of the production release of Magento 1.1. Read more about the release in the Magento Blog.',	'http://www.magentocommerce.com/blog/comments/magento-11-is-here-1/',	0,	1),
+(2,	4,	'2008-08-02 05:30:16',	'Updated iPhone Theme is now available',	'Updated iPhone theme for Magento 1.1 is now available on Magento Connect and for upgrade through your Magento Connect Manager.',	'http://www.magentocommerce.com/blog/comments/updated-iphone-theme-for-magento-11-is-now-available/',	0,	1),
+(3,	3,	'2008-08-02 05:40:27',	'Magento version 1.1.2 is now available',	'Magento version 1.1.2 is now available for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-version-112-is-now-available/',	0,	1),
+(4,	3,	'2008-08-13 21:51:46',	'Magento version 1.1.3 is now available',	'Magento version 1.1.3 is now available',	'http://www.magentocommerce.com/blog/comments/magento-version-113-is-now-available/',	0,	1),
+(5,	1,	'2008-09-03 01:10:31',	'Magento Version 1.1.4 Security Update Now Available',	'Magento 1.1.4 Security Update Now Available. If you are using Magento version 1.1.x, we highly recommend upgrading to this version as soon as possible.',	'http://www.magentocommerce.com/blog/comments/magento-version-114-security-update/',	0,	1),
+(6,	3,	'2008-09-16 02:09:54',	'Magento version 1.1.5 Now Available',	'Magento version 1.1.5 Now Available.\n\nThis release includes many bug fixes, a new category manager and a new skin for the default Magento theme.',	'http://www.magentocommerce.com/blog/comments/magento-version-115-now-available/',	0,	1),
+(7,	3,	'2008-09-18 00:18:35',	'Magento version 1.1.6 Now Available',	'Magento version 1.1.6 Now Available.\n\nThis version includes bug fixes for Magento 1.1.x that are listed in the release notes section.',	'http://www.magentocommerce.com/blog/comments/magento-version-116-now-available/',	0,	1),
+(8,	4,	'2008-11-08 04:46:42',	'Reminder: Change Magento`s default phone numbers and callouts before site launch',	'Before launching your Magento store, please remember to change Magento`s default phone numbers that appear in email templates, callouts, templates, etc.',	NULL,	0,	1),
+(9,	3,	'2008-11-20 06:31:12',	'Magento version 1.1.7 Now Available',	'Magento version 1.1.7 Now Available.\n\nThis version includes over 350 issue resolutions for Magento 1.1.x that are listed in the release notes section, and new functionality that includes:\n\n-Google Website Optimizer integration\n-Google Base integration\n-Scheduled DB logs cleaning option',	'http://www.magentocommerce.com/blog/comments/magento-version-117-now-available/',	0,	1),
+(10,	3,	'2008-11-27 02:24:50',	'Magento Version 1.1.8 Now Available',	'Magento version 1.1.8 now available.\n\nThis version includes some issue resolutions for Magento 1.1.x that are listed in the release notes section.',	'http://www.magentocommerce.com/blog/comments/magento-version-118-now-available/',	0,	1),
+(11,	3,	'2008-12-30 12:45:59',	'Magento version 1.2.0 is now available for download and upgrade',	'We are extremely happy to announce the availability of Magento version 1.2.0 for download and upgrade.\n\nThis version includes numerous issue resolutions for Magento version 1.1.x and some highly requested new features such as:\n\n    * Support for Downloadable/Digital Products. \n    * Added Layered Navigation to site search result page.\n    * Improved site search to utilize MySQL fulltext search\n    * Added support for fixed-taxes on product level.\n    * Upgraded Zend Framework to the latest stable version 1.7.2',	'http://www.magentocommerce.com/blog/comments/magento-version-120-is-now-available/',	0,	1),
+(12,	2,	'2008-12-31 02:59:22',	'Magento version 1.2.0.1 now available',	'Magento version 1.2.0.1 now available.This version includes some issue resolutions for Magento 1.2.x that are listed in the release notes section.',	'http://www.magentocommerce.com/blog/comments/magento-version-1201-available/',	0,	1),
+(13,	2,	'2009-01-13 01:41:49',	'Magento version 1.2.0.2 now available',	'Magento version 1.2.0.2 is now available for download and upgrade. This version includes an issue resolutions for Magento version 1.2.0.x as listed in the release notes.',	'http://www.magentocommerce.com/blog/comments/magento-version-1202-now-available/',	0,	1),
+(14,	3,	'2009-01-24 05:25:56',	'Magento version 1.2.0.3 now available',	'Magento version 1.2.0.3 is now available for download and upgrade. This version includes issue resolutions for Magento version 1.2.0.x as listed in the release notes.',	'http://www.magentocommerce.com/blog/comments/magento-version-1203-now-available/',	0,	1),
+(15,	3,	'2009-02-03 02:57:00',	'Magento version 1.2.1 is now available for download and upgrade',	'We are happy to announce the availability of Magento version 1.2.1 for download and upgrade.\n\nThis version includes some issue resolutions for Magento version 1.2.x. A full list of items included in this release can be found on the release notes page.',	'http://www.magentocommerce.com/blog/comments/magento-version-121-now-available/',	0,	1),
+(16,	3,	'2009-02-24 05:45:47',	'Magento version 1.2.1.1 now available',	'Magento version 1.2.1.1 now available.This version includes some issue resolutions for Magento 1.2.x that are listed in the release notes section.',	'http://www.magentocommerce.com/blog/comments/magento-version-1211-now-available/',	0,	1),
+(17,	3,	'2009-02-27 06:39:24',	'CSRF Attack Prevention',	'We have just posted a blog entry about a hypothetical CSRF attack on a Magento admin panel. Please read the post to find out if your Magento installation is at risk at http://www.magentocommerce.com/blog/comments/csrf-vulnerabilities-in-web-application-and-how-to-avoid-them-in-magento/',	'http://www.magentocommerce.com/blog/comments/csrf-vulnerabilities-in-web-application-and-how-to-avoid-them-in-magento/',	0,	1),
+(18,	2,	'2009-03-04 04:03:58',	'Magento version 1.2.1.2 now available',	'Magento version 1.2.1.2 is now available for download and upgrade.\nThis version includes some updates to improve admin security as described in the release notes page.',	'http://www.magentocommerce.com/blog/comments/magento-version-1212-now-available/',	0,	1),
+(19,	3,	'2009-03-31 06:22:40',	'Magento version 1.3.0 now available',	'Magento version 1.3.0 is now available for download and upgrade. This version includes numerous issue resolutions for Magento version 1.2.x and new features as described on the release notes page.',	'http://www.magentocommerce.com/blog/comments/magento-version-130-is-now-available/',	0,	1),
+(20,	3,	'2009-04-18 08:06:02',	'Magento version 1.3.1 now available',	'Magento version 1.3.1 is now available for download and upgrade. This version includes some issue resolutions for Magento version 1.3.x and new features such as Checkout By Amazon and Amazon Flexible Payment. To see a full list of updates please check the release notes page.',	'http://www.magentocommerce.com/blog/comments/magento-version-131-now-available/',	0,	1),
+(21,	3,	'2009-05-20 02:31:21',	'Magento version 1.3.1.1 now available',	'Magento version 1.3.1.1 is now available for download and upgrade. This version includes some issue resolutions for Magento version 1.3.x and a security update for Magento installations that run on multiple domains or sub-domains. If you are running Magento with multiple domains or sub-domains we highly recommend upgrading to this version.',	'http://www.magentocommerce.com/blog/comments/magento-version-1311-now-available/',	0,	1),
+(22,	3,	'2009-05-30 02:54:06',	'Magento version 1.3.2 now available',	'This version includes some improvements and issue resolutions for version 1.3.x that are listed on the release notes page. also included is a Beta version of the Compile module.',	'http://www.magentocommerce.com/blog/comments/magento-version-132-now-available/',	0,	1),
+(23,	3,	'2009-06-01 23:32:52',	'Magento version 1.3.2.1 now available',	'Magento version 1.3.2.1 now available for download and upgrade.\n\nThis release solves an issue for users running Magento with PHP 5.2.0, and changes to index.php to support the new Compiler Module.',	'http://www.magentocommerce.com/blog/comments/magento-version-1321-now-available/',	0,	1),
+(24,	3,	'2009-07-02 05:21:44',	'Magento version 1.3.2.2 now available',	'Magento version 1.3.2.2 is now available for download and upgrade.\n\nThis release includes issue resolution for Magento version 1.3.x. To see a full list of changes please visit the release notes page http://www.magentocommerce.com/download/release_notes.',	'http://www.magentocommerce.com/blog/comments/magento-version-1322-now-available/',	0,	1),
+(25,	3,	'2009-07-23 10:48:54',	'Magento version 1.3.2.3 now available',	'Magento version 1.3.2.3 is now available for download and upgrade.\n\nThis release includes issue resolution for Magento version 1.3.x. We recommend to upgrade to this version if PayPal payment modules are in use. To see a full list of changes please visit the release notes page http://www.magentocommerce.com/download/release_notes.',	'http://www.magentocommerce.com/blog/comments/magento-version-1323-now-available/',	0,	1),
+(26,	4,	'2009-08-28 22:26:28',	'PayPal is updating Payflow Pro and Website Payments Pro (Payflow Edition) UK.',	'If you are using Payflow Pro and/or Website Payments Pro (Payflow Edition) UK.  payment methods, you will need to update the URLâ€˜s in your Magento Administrator Panel in order to process transactions after September 1, 2009. Full details are available here: http://www.magentocommerce.com/wiki/paypal_payflow_changes',	'http://www.magentocommerce.com/wiki/paypal_payflow_changes',	0,	1),
+(27,	2,	'2009-09-24 00:16:49',	'Magento Version 1.3.2.4 Security Update',	'Magento Version 1.3.2.4 is now available. This version includes a security updates for Magento 1.3.x that solves possible XSS vulnerability issue on customer registration page and is available through SVN, Download Page and through the Magento Connect Manager.',	'http://www.magentocommerce.com/blog/comments/magento-version-1324-security-update/',	0,	1),
+(28,	4,	'2009-09-25 18:57:54',	'Magento Preview Version 1.4.0.0-alpha2 is now available',	'We are happy to announce the availability of Magento Preview Version 1.4.0.0-alpha2 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1400-alpha2-now-available/',	0,	1),
+(29,	4,	'2009-10-07 04:55:40',	'Magento Preview Version 1.4.0.0-alpha3 is now available',	'We are happy to announce the availability of Magento Preview Version 1.4.0.0-alpha3 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1400-alpha3-now-available/',	0,	1),
+(30,	4,	'2009-12-09 04:30:36',	'Magento Preview Version 1.4.0.0-beta1 is now available',	'We are happy to announce the availability of Magento Preview Version 1.4.0.0-beta1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1400-beta1-now-available/',	0,	1),
+(31,	4,	'2009-12-31 14:22:12',	'Magento Preview Version 1.4.0.0-rc1 is now available',	'We are happy to announce the availability of Magento Preview Version 1.4.0.0-rc1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1400-rc1-now-available/',	0,	1),
+(32,	4,	'2010-02-13 08:39:53',	'Magento CE Version 1.4.0.0 Stable is now available',	'We are excited to announce the availability of Magento CE Version 1.4.0.0 Stable for upgrade and download.',	'http://bit.ly/c53rpK',	0,	1),
+(33,	3,	'2010-02-20 07:39:36',	'Magento CE Version 1.4.0.1 Stable is now available',	'Magento CE 1.4.0.1 Stable is now available for upgrade and download.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1401-stable-now-available/',	0,	1),
+(34,	4,	'2010-04-24 00:09:03',	'Magento Version CE 1.3.3.0 Stable - Now Available With Support for 3-D Secure',	'Based on community requests, we are excited to announce the release of Magento CE 1.3.3.0-Stable with support for 3-D Secure. This release is intended for Magento merchants using version 1.3.x, who want to add support for 3-D Secure.',	'http://www.magentocommerce.com/blog/comments/magento-version-ce-1330-stable-now-available-with-support-for-3-d-secure/',	0,	1),
+(35,	4,	'2010-05-31 21:20:21',	'Announcing the Launch of Magento Mobile',	'The Magento team is pleased to announce the launch of Magento mobile, a new product that will allow Magento merchants to easily create branded, native mobile storefront applications that are deeply integrated with Magentoâ€™s market-leading eCommerce platform. The product includes a new administrative manager, a native iPhone app that is fully customizable, and a service where Magento manages the submission and maintenance process for the iTunes App Store.\n\nLearn more by visiting the Magento mobile product page and sign-up to be the first to launch a native mobile commerce app, fully integrated with Magento.',	'http://www.magentocommerce.com/product/mobile',	0,	1),
+(36,	4,	'2010-06-11 00:08:08',	'Magento CE Version 1.4.1.0 Stable is now available',	'We are excited to announce the availability of Magento CE Version 1.4.1.0 Stable for upgrade and download. Some of the highlights of this release include: Enhanced PayPal integration (more info to follow), Change of Database structure of the Sales module to no longer use EAV, and much more.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1410-stable-now-available/',	0,	1),
+(37,	4,	'2010-07-27 01:37:34',	'Magento CE Version 1.4.1.1 Stable is now available',	'We are excited to announce the availability of Magento CE Version 1.4.1.1 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1411-stable-now-available/',	0,	1),
+(38,	4,	'2010-07-28 09:12:12',	'Magento CE Version 1.4.2.0-beta1 Preview Release Now Available',	'This release gives a preview of the new Magento Connect Manager.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1420-beta1-now-available/',	0,	1),
+(39,	4,	'2010-07-29 00:15:01',	'Magento CE Version 1.4.1.1 Patch Available',	'As some users experienced issues with upgrading to CE 1.4.1.1 through PEAR channels we provided a patch for it that is available on our blog http://www.magentocommerce.com/blog/comments/magento-ce-version-1411-stable-patch/',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1411-stable-patch/',	0,	1),
+(40,	4,	'2010-10-12 04:13:25',	'Magento Mobile is now live!',	'Magento Mobile is now live! Signup today to have your own native iPhone mobile-shopping app in iTunes for the holiday season! Learn more at http://www.magentomobile.com/',	'http://www.magentomobile.com/',	0,	1),
+(41,	4,	'2010-11-09 02:52:06',	'Magento CE Version 1.4.2.0-RC1 Preview Release Now Available',	'We are happy to announce the availability of Magento Preview Version 1.4.2.0-RC1 for download.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1420-rc1-now-available/',	0,	1),
+(42,	4,	'2010-12-03 01:33:00',	'Magento CE Version 1.4.2.0-RC2 Preview Release Now Available',	'We are happy to announce the availability of Magento Preview Version 1.4.2.0-RC2 for download.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-1420-rc2-now-available/',	0,	1),
+(43,	4,	'2010-12-09 03:29:55',	'Magento CE Version 1.4.2.0 Stable is now available',	'We are excited to announce the availability of Magento CE Version 1.4.2.0 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1420-stable-now-available/',	0,	1),
+(44,	4,	'2010-12-18 04:23:55',	'Magento Preview Version CE 1.5.0.0-alpha1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.0.0-alpha1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1500-alpha1-now-available/',	0,	1),
+(45,	4,	'2010-12-30 04:51:08',	'Magento Preview Version CE 1.5.0.0-alpha2 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.0.0-alpha2 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1500-alpha2-now-available/',	0,	1),
+(46,	4,	'2011-01-14 05:35:36',	'Magento Preview Version CE 1.5.0.0-beta1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.0.0-beta1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1500-beta1-now-available/',	0,	1),
+(47,	4,	'2011-01-22 02:19:09',	'Magento Preview Version CE 1.5.0.0-beta2 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.0.0-beta2 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1500-beta2-now-available/',	0,	1),
+(48,	4,	'2011-01-28 02:27:57',	'Magento Preview Version CE 1.5.0.0-rc1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.0.0-rc1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1500-rc1-now-available/',	0,	1),
+(49,	4,	'2011-02-04 02:56:33',	'Magento Preview Version CE 1.5.0.0-rc2 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.0.0-rc2 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1500-rc2-now-available/',	0,	1),
+(50,	4,	'2011-02-09 00:43:23',	'Magento CE Version 1.5.0.0 Stable is now available',	'We are excited to announce the availability of Magento CE Version 1.5.0.0 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-community-professional-and-enterprise-editions-releases-now-availab/',	0,	1),
+(51,	4,	'2011-02-10 04:42:57',	'Magento CE 1.5.0.1 stable Now Available',	'We are excited to announce the availability of Magento CE Version 1.5.0.1 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-1501-stable-now-available/',	0,	1),
+(52,	4,	'2011-03-19 00:15:45',	'Magento CE 1.5.1.0-beta1 Now Available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.1.0-beta1 for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1510-beta1-now-available/',	0,	1),
+(53,	4,	'2011-03-31 22:43:02',	'Magento CE 1.5.1.0-rc1 Now Available',	'We are happy to announce the availability of Magento Preview Version CE 1.5.1.0-rc1 for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1510-rc1-now-available/',	0,	1),
+(54,	4,	'2011-04-26 23:21:07',	'Magento CE 1.5.1.0-stable Now Available',	'We are excited to announce the availability of Magento CE Version 1.5.1.0 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1510-stable-now-available/',	0,	1),
+(55,	4,	'2011-05-26 23:33:23',	'Magento Preview Version CE 1.6.0.0-alpha1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.6.0.0-alpha1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1600-alpha1-now-available/',	0,	1),
+(56,	4,	'2011-06-15 22:12:08',	'Magento Preview Version CE 1.6.0.0-beta1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.6.0.0-beta1for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1600-beta1-now-available/',	0,	1),
+(57,	4,	'2011-06-30 23:03:58',	'Magento Preview Version CE 1.6.0.0-rc1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.6.0.0-rc1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1600-rc1-now-available/',	0,	1),
+(58,	4,	'2011-07-11 23:07:39',	'Magento Preview Version CE 1.6.0.0-rc2 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.6.0.0-rc2 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1600-rc2-now-available/',	0,	1),
+(59,	4,	'2011-08-19 21:58:31',	'Magento CE 1.6.0.0-stable Now Available',	'We are excited to announce the availability of Magento CE Version 1.6.0.0 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1600-stable-now-available/',	0,	1),
+(60,	4,	'2011-09-17 05:31:26',	'Magento Preview Version CE 1.6.1.0-beta1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.6.1.0-beta1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1610-beta1-now-available/',	0,	1),
+(61,	4,	'2011-09-29 19:44:10',	'Magento Preview Version CE 1.6.1.0-rc1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.6.1.0-rc1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1610-rc1-now-available/',	0,	1),
+(62,	4,	'2011-10-19 21:50:05',	'Magento CE 1.6.1.0-stable Now Available',	'We are excited to announce the availability of Magento CE Version 1.6.1.0 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1610-stable-now-available/',	0,	1),
+(63,	4,	'2011-12-30 22:39:35',	'Magento Preview Version CE 1.7.0.0-alpha1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.7.0.0-alpha1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1700-alpha1-now-available/',	0,	1),
+(64,	4,	'2012-01-11 22:24:20',	'Magento CE 1.6.2.0-stable Now Available',	'We are excited to announce the availability of Magento CE Version 1.6.2.0 Stable for download and upgrade.',	'http://www.magentocommerce.com/blog/comments/magento-ce-version-1620-stable-now-available/',	0,	1),
+(65,	4,	'2012-03-03 00:54:12',	'Magento Preview Version CE 1.7.0.0-beta1 is now available',	'We are happy to announce the availability of Magento Preview Version CE 1.7.0.0-beta1 for download.\nAs this is a preview version it is NOT recommended in any way to be used in a production environment.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1700-beta1-now-available/',	0,	1),
+(66,	4,	'2012-04-23 14:02:40',	'Magento Community Preview Version CE 1.7.0.0-RC1 has been released!',	'Learn more about the exciting new features and updates in this release and how you can take it for a test drive. As this is a preview version, we need to stress that it\'s likely unstable and that we DON\'T recommend that you use it in any production environment just yet.',	'http://www.magentocommerce.com/blog/comments/magento-preview-version-ce-1700-rc1-now-available/',	0,	1),
+(67,	4,	'2012-05-11 09:46:54',	'Magento Community 1.7 and Magento Enterprise 1.12 now available!',	'Learn more about the exciting new features and updates in these releases.',	'http://www.magentocommerce.com/blog/comments/magento-enterprise-112-and-community-17-now-available/',	0,	1),
+(68,	4,	'2012-06-20 18:54:07',	'Magento Community Edition 1.7.0.1 now available! ',	'We have just released an updated version of Magento Community Edition, version 1.7.0.1. This update delivers new, minor functionality and fixes for some potential security vulnerabilities.',	'http://www.magentocommerce.com/blog/comments/magento-community-edition-1701-released/',	0,	1),
+(69,	4,	'2012-07-05 19:21:43',	'Important Security Update - Zend Platform Vulnerability',	'We have recently learned of a serious vulnerability in the Zend platform on which Magento is built. Learn more and access a patch that addresses this issue. ',	'http://www.magentocommerce.com/blog/comments/important-security-update-zend-platform-vulnerability/',	0,	1),
+(70,	4,	'2012-11-19 20:27:42',	'Wrap up more holiday sales with financing',	'Give your customers up to 6 months financing. You get paid right away with Bill Me Later, a PayPal service. It’s a great way to extend financing in time for the holidays. Learn More.',	'http://www.magentocommerce.com/paypal/billmelater?utm_source=CEMessaging&utm_medium=copy&utm_content=sixmonths&utm_campaign=BML',	0,	1),
+(71,	4,	'2012-12-07 11:22:30',	'Increase Your Sales With PayPal',	'Magento merchants using PayPal Express Checkout can help increase their sales on average 18%. It is one simple thing you can do right now to help boost your sales. Learn more.',	'http://www.magentocommerce.com/add-paypal?utm_source=CEModule&utm_medium=copy&utm_content=18&utm_campaign=choosepaypal',	0,	1),
+(72,	4,	'2013-01-15 22:02:07',	'Imagine 2013 Registration is Now Open!',	'Join 1500 merchants, partners, developers and enthusiasts from 35+ countries around the world for Magento’s premier global conference! Collaborate, learn, network and get inspired by the future of eCommerce. Tickets will sell out fast! April 8th – 10th in Las Vegas.',	'https://registration.imagineecommerce.com/',	0,	1),
+(73,	4,	'2013-02-12 17:53:42',	'Get More eCommerce Power with Magento Enterprise',	'Limited time offer: Get a free, customized evaluation of your Community Edition site from a Magento Solution Partner. This evaluation gives you a clear look at the numerous benefits you can achieve by upgrading to Enterprise Edition. ',	'http://www.magentocommerce.com/community-to-enterprise?utm_source=CEMM&utm_medium=copy&utm_campaign=CE2EE',	0,	1);
 
 DROP TABLE IF EXISTS `admin_assert`;
 CREATE TABLE `admin_assert` (
@@ -30,7 +121,7 @@ CREATE TABLE `admin_role` (
 
 INSERT INTO `admin_role` (`role_id`, `parent_id`, `tree_level`, `sort_order`, `role_type`, `user_id`, `role_name`) VALUES
 (1,	0,	1,	1,	'G',	0,	'Administrators'),
-(2,	1,	2,	0,	'U',	1,	'Foo');
+(2,	1,	2,	0,	'U',	1,	'travis');
 
 DROP TABLE IF EXISTS `admin_rule`;
 CREATE TABLE `admin_rule` (
@@ -72,24 +163,7 @@ CREATE TABLE `admin_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Admin User Table';
 
 INSERT INTO `admin_user` (`user_id`, `firstname`, `lastname`, `email`, `username`, `password`, `created`, `modified`, `logdate`, `lognum`, `reload_acl_flag`, `is_active`, `extra`, `rp_token`, `rp_token_created_at`) VALUES
-(1,	'Foo',	'Bar',	'example@domain.example',	'travis',	'f5d1d4d68a42192478c1f4d9f567da99:IG',	'2013-09-04 04:22:40',	'2013-09-04 04:22:40',	NULL,	0,	0,	1,	'N;',	NULL,	NULL);
-
-DROP TABLE IF EXISTS `adminnotification_inbox`;
-CREATE TABLE `adminnotification_inbox` (
-  `notification_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Notification id',
-  `severity` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Problem type',
-  `date_added` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Create date',
-  `title` varchar(255) NOT NULL COMMENT 'Title',
-  `description` text COMMENT 'Description',
-  `url` varchar(255) DEFAULT NULL COMMENT 'Url',
-  `is_read` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Flag if notification read',
-  `is_remove` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Flag if notification might be removed',
-  PRIMARY KEY (`notification_id`),
-  KEY `IDX_ADMINNOTIFICATION_INBOX_SEVERITY` (`severity`),
-  KEY `IDX_ADMINNOTIFICATION_INBOX_IS_READ` (`is_read`),
-  KEY `IDX_ADMINNOTIFICATION_INBOX_IS_REMOVE` (`is_remove`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Adminnotification Inbox';
-
+(1,	'travis',	'travis',	'travis@foo.com',	'travis',	'e2f461c803f97f55cb38f1c5a64aee72:VR',	'2013-09-07 15:00:35',	'2013-09-07 13:00:19',	'2013-09-07 13:00:35',	1,	0,	1,	'N;',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `api2_acl_attribute`;
 CREATE TABLE `api2_acl_attribute` (
@@ -116,8 +190,8 @@ CREATE TABLE `api2_acl_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Api2 Global ACL Roles';
 
 INSERT INTO `api2_acl_role` (`entity_id`, `created_at`, `updated_at`, `role_name`) VALUES
-(1,	'2013-09-04 06:21:50',	NULL,	'Guest'),
-(2,	'2013-09-04 06:21:50',	NULL,	'Customer');
+(1,	'2013-09-07 14:59:15',	NULL,	'Guest'),
+(2,	'2013-09-07 14:59:15',	NULL,	'Customer');
 
 DROP TABLE IF EXISTS `api2_acl_rule`;
 CREATE TABLE `api2_acl_rule` (
@@ -220,6 +294,258 @@ CREATE TABLE `captcha_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Count Login Attempts';
 
 
+DROP TABLE IF EXISTS `cataloginventory_stock`;
+CREATE TABLE `cataloginventory_stock` (
+  `stock_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Stock Id',
+  `stock_name` varchar(255) DEFAULT NULL COMMENT 'Stock Name',
+  PRIMARY KEY (`stock_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock';
+
+INSERT INTO `cataloginventory_stock` (`stock_id`, `stock_name`) VALUES
+(1,	'Default');
+
+DROP TABLE IF EXISTS `cataloginventory_stock_item`;
+CREATE TABLE `cataloginventory_stock_item` (
+  `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Item Id',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product Id',
+  `stock_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Stock Id',
+  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
+  `min_qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Min Qty',
+  `use_config_min_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Min Qty',
+  `is_qty_decimal` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Qty Decimal',
+  `backorders` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Backorders',
+  `use_config_backorders` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Backorders',
+  `min_sale_qty` decimal(12,4) NOT NULL DEFAULT '1.0000' COMMENT 'Min Sale Qty',
+  `use_config_min_sale_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Min Sale Qty',
+  `max_sale_qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Max Sale Qty',
+  `use_config_max_sale_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Max Sale Qty',
+  `is_in_stock` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is In Stock',
+  `low_stock_date` timestamp NULL DEFAULT NULL COMMENT 'Low Stock Date',
+  `notify_stock_qty` decimal(12,4) DEFAULT NULL COMMENT 'Notify Stock Qty',
+  `use_config_notify_stock_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Notify Stock Qty',
+  `manage_stock` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Manage Stock',
+  `use_config_manage_stock` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Manage Stock',
+  `stock_status_changed_auto` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Stock Status Changed Automatically',
+  `use_config_qty_increments` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Qty Increments',
+  `qty_increments` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty Increments',
+  `use_config_enable_qty_inc` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Enable Qty Increments',
+  `enable_qty_increments` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Enable Qty Increments',
+  `is_decimal_divided` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Divided into Multiple Boxes for Shipping',
+  PRIMARY KEY (`item_id`),
+  UNIQUE KEY `UNQ_CATALOGINVENTORY_STOCK_ITEM_PRODUCT_ID_STOCK_ID` (`product_id`,`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_ITEM_PRODUCT_ID` (`product_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_ITEM_STOCK_ID` (`stock_id`),
+  CONSTRAINT `FK_CATINV_STOCK_ITEM_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATINV_STOCK_ITEM_STOCK_ID_CATINV_STOCK_STOCK_ID` FOREIGN KEY (`stock_id`) REFERENCES `cataloginventory_stock` (`stock_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Item';
+
+
+DROP TABLE IF EXISTS `cataloginventory_stock_status`;
+CREATE TABLE `cataloginventory_stock_status` (
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  `stock_id` smallint(5) unsigned NOT NULL COMMENT 'Stock Id',
+  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
+  `stock_status` smallint(5) unsigned NOT NULL COMMENT 'Stock Status',
+  PRIMARY KEY (`product_id`,`website_id`,`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_STOCK_ID` (`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_WEBSITE_ID` (`website_id`),
+  CONSTRAINT `FK_CATINV_STOCK_STS_STOCK_ID_CATINV_STOCK_STOCK_ID` FOREIGN KEY (`stock_id`) REFERENCES `cataloginventory_stock` (`stock_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATINV_STOCK_STS_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATINV_STOCK_STS_WS_ID_CORE_WS_WS_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Status';
+
+
+DROP TABLE IF EXISTS `cataloginventory_stock_status_idx`;
+CREATE TABLE `cataloginventory_stock_status_idx` (
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  `stock_id` smallint(5) unsigned NOT NULL COMMENT 'Stock Id',
+  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
+  `stock_status` smallint(5) unsigned NOT NULL COMMENT 'Stock Status',
+  PRIMARY KEY (`product_id`,`website_id`,`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_IDX_STOCK_ID` (`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_IDX_WEBSITE_ID` (`website_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Status Indexer Idx';
+
+
+DROP TABLE IF EXISTS `cataloginventory_stock_status_tmp`;
+CREATE TABLE `cataloginventory_stock_status_tmp` (
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  `stock_id` smallint(5) unsigned NOT NULL COMMENT 'Stock Id',
+  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
+  `stock_status` smallint(5) unsigned NOT NULL COMMENT 'Stock Status',
+  PRIMARY KEY (`product_id`,`website_id`,`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_TMP_STOCK_ID` (`stock_id`),
+  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_TMP_WEBSITE_ID` (`website_id`)
+) ENGINE=MEMORY DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Status Indexer Tmp';
+
+
+DROP TABLE IF EXISTS `catalogrule`;
+CREATE TABLE `catalogrule` (
+  `rule_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Id',
+  `name` varchar(255) DEFAULT NULL COMMENT 'Name',
+  `description` text COMMENT 'Description',
+  `from_date` date DEFAULT NULL COMMENT 'From Date',
+  `to_date` date DEFAULT NULL COMMENT 'To Date',
+  `is_active` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Is Active',
+  `conditions_serialized` mediumtext COMMENT 'Conditions Serialized',
+  `actions_serialized` mediumtext COMMENT 'Actions Serialized',
+  `stop_rules_processing` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Stop Rules Processing',
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
+  `simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action',
+  `discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount',
+  `sub_is_enable` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Rule Enable For Subitems',
+  `sub_simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action For Subitems',
+  `sub_discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount For Subitems',
+  PRIMARY KEY (`rule_id`),
+  KEY `IDX_CATALOGRULE_IS_ACTIVE_SORT_ORDER_TO_DATE_FROM_DATE` (`is_active`,`sort_order`,`to_date`,`from_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule';
+
+
+DROP TABLE IF EXISTS `catalogrule_affected_product`;
+CREATE TABLE `catalogrule_affected_product` (
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
+  PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Affected Product';
+
+
+DROP TABLE IF EXISTS `catalogrule_customer_group`;
+CREATE TABLE `catalogrule_customer_group` (
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `customer_group_id` smallint(5) unsigned NOT NULL COMMENT 'Customer Group Id',
+  PRIMARY KEY (`rule_id`,`customer_group_id`),
+  KEY `IDX_CATALOGRULE_CUSTOMER_GROUP_RULE_ID` (`rule_id`),
+  KEY `IDX_CATALOGRULE_CUSTOMER_GROUP_CUSTOMER_GROUP_ID` (`customer_group_id`),
+  CONSTRAINT `FK_CATALOGRULE_CUSTOMER_GROUP_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATRULE_CSTR_GROUP_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Rules To Customer Groups Relations';
+
+
+DROP TABLE IF EXISTS `catalogrule_group_website`;
+CREATE TABLE `catalogrule_group_website` (
+  `rule_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Rule Id',
+  `customer_group_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Group Id',
+  `website_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Website Id',
+  PRIMARY KEY (`rule_id`,`customer_group_id`,`website_id`),
+  KEY `IDX_CATALOGRULE_GROUP_WEBSITE_RULE_ID` (`rule_id`),
+  KEY `IDX_CATALOGRULE_GROUP_WEBSITE_CUSTOMER_GROUP_ID` (`customer_group_id`),
+  KEY `IDX_CATALOGRULE_GROUP_WEBSITE_WEBSITE_ID` (`website_id`),
+  CONSTRAINT `FK_CATRULE_GROUP_WS_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATALOGRULE_GROUP_WEBSITE_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATALOGRULE_GROUP_WEBSITE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Group Website';
+
+
+DROP TABLE IF EXISTS `catalogrule_product`;
+CREATE TABLE `catalogrule_product` (
+  `rule_product_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Product Id',
+  `rule_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Rule Id',
+  `from_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'From Time',
+  `to_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'To time',
+  `customer_group_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Group Id',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product Id',
+  `action_operator` varchar(10) DEFAULT 'to_fixed' COMMENT 'Action Operator',
+  `action_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Action Amount',
+  `action_stop` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Action Stop',
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  `sub_simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action For Subitems',
+  `sub_discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount For Subitems',
+  PRIMARY KEY (`rule_product_id`),
+  UNIQUE KEY `EAA51B56FF092A0DCB795D1CEF812B7B` (`rule_id`,`from_time`,`to_time`,`website_id`,`customer_group_id`,`product_id`,`sort_order`),
+  KEY `IDX_CATALOGRULE_PRODUCT_RULE_ID` (`rule_id`),
+  KEY `IDX_CATALOGRULE_PRODUCT_CUSTOMER_GROUP_ID` (`customer_group_id`),
+  KEY `IDX_CATALOGRULE_PRODUCT_WEBSITE_ID` (`website_id`),
+  KEY `IDX_CATALOGRULE_PRODUCT_FROM_TIME` (`from_time`),
+  KEY `IDX_CATALOGRULE_PRODUCT_TO_TIME` (`to_time`),
+  KEY `IDX_CATALOGRULE_PRODUCT_PRODUCT_ID` (`product_id`),
+  CONSTRAINT `FK_CATALOGRULE_PRODUCT_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATALOGRULE_PRODUCT_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATRULE_PRD_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATRULE_PRD_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Product';
+
+
+DROP TABLE IF EXISTS `catalogrule_product_price`;
+CREATE TABLE `catalogrule_product_price` (
+  `rule_product_price_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Product PriceId',
+  `rule_date` date NOT NULL COMMENT 'Rule Date',
+  `customer_group_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Group Id',
+  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product Id',
+  `rule_price` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Rule Price',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  `latest_start_date` date DEFAULT NULL COMMENT 'Latest StartDate',
+  `earliest_end_date` date DEFAULT NULL COMMENT 'Earliest EndDate',
+  PRIMARY KEY (`rule_product_price_id`),
+  UNIQUE KEY `UNQ_CATRULE_PRD_PRICE_RULE_DATE_WS_ID_CSTR_GROUP_ID_PRD_ID` (`rule_date`,`website_id`,`customer_group_id`,`product_id`),
+  KEY `IDX_CATALOGRULE_PRODUCT_PRICE_CUSTOMER_GROUP_ID` (`customer_group_id`),
+  KEY `IDX_CATALOGRULE_PRODUCT_PRICE_WEBSITE_ID` (`website_id`),
+  KEY `IDX_CATALOGRULE_PRODUCT_PRICE_PRODUCT_ID` (`product_id`),
+  CONSTRAINT `FK_CATRULE_PRD_PRICE_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATRULE_PRD_PRICE_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATALOGRULE_PRODUCT_PRICE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Product Price';
+
+
+DROP TABLE IF EXISTS `catalogrule_website`;
+CREATE TABLE `catalogrule_website` (
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  PRIMARY KEY (`rule_id`,`website_id`),
+  KEY `IDX_CATALOGRULE_WEBSITE_RULE_ID` (`rule_id`),
+  KEY `IDX_CATALOGRULE_WEBSITE_WEBSITE_ID` (`website_id`),
+  CONSTRAINT `FK_CATALOGRULE_WEBSITE_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATALOGRULE_WEBSITE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Rules To Websites Relations';
+
+
+DROP TABLE IF EXISTS `catalogsearch_fulltext`;
+CREATE TABLE `catalogsearch_fulltext` (
+  `fulltext_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Entity ID',
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Product ID',
+  `store_id` smallint(5) unsigned NOT NULL COMMENT 'Store ID',
+  `data_index` longtext COMMENT 'Data index',
+  PRIMARY KEY (`fulltext_id`),
+  UNIQUE KEY `UNQ_CATALOGSEARCH_FULLTEXT_PRODUCT_ID_STORE_ID` (`product_id`,`store_id`),
+  FULLTEXT KEY `FTI_CATALOGSEARCH_FULLTEXT_DATA_INDEX` (`data_index`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Catalog search result table';
+
+
+DROP TABLE IF EXISTS `catalogsearch_query`;
+CREATE TABLE `catalogsearch_query` (
+  `query_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Query ID',
+  `query_text` varchar(255) DEFAULT NULL COMMENT 'Query text',
+  `num_results` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Num results',
+  `popularity` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Popularity',
+  `redirect` varchar(255) DEFAULT NULL COMMENT 'Redirect',
+  `synonym_for` varchar(255) DEFAULT NULL COMMENT 'Synonym for',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
+  `display_in_terms` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Display in terms',
+  `is_active` smallint(6) DEFAULT '1' COMMENT 'Active status',
+  `is_processed` smallint(6) DEFAULT '0' COMMENT 'Processed status',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
+  PRIMARY KEY (`query_id`),
+  KEY `IDX_CATALOGSEARCH_QUERY_QUERY_TEXT_STORE_ID_POPULARITY` (`query_text`,`store_id`,`popularity`),
+  KEY `IDX_CATALOGSEARCH_QUERY_STORE_ID` (`store_id`),
+  CONSTRAINT `FK_CATALOGSEARCH_QUERY_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog search query table';
+
+
+DROP TABLE IF EXISTS `catalogsearch_result`;
+CREATE TABLE `catalogsearch_result` (
+  `query_id` int(10) unsigned NOT NULL COMMENT 'Query ID',
+  `product_id` int(10) unsigned NOT NULL COMMENT 'Product ID',
+  `relevance` decimal(20,4) NOT NULL DEFAULT '0.0000' COMMENT 'Relevance',
+  PRIMARY KEY (`query_id`,`product_id`),
+  KEY `IDX_CATALOGSEARCH_RESULT_QUERY_ID` (`query_id`),
+  KEY `IDX_CATALOGSEARCH_RESULT_PRODUCT_ID` (`product_id`),
+  CONSTRAINT `FK_CATALOGSEARCH_RESULT_QUERY_ID_CATALOGSEARCH_QUERY_QUERY_ID` FOREIGN KEY (`query_id`) REFERENCES `catalogsearch_query` (`query_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATSRCH_RESULT_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog search result table';
+
+
 DROP TABLE IF EXISTS `catalog_category_anc_categs_index_idx`;
 CREATE TABLE `catalog_category_anc_categs_index_idx` (
   `category_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Category ID',
@@ -274,8 +600,9 @@ CREATE TABLE `catalog_category_entity` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Category Table';
 
 INSERT INTO `catalog_category_entity` (`entity_id`, `entity_type_id`, `attribute_set_id`, `parent_id`, `created_at`, `updated_at`, `path`, `position`, `level`, `children_count`) VALUES
-(1,	3,	0,	0,	'2013-09-04 04:22:02',	'2013-09-04 04:22:02',	'1',	0,	0,	1),
-(2,	3,	3,	1,	'2013-09-04 04:22:02',	'2013-09-04 04:22:02',	'1/2',	1,	1,	0);
+(1,	3,	0,	0,	'2013-09-07 12:59:17',	'2013-09-07 12:59:17',	'1',	0,	0,	2),
+(2,	3,	3,	1,	'2013-09-07 12:59:17',	'2013-09-07 12:59:17',	'1/2',	1,	1,	1),
+(3,	3,	3,	2,	'2013-09-07 13:01:54',	'2013-09-07 13:01:54',	'1/2/3',	1,	2,	0);
 
 DROP TABLE IF EXISTS `catalog_category_entity_datetime`;
 CREATE TABLE `catalog_category_entity_datetime` (
@@ -295,6 +622,9 @@ CREATE TABLE `catalog_category_entity_datetime` (
   CONSTRAINT `FK_CATALOG_CATEGORY_ENTITY_DATETIME_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Category Datetime Attribute Backend Table';
 
+INSERT INTO `catalog_category_entity_datetime` (`value_id`, `entity_type_id`, `attribute_id`, `store_id`, `entity_id`, `value`) VALUES
+(1,	3,	59,	0,	3,	NULL),
+(2,	3,	60,	0,	3,	NULL);
 
 DROP TABLE IF EXISTS `catalog_category_entity_decimal`;
 CREATE TABLE `catalog_category_entity_decimal` (
@@ -314,6 +644,8 @@ CREATE TABLE `catalog_category_entity_decimal` (
   CONSTRAINT `FK_CATALOG_CATEGORY_ENTITY_DECIMAL_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Category Decimal Attribute Backend Table';
 
+INSERT INTO `catalog_category_entity_decimal` (`value_id`, `entity_type_id`, `attribute_id`, `store_id`, `entity_id`, `value`) VALUES
+(1,	3,	70,	0,	3,	NULL);
 
 DROP TABLE IF EXISTS `catalog_category_entity_int`;
 CREATE TABLE `catalog_category_entity_int` (
@@ -339,7 +671,13 @@ INSERT INTO `catalog_category_entity_int` (`value_id`, `entity_type_id`, `attrib
 (3,	3,	42,	0,	2,	1),
 (4,	3,	67,	0,	2,	1),
 (5,	3,	42,	1,	2,	1),
-(6,	3,	67,	1,	2,	1);
+(6,	3,	67,	1,	2,	1),
+(7,	3,	42,	0,	3,	1),
+(8,	3,	67,	0,	3,	1),
+(9,	3,	50,	0,	3,	NULL),
+(10,	3,	51,	0,	3,	0),
+(11,	3,	68,	0,	3,	0),
+(12,	3,	69,	0,	3,	0);
 
 DROP TABLE IF EXISTS `catalog_category_entity_text`;
 CREATE TABLE `catalog_category_entity_text` (
@@ -363,7 +701,12 @@ INSERT INTO `catalog_category_entity_text` (`value_id`, `entity_type_id`, `attri
 (1,	3,	65,	0,	1,	NULL),
 (2,	3,	65,	1,	1,	NULL),
 (3,	3,	65,	0,	2,	NULL),
-(4,	3,	65,	1,	2,	NULL);
+(4,	3,	65,	1,	2,	NULL),
+(5,	3,	44,	0,	3,	NULL),
+(6,	3,	47,	0,	3,	NULL),
+(7,	3,	48,	0,	3,	NULL),
+(8,	3,	62,	0,	3,	NULL),
+(9,	3,	65,	0,	3,	NULL);
 
 DROP TABLE IF EXISTS `catalog_category_entity_varchar`;
 CREATE TABLE `catalog_category_entity_varchar` (
@@ -390,7 +733,65 @@ INSERT INTO `catalog_category_entity_varchar` (`value_id`, `entity_type_id`, `at
 (4,	3,	41,	0,	2,	'Default Category'),
 (5,	3,	41,	1,	2,	'Default Category'),
 (6,	3,	49,	1,	2,	'PRODUCTS'),
-(7,	3,	43,	1,	2,	'default-category');
+(7,	3,	43,	1,	2,	'default-category'),
+(8,	3,	41,	0,	3,	'test1 category'),
+(9,	3,	43,	0,	3,	'test1-category'),
+(10,	3,	46,	0,	3,	NULL),
+(11,	3,	49,	0,	3,	'PRODUCTS'),
+(12,	3,	58,	0,	3,	NULL),
+(13,	3,	61,	0,	3,	NULL),
+(14,	3,	57,	1,	3,	'test1-category.html'),
+(15,	3,	57,	0,	3,	'test1-category.html');
+
+DROP TABLE IF EXISTS `catalog_category_flat_store_1`;
+CREATE TABLE `catalog_category_flat_store_1` (
+  `entity_id` int(10) unsigned NOT NULL COMMENT 'entity_id',
+  `parent_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'parent_id',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT 'created_at',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT 'updated_at',
+  `path` varchar(255) NOT NULL DEFAULT '' COMMENT 'path',
+  `position` int(11) NOT NULL COMMENT 'position',
+  `level` int(11) NOT NULL DEFAULT '0' COMMENT 'level',
+  `children_count` int(11) NOT NULL COMMENT 'children_count',
+  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store Id',
+  `all_children` text COMMENT 'All Children',
+  `available_sort_by` text COMMENT 'Available Product Listing Sort By',
+  `children` text COMMENT 'Children',
+  `custom_apply_to_products` int(11) DEFAULT NULL COMMENT 'Apply To Products',
+  `custom_design` varchar(255) DEFAULT NULL COMMENT 'Custom Design',
+  `custom_design_from` datetime DEFAULT NULL COMMENT 'Active From',
+  `custom_design_to` datetime DEFAULT NULL COMMENT 'Active To',
+  `custom_layout_update` text COMMENT 'Custom Layout Update',
+  `custom_use_parent_settings` int(11) DEFAULT NULL COMMENT 'Use Parent Category Settings',
+  `default_sort_by` varchar(255) DEFAULT NULL COMMENT 'Default Product Listing Sort By',
+  `description` text COMMENT 'Description',
+  `display_mode` varchar(255) DEFAULT NULL COMMENT 'Display Mode',
+  `filter_price_range` decimal(12,4) DEFAULT NULL COMMENT 'Layered Navigation Price Step',
+  `image` varchar(255) DEFAULT NULL COMMENT 'Image',
+  `include_in_menu` int(11) DEFAULT NULL COMMENT 'Include in Navigation Menu',
+  `is_active` int(11) DEFAULT NULL COMMENT 'Is Active',
+  `is_anchor` int(11) DEFAULT NULL COMMENT 'Is Anchor',
+  `landing_page` int(11) DEFAULT NULL COMMENT 'CMS Block',
+  `meta_description` text COMMENT 'Meta Description',
+  `meta_keywords` text COMMENT 'Meta Keywords',
+  `meta_title` varchar(255) DEFAULT NULL COMMENT 'Page Title',
+  `name` varchar(255) DEFAULT NULL COMMENT 'Name',
+  `page_layout` varchar(255) DEFAULT NULL COMMENT 'Page Layout',
+  `path_in_store` text COMMENT 'Path In Store',
+  `thumbnail` varchar(255) DEFAULT NULL COMMENT 'Thumbnail Image',
+  `url_key` varchar(255) DEFAULT NULL COMMENT 'URL Key',
+  `url_path` varchar(255) DEFAULT NULL COMMENT 'Url Path',
+  PRIMARY KEY (`entity_id`),
+  KEY `IDX_CATALOG_CATEGORY_FLAT_STORE_1_STORE_ID` (`store_id`),
+  KEY `IDX_CATALOG_CATEGORY_FLAT_STORE_1_PATH` (`path`),
+  KEY `IDX_CATALOG_CATEGORY_FLAT_STORE_1_LEVEL` (`level`),
+  CONSTRAINT `FK_CAT_CTGR_FLAT_STORE_1_ENTT_ID_CAT_CTGR_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_category_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_CATALOG_CATEGORY_FLAT_STORE_1_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Category Flat (Store 1)';
+
+INSERT INTO `catalog_category_flat_store_1` (`entity_id`, `parent_id`, `created_at`, `updated_at`, `path`, `position`, `level`, `children_count`, `store_id`, `all_children`, `available_sort_by`, `children`, `custom_apply_to_products`, `custom_design`, `custom_design_from`, `custom_design_to`, `custom_layout_update`, `custom_use_parent_settings`, `default_sort_by`, `description`, `display_mode`, `filter_price_range`, `image`, `include_in_menu`, `is_active`, `is_anchor`, `landing_page`, `meta_description`, `meta_keywords`, `meta_title`, `name`, `page_layout`, `path_in_store`, `thumbnail`, `url_key`, `url_path`) VALUES
+(1,	0,	'2013-09-07 12:59:17',	'2013-09-07 12:59:17',	'1',	0,	0,	1,	1,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	'Root Catalog',	NULL,	NULL,	NULL,	NULL,	NULL),
+(2,	1,	'2013-09-07 12:59:17',	'2013-09-07 12:59:17',	'1/2',	1,	1,	0,	1,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL,	1,	1,	NULL,	NULL,	NULL,	NULL,	NULL,	'Default Category',	NULL,	NULL,	NULL,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `catalog_category_product`;
 CREATE TABLE `catalog_category_product` (
@@ -901,6 +1302,59 @@ CREATE TABLE `catalog_product_entity_varchar` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Product Varchar Attribute Backend Table';
 
 
+DROP TABLE IF EXISTS `catalog_product_flat_1`;
+CREATE TABLE `catalog_product_flat_1` (
+  `entity_id` int(10) unsigned NOT NULL COMMENT 'entity_id',
+  `attribute_set_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'attribute_set_id',
+  `type_id` varchar(32) NOT NULL DEFAULT 'simple' COMMENT 'type_id',
+  `cost` decimal(12,4) DEFAULT NULL COMMENT 'cost',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT 'created_at',
+  `enable_googlecheckout` smallint(6) DEFAULT NULL COMMENT 'enable_googlecheckout',
+  `gift_message_available` smallint(6) DEFAULT NULL COMMENT 'gift_message_available',
+  `has_options` smallint(6) NOT NULL DEFAULT '0' COMMENT 'has_options',
+  `image_label` varchar(255) DEFAULT NULL COMMENT 'image_label',
+  `is_recurring` smallint(6) DEFAULT NULL COMMENT 'is_recurring',
+  `links_exist` int(11) DEFAULT NULL COMMENT 'links_exist',
+  `links_purchased_separately` int(11) DEFAULT NULL COMMENT 'links_purchased_separately',
+  `links_title` varchar(255) DEFAULT NULL COMMENT 'links_title',
+  `msrp` decimal(12,4) DEFAULT NULL COMMENT 'msrp',
+  `msrp_display_actual_price_type` varchar(255) DEFAULT NULL COMMENT 'msrp_display_actual_price_type',
+  `msrp_enabled` smallint(6) DEFAULT NULL COMMENT 'msrp_enabled',
+  `name` varchar(255) DEFAULT NULL COMMENT 'name',
+  `news_from_date` datetime DEFAULT NULL COMMENT 'news_from_date',
+  `news_to_date` datetime DEFAULT NULL COMMENT 'news_to_date',
+  `price` decimal(12,4) DEFAULT NULL COMMENT 'price',
+  `price_type` int(11) DEFAULT NULL COMMENT 'price_type',
+  `price_view` int(11) DEFAULT NULL COMMENT 'price_view',
+  `recurring_profile` text COMMENT 'recurring_profile',
+  `required_options` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'required_options',
+  `shipment_type` int(11) DEFAULT NULL COMMENT 'shipment_type',
+  `short_description` text COMMENT 'short_description',
+  `sku` varchar(64) DEFAULT NULL COMMENT 'sku',
+  `sku_type` int(11) DEFAULT NULL COMMENT 'sku_type',
+  `small_image` varchar(255) DEFAULT NULL COMMENT 'small_image',
+  `small_image_label` varchar(255) DEFAULT NULL COMMENT 'small_image_label',
+  `special_from_date` datetime DEFAULT NULL COMMENT 'special_from_date',
+  `special_price` decimal(12,4) DEFAULT NULL COMMENT 'special_price',
+  `special_to_date` datetime DEFAULT NULL COMMENT 'special_to_date',
+  `tax_class_id` int(10) unsigned DEFAULT NULL COMMENT 'tax_class_id',
+  `thumbnail` varchar(255) DEFAULT NULL COMMENT 'thumbnail',
+  `thumbnail_label` varchar(255) DEFAULT NULL COMMENT 'thumbnail_label',
+  `updated_at` timestamp NULL DEFAULT NULL COMMENT 'updated_at',
+  `url_key` varchar(255) DEFAULT NULL COMMENT 'url_key',
+  `url_path` varchar(255) DEFAULT NULL COMMENT 'url_path',
+  `visibility` smallint(5) unsigned DEFAULT NULL COMMENT 'visibility',
+  `weight` decimal(12,4) DEFAULT NULL COMMENT 'weight',
+  `weight_type` int(11) DEFAULT NULL COMMENT 'weight_type',
+  PRIMARY KEY (`entity_id`),
+  KEY `IDX_CATALOG_PRODUCT_FLAT_1_TYPE_ID` (`type_id`),
+  KEY `IDX_CATALOG_PRODUCT_FLAT_1_ATTRIBUTE_SET_ID` (`attribute_set_id`),
+  KEY `IDX_CATALOG_PRODUCT_FLAT_1_NAME` (`name`),
+  KEY `IDX_CATALOG_PRODUCT_FLAT_1_PRICE` (`price`),
+  CONSTRAINT `FK_CAT_PRD_FLAT_1_ENTT_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`entity_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Product Flat (Store 1)';
+
+
 DROP TABLE IF EXISTS `catalog_product_index_eav`;
 CREATE TABLE `catalog_product_index_eav` (
   `entity_id` int(10) unsigned NOT NULL COMMENT 'Entity ID',
@@ -1366,6 +1820,8 @@ CREATE TABLE `catalog_product_index_website` (
   CONSTRAINT `FK_CAT_PRD_IDX_WS_WS_ID_CORE_WS_WS_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Product Website Index Table';
 
+INSERT INTO `catalog_product_index_website` (`website_id`, `website_date`, `rate`) VALUES
+(1,	'2013-09-07',	1);
 
 DROP TABLE IF EXISTS `catalog_product_link`;
 CREATE TABLE `catalog_product_link` (
@@ -1634,258 +2090,6 @@ CREATE TABLE `catalog_product_website` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Product To Website Linkage Table';
 
 
-DROP TABLE IF EXISTS `cataloginventory_stock`;
-CREATE TABLE `cataloginventory_stock` (
-  `stock_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Stock Id',
-  `stock_name` varchar(255) DEFAULT NULL COMMENT 'Stock Name',
-  PRIMARY KEY (`stock_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock';
-
-INSERT INTO `cataloginventory_stock` (`stock_id`, `stock_name`) VALUES
-(1,	'Default');
-
-DROP TABLE IF EXISTS `cataloginventory_stock_item`;
-CREATE TABLE `cataloginventory_stock_item` (
-  `item_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Item Id',
-  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product Id',
-  `stock_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Stock Id',
-  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
-  `min_qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Min Qty',
-  `use_config_min_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Min Qty',
-  `is_qty_decimal` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Qty Decimal',
-  `backorders` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Backorders',
-  `use_config_backorders` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Backorders',
-  `min_sale_qty` decimal(12,4) NOT NULL DEFAULT '1.0000' COMMENT 'Min Sale Qty',
-  `use_config_min_sale_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Min Sale Qty',
-  `max_sale_qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Max Sale Qty',
-  `use_config_max_sale_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Max Sale Qty',
-  `is_in_stock` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is In Stock',
-  `low_stock_date` timestamp NULL DEFAULT NULL COMMENT 'Low Stock Date',
-  `notify_stock_qty` decimal(12,4) DEFAULT NULL COMMENT 'Notify Stock Qty',
-  `use_config_notify_stock_qty` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Notify Stock Qty',
-  `manage_stock` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Manage Stock',
-  `use_config_manage_stock` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Manage Stock',
-  `stock_status_changed_auto` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Stock Status Changed Automatically',
-  `use_config_qty_increments` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Qty Increments',
-  `qty_increments` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty Increments',
-  `use_config_enable_qty_inc` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Use Config Enable Qty Increments',
-  `enable_qty_increments` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Enable Qty Increments',
-  `is_decimal_divided` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Divided into Multiple Boxes for Shipping',
-  PRIMARY KEY (`item_id`),
-  UNIQUE KEY `UNQ_CATALOGINVENTORY_STOCK_ITEM_PRODUCT_ID_STOCK_ID` (`product_id`,`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_ITEM_PRODUCT_ID` (`product_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_ITEM_STOCK_ID` (`stock_id`),
-  CONSTRAINT `FK_CATINV_STOCK_ITEM_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATINV_STOCK_ITEM_STOCK_ID_CATINV_STOCK_STOCK_ID` FOREIGN KEY (`stock_id`) REFERENCES `cataloginventory_stock` (`stock_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Item';
-
-
-DROP TABLE IF EXISTS `cataloginventory_stock_status`;
-CREATE TABLE `cataloginventory_stock_status` (
-  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  `stock_id` smallint(5) unsigned NOT NULL COMMENT 'Stock Id',
-  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
-  `stock_status` smallint(5) unsigned NOT NULL COMMENT 'Stock Status',
-  PRIMARY KEY (`product_id`,`website_id`,`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_STOCK_ID` (`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_WEBSITE_ID` (`website_id`),
-  CONSTRAINT `FK_CATINV_STOCK_STS_STOCK_ID_CATINV_STOCK_STOCK_ID` FOREIGN KEY (`stock_id`) REFERENCES `cataloginventory_stock` (`stock_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATINV_STOCK_STS_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATINV_STOCK_STS_WS_ID_CORE_WS_WS_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Status';
-
-
-DROP TABLE IF EXISTS `cataloginventory_stock_status_idx`;
-CREATE TABLE `cataloginventory_stock_status_idx` (
-  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  `stock_id` smallint(5) unsigned NOT NULL COMMENT 'Stock Id',
-  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
-  `stock_status` smallint(5) unsigned NOT NULL COMMENT 'Stock Status',
-  PRIMARY KEY (`product_id`,`website_id`,`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_IDX_STOCK_ID` (`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_IDX_WEBSITE_ID` (`website_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Status Indexer Idx';
-
-
-DROP TABLE IF EXISTS `cataloginventory_stock_status_tmp`;
-CREATE TABLE `cataloginventory_stock_status_tmp` (
-  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  `stock_id` smallint(5) unsigned NOT NULL COMMENT 'Stock Id',
-  `qty` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Qty',
-  `stock_status` smallint(5) unsigned NOT NULL COMMENT 'Stock Status',
-  PRIMARY KEY (`product_id`,`website_id`,`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_TMP_STOCK_ID` (`stock_id`),
-  KEY `IDX_CATALOGINVENTORY_STOCK_STATUS_TMP_WEBSITE_ID` (`website_id`)
-) ENGINE=MEMORY DEFAULT CHARSET=utf8 COMMENT='Cataloginventory Stock Status Indexer Tmp';
-
-
-DROP TABLE IF EXISTS `catalogrule`;
-CREATE TABLE `catalogrule` (
-  `rule_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Id',
-  `name` varchar(255) DEFAULT NULL COMMENT 'Name',
-  `description` text COMMENT 'Description',
-  `from_date` date DEFAULT NULL COMMENT 'From Date',
-  `to_date` date DEFAULT NULL COMMENT 'To Date',
-  `is_active` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Is Active',
-  `conditions_serialized` mediumtext COMMENT 'Conditions Serialized',
-  `actions_serialized` mediumtext COMMENT 'Actions Serialized',
-  `stop_rules_processing` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Stop Rules Processing',
-  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
-  `simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action',
-  `discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount',
-  `sub_is_enable` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Is Rule Enable For Subitems',
-  `sub_simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action For Subitems',
-  `sub_discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount For Subitems',
-  PRIMARY KEY (`rule_id`),
-  KEY `IDX_CATALOGRULE_IS_ACTIVE_SORT_ORDER_TO_DATE_FROM_DATE` (`is_active`,`sort_order`,`to_date`,`from_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule';
-
-
-DROP TABLE IF EXISTS `catalogrule_affected_product`;
-CREATE TABLE `catalogrule_affected_product` (
-  `product_id` int(10) unsigned NOT NULL COMMENT 'Product Id',
-  PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Affected Product';
-
-
-DROP TABLE IF EXISTS `catalogrule_customer_group`;
-CREATE TABLE `catalogrule_customer_group` (
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `customer_group_id` smallint(5) unsigned NOT NULL COMMENT 'Customer Group Id',
-  PRIMARY KEY (`rule_id`,`customer_group_id`),
-  KEY `IDX_CATALOGRULE_CUSTOMER_GROUP_RULE_ID` (`rule_id`),
-  KEY `IDX_CATALOGRULE_CUSTOMER_GROUP_CUSTOMER_GROUP_ID` (`customer_group_id`),
-  CONSTRAINT `FK_CATALOGRULE_CUSTOMER_GROUP_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATRULE_CSTR_GROUP_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Rules To Customer Groups Relations';
-
-
-DROP TABLE IF EXISTS `catalogrule_group_website`;
-CREATE TABLE `catalogrule_group_website` (
-  `rule_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Rule Id',
-  `customer_group_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Group Id',
-  `website_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Website Id',
-  PRIMARY KEY (`rule_id`,`customer_group_id`,`website_id`),
-  KEY `IDX_CATALOGRULE_GROUP_WEBSITE_RULE_ID` (`rule_id`),
-  KEY `IDX_CATALOGRULE_GROUP_WEBSITE_CUSTOMER_GROUP_ID` (`customer_group_id`),
-  KEY `IDX_CATALOGRULE_GROUP_WEBSITE_WEBSITE_ID` (`website_id`),
-  CONSTRAINT `FK_CATRULE_GROUP_WS_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATALOGRULE_GROUP_WEBSITE_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATALOGRULE_GROUP_WEBSITE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Group Website';
-
-
-DROP TABLE IF EXISTS `catalogrule_product`;
-CREATE TABLE `catalogrule_product` (
-  `rule_product_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Product Id',
-  `rule_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Rule Id',
-  `from_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'From Time',
-  `to_time` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'To time',
-  `customer_group_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Group Id',
-  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product Id',
-  `action_operator` varchar(10) DEFAULT 'to_fixed' COMMENT 'Action Operator',
-  `action_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Action Amount',
-  `action_stop` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Action Stop',
-  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  `sub_simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action For Subitems',
-  `sub_discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount For Subitems',
-  PRIMARY KEY (`rule_product_id`),
-  UNIQUE KEY `EAA51B56FF092A0DCB795D1CEF812B7B` (`rule_id`,`from_time`,`to_time`,`website_id`,`customer_group_id`,`product_id`,`sort_order`),
-  KEY `IDX_CATALOGRULE_PRODUCT_RULE_ID` (`rule_id`),
-  KEY `IDX_CATALOGRULE_PRODUCT_CUSTOMER_GROUP_ID` (`customer_group_id`),
-  KEY `IDX_CATALOGRULE_PRODUCT_WEBSITE_ID` (`website_id`),
-  KEY `IDX_CATALOGRULE_PRODUCT_FROM_TIME` (`from_time`),
-  KEY `IDX_CATALOGRULE_PRODUCT_TO_TIME` (`to_time`),
-  KEY `IDX_CATALOGRULE_PRODUCT_PRODUCT_ID` (`product_id`),
-  CONSTRAINT `FK_CATALOGRULE_PRODUCT_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATALOGRULE_PRODUCT_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATRULE_PRD_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATRULE_PRD_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Product';
-
-
-DROP TABLE IF EXISTS `catalogrule_product_price`;
-CREATE TABLE `catalogrule_product_price` (
-  `rule_product_price_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Product PriceId',
-  `rule_date` date NOT NULL COMMENT 'Rule Date',
-  `customer_group_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Group Id',
-  `product_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Product Id',
-  `rule_price` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Rule Price',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  `latest_start_date` date DEFAULT NULL COMMENT 'Latest StartDate',
-  `earliest_end_date` date DEFAULT NULL COMMENT 'Earliest EndDate',
-  PRIMARY KEY (`rule_product_price_id`),
-  UNIQUE KEY `UNQ_CATRULE_PRD_PRICE_RULE_DATE_WS_ID_CSTR_GROUP_ID_PRD_ID` (`rule_date`,`website_id`,`customer_group_id`,`product_id`),
-  KEY `IDX_CATALOGRULE_PRODUCT_PRICE_CUSTOMER_GROUP_ID` (`customer_group_id`),
-  KEY `IDX_CATALOGRULE_PRODUCT_PRICE_WEBSITE_ID` (`website_id`),
-  KEY `IDX_CATALOGRULE_PRODUCT_PRICE_PRODUCT_ID` (`product_id`),
-  CONSTRAINT `FK_CATRULE_PRD_PRICE_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATRULE_PRD_PRICE_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATALOGRULE_PRODUCT_PRICE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CatalogRule Product Price';
-
-
-DROP TABLE IF EXISTS `catalogrule_website`;
-CREATE TABLE `catalogrule_website` (
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  PRIMARY KEY (`rule_id`,`website_id`),
-  KEY `IDX_CATALOGRULE_WEBSITE_RULE_ID` (`rule_id`),
-  KEY `IDX_CATALOGRULE_WEBSITE_WEBSITE_ID` (`website_id`),
-  CONSTRAINT `FK_CATALOGRULE_WEBSITE_RULE_ID_CATALOGRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `catalogrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATALOGRULE_WEBSITE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog Rules To Websites Relations';
-
-
-DROP TABLE IF EXISTS `catalogsearch_fulltext`;
-CREATE TABLE `catalogsearch_fulltext` (
-  `fulltext_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Entity ID',
-  `product_id` int(10) unsigned NOT NULL COMMENT 'Product ID',
-  `store_id` smallint(5) unsigned NOT NULL COMMENT 'Store ID',
-  `data_index` longtext COMMENT 'Data index',
-  PRIMARY KEY (`fulltext_id`),
-  UNIQUE KEY `UNQ_CATALOGSEARCH_FULLTEXT_PRODUCT_ID_STORE_ID` (`product_id`,`store_id`),
-  FULLTEXT KEY `FTI_CATALOGSEARCH_FULLTEXT_DATA_INDEX` (`data_index`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Catalog search result table';
-
-
-DROP TABLE IF EXISTS `catalogsearch_query`;
-CREATE TABLE `catalogsearch_query` (
-  `query_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Query ID',
-  `query_text` varchar(255) DEFAULT NULL COMMENT 'Query text',
-  `num_results` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Num results',
-  `popularity` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Popularity',
-  `redirect` varchar(255) DEFAULT NULL COMMENT 'Redirect',
-  `synonym_for` varchar(255) DEFAULT NULL COMMENT 'Synonym for',
-  `store_id` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Store ID',
-  `display_in_terms` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Display in terms',
-  `is_active` smallint(6) DEFAULT '1' COMMENT 'Active status',
-  `is_processed` smallint(6) DEFAULT '0' COMMENT 'Processed status',
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated at',
-  PRIMARY KEY (`query_id`),
-  KEY `IDX_CATALOGSEARCH_QUERY_QUERY_TEXT_STORE_ID_POPULARITY` (`query_text`,`store_id`,`popularity`),
-  KEY `IDX_CATALOGSEARCH_QUERY_STORE_ID` (`store_id`),
-  CONSTRAINT `FK_CATALOGSEARCH_QUERY_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog search query table';
-
-
-DROP TABLE IF EXISTS `catalogsearch_result`;
-CREATE TABLE `catalogsearch_result` (
-  `query_id` int(10) unsigned NOT NULL COMMENT 'Query ID',
-  `product_id` int(10) unsigned NOT NULL COMMENT 'Product ID',
-  `relevance` decimal(20,4) NOT NULL DEFAULT '0.0000' COMMENT 'Relevance',
-  PRIMARY KEY (`query_id`,`product_id`),
-  KEY `IDX_CATALOGSEARCH_RESULT_QUERY_ID` (`query_id`),
-  KEY `IDX_CATALOGSEARCH_RESULT_PRODUCT_ID` (`product_id`),
-  CONSTRAINT `FK_CATALOGSEARCH_RESULT_QUERY_ID_CATALOGSEARCH_QUERY_QUERY_ID` FOREIGN KEY (`query_id`) REFERENCES `catalogsearch_query` (`query_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_CATSRCH_RESULT_PRD_ID_CAT_PRD_ENTT_ENTT_ID` FOREIGN KEY (`product_id`) REFERENCES `catalog_product_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Catalog search result table';
-
-
 DROP TABLE IF EXISTS `checkout_agreement`;
 CREATE TABLE `checkout_agreement` (
   `agreement_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Agreement Id',
@@ -1923,7 +2127,7 @@ CREATE TABLE `cms_block` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CMS Block Table';
 
 INSERT INTO `cms_block` (`block_id`, `title`, `identifier`, `content`, `creation_time`, `update_time`, `is_active`) VALUES
-(1,	'Footer Links',	'footer_links',	'<ul>\r\n<li><a href=\"{{store direct_url=\"about-magento-demo-store\"}}\">About Us</a></li>\r\n<li><a href=\"{{store direct_url=\"customer-service\"}}\">Customer Service</a></li>\r\n<li class=\"last privacy\"><a href=\"{{store direct_url=\"privacy-policy-cookie-restriction-mode\"}}\">Privacy Policy</a></li>\r\n</ul>',	'2013-09-04 04:21:53',	'2013-09-04 04:21:54',	1);
+(1,	'Footer Links',	'footer_links',	'<ul>\r\n<li><a href=\"{{store direct_url=\"about-magento-demo-store\"}}\">About Us</a></li>\r\n<li><a href=\"{{store direct_url=\"customer-service\"}}\">Customer Service</a></li>\r\n<li class=\"last privacy\"><a href=\"{{store direct_url=\"privacy-policy-cookie-restriction-mode\"}}\">Privacy Policy</a></li>\r\n</ul>',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	1);
 
 DROP TABLE IF EXISTS `cms_block_store`;
 CREATE TABLE `cms_block_store` (
@@ -1963,12 +2167,12 @@ CREATE TABLE `cms_page` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='CMS Page Table';
 
 INSERT INTO `cms_page` (`page_id`, `title`, `root_template`, `meta_keywords`, `meta_description`, `identifier`, `content_heading`, `content`, `creation_time`, `update_time`, `is_active`, `sort_order`, `layout_update_xml`, `custom_theme`, `custom_root_template`, `custom_layout_update_xml`, `custom_theme_from`, `custom_theme_to`) VALUES
-(1,	'404 Not Found 1',	'two_columns_right',	'Page keywords',	'Page description',	'no-route',	NULL,	'<div class=\"page-title\"><h1>Whoops, our bad...</h1></div>\r\n<dl>\r\n<dt>The page you requested was not found, and we have a fine guess why.</dt>\r\n<dd>\r\n<ul class=\"disc\">\r\n<li>If you typed the URL directly, please make sure the spelling is correct.</li>\r\n<li>If you clicked on a link to get here, the link is outdated.</li>\r\n</ul></dd>\r\n</dl>\r\n<dl>\r\n<dt>What can you do?</dt>\r\n<dd>Have no fear, help is near! There are many ways you can get back on track with Magento Store.</dd>\r\n<dd>\r\n<ul class=\"disc\">\r\n<li><a href=\"#\" onclick=\"history.go(-1); return false;\">Go back</a> to the previous page.</li>\r\n<li>Use the search bar at the top of the page to search for your products.</li>\r\n<li>Follow these links to get you back on track!<br /><a href=\"{{store url=\"\"}}\">Store Home</a> <span class=\"separator\">|</span> <a href=\"{{store url=\"customer/account\"}}\">My Account</a></li></ul></dd></dl>\r\n',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(2,	'Home page',	'two_columns_right',	NULL,	NULL,	'home',	NULL,	'<div class=\"page-title\"><h2>Home Page</h2></div>\r\n',	'2013-09-04 04:21:54',	'2013-09-04 04:22:03',	1,	0,	'<!--<reference name=\"content\">\n        <block type=\"catalog/product_new\" name=\"home.catalog.product.new\" alias=\"product_new\" template=\"catalog/product/new.phtml\" after=\"cms_page\">\n            <action method=\"addPriceBlockType\">\n                <type>bundle</type>\n                <block>bundle/catalog_product_price</block>\n                <template>bundle/catalog/product/price.phtml</template>\n            </action>\n        </block>\n        <block type=\"reports/product_viewed\" name=\"home.reports.product.viewed\" alias=\"product_viewed\" template=\"reports/home_product_viewed.phtml\" after=\"product_new\">\n            <action method=\"addPriceBlockType\">\n                <type>bundle</type>\n                <block>bundle/catalog_product_price</block>\n                <template>bundle/catalog/product/price.phtml</template>\n            </action>\n        </block>\n        <block type=\"reports/product_compared\" name=\"home.reports.product.compared\" template=\"reports/home_product_compared.phtml\" after=\"product_viewed\">\n            <action method=\"addPriceBlockType\">\n                <type>bundle</type>\n                <block>bundle/catalog_product_price</block>\n                <template>bundle/catalog/product/price.phtml</template>\n            </action>\n        </block>\n    </reference>\n    <reference name=\"right\">\n        <action method=\"unsetChild\"><alias>right.reports.product.viewed</alias></action>\n        <action method=\"unsetChild\"><alias>right.reports.product.compared</alias></action>\n    </reference>-->',	NULL,	NULL,	NULL,	NULL,	NULL),
-(3,	'About Us',	'two_columns_right',	NULL,	NULL,	'about-magento-demo-store',	NULL,	'<div class=\"page-title\">\r\n<h1>About Magento Store</h1>\r\n</div>\r\n<div class=\"col3-set\">\r\n<div class=\"col-1\"><p><a href=\"http://www.varien.com/\"><img src=\"{{skin url=\'images/media/about_us_img.jpg\'}}\" title=\"Varien\" alt=\"Varien\" /></a></p><p style=\"line-height:1.2em;\"><small>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede.</small></p>\r\n<p style=\"color:#888; font:1.2em/1.4em georgia, serif;\">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta.</p></div>\r\n<div class=\"col-2\">\r\n<p><strong style=\"color:#de036f;\">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit.</strong></p>\r\n<p>Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo. </p>\r\n<p>Maecenas ullamcorper, odio vel tempus egestas, dui orci faucibus orci, sit amet aliquet lectus dolor et quam. Pellentesque consequat luctus purus. Nunc et risus. Etiam a nibh. Phasellus dignissim metus eget nisi. Vestibulum sapien dolor, aliquet nec, porta ac, malesuada a, libero. Praesent feugiat purus eget est. Nulla facilisi. Vestibulum tincidunt sapien eu velit. Mauris purus. Maecenas eget mauris eu orci accumsan feugiat. Pellentesque eget velit. Nunc tincidunt.</p></div>\r\n<div class=\"col-3\">\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper </p>\r\n<p><strong style=\"color:#de036f;\">Maecenas ullamcorper, odio vel tempus egestas, dui orci faucibus orci, sit amet aliquet lectus dolor et quam. Pellentesque consequat luctus purus.</strong></p>\r\n<p>Nunc et risus. Etiam a nibh. Phasellus dignissim metus eget nisi.</p>\r\n<div class=\"divider\"></div>\r\n<p>To all of you, from all of us at Magento Store - Thank you and Happy eCommerce!</p>\r\n<p style=\"line-height:1.2em;\"><strong style=\"font:italic 2em Georgia, serif;\">John Doe</strong><br /><small>Some important guy</small></p></div>\r\n</div>',	'2013-09-04 04:21:54',	'2013-09-04 04:21:54',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(4,	'Customer Service',	'three_columns',	NULL,	NULL,	'customer-service',	NULL,	'<div class=\"page-title\">\r\n<h1>Customer Service</h1>\r\n</div>\r\n<ul class=\"disc\">\r\n<li><a href=\"#answer1\">Shipping &amp; Delivery</a></li>\r\n<li><a href=\"#answer2\">Privacy &amp; Security</a></li>\r\n<li><a href=\"#answer3\">Returns &amp; Replacements</a></li>\r\n<li><a href=\"#answer4\">Ordering</a></li>\r\n<li><a href=\"#answer5\">Payment, Pricing &amp; Promotions</a></li>\r\n<li><a href=\"#answer6\">Viewing Orders</a></li>\r\n<li><a href=\"#answer7\">Updating Account Information</a></li>\r\n</ul>\r\n<dl>\r\n<dt id=\"answer1\">Shipping &amp; Delivery</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer2\">Privacy &amp; Security</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer3\">Returns &amp; Replacements</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer4\">Ordering</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer5\">Payment, Pricing &amp; Promotions</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer6\">Viewing Orders</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer7\">Updating Account Information</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n</dl>',	'2013-09-04 04:21:54',	'2013-09-04 04:21:54',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(5,	'Enable Cookies',	'one_column',	NULL,	NULL,	'enable-cookies',	NULL,	'<div class=\"std\">\r\n    <ul class=\"messages\">\r\n        <li class=\"notice-msg\">\r\n            <ul>\r\n                <li>Please enable cookies in your web browser to continue.</li>\r\n            </ul>\r\n        </li>\r\n    </ul>\r\n    <div class=\"page-title\">\r\n        <h1><a name=\"top\"></a>What are Cookies?</h1>\r\n    </div>\r\n    <p>Cookies are short pieces of data that are sent to your computer when you visit a website. On later visits, this data is then returned to that website. Cookies allow us to recognize you automatically whenever you visit our site so that we can personalize your experience and provide you with better service. We also use cookies (and similar browser data, such as Flash cookies) for fraud prevention and other purposes. If your web browser is set to refuse cookies from our website, you will not be able to complete a purchase or take advantage of certain features of our website, such as storing items in your Shopping Cart or receiving personalized recommendations. As a result, we strongly encourage you to configure your web browser to accept cookies from our website.</p>\r\n    <h2 class=\"subtitle\">Enabling Cookies</h2>\r\n    <ul class=\"disc\">\r\n        <li><a href=\"#ie7\">Internet Explorer 7.x</a></li>\r\n        <li><a href=\"#ie6\">Internet Explorer 6.x</a></li>\r\n        <li><a href=\"#firefox\">Mozilla/Firefox</a></li>\r\n        <li><a href=\"#opera\">Opera 7.x</a></li>\r\n    </ul>\r\n    <h3><a name=\"ie7\"></a>Internet Explorer 7.x</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Start Internet Explorer</p>\r\n        </li>\r\n        <li>\r\n            <p>Under the <strong>Tools</strong> menu, click <strong>Internet Options</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-1.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click the <strong>Privacy</strong> tab</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-2.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click the <strong>Advanced</strong> button</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-3.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Put a check mark in the box for <strong>Override Automatic Cookie Handling</strong>, put another check mark in the <strong>Always accept session cookies </strong>box</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-4.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click <strong>OK</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-5.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click <strong>OK</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-6.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Restart Internet Explore</p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n    <h3><a name=\"ie6\"></a>Internet Explorer 6.x</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Select <strong>Internet Options</strong> from the Tools menu</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie6-1.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Privacy</strong> tab</p>\r\n        </li>\r\n        <li>\r\n            <p>Click the <strong>Default</strong> button (or manually slide the bar down to <strong>Medium</strong>) under <strong>Settings</strong>. Click <strong>OK</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie6-2.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n    <h3><a name=\"firefox\"></a>Mozilla/Firefox</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Click on the <strong>Tools</strong>-menu in Mozilla</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Options...</strong> item in the menu - a new window open</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Privacy</strong> selection in the left part of the window. (See image below)</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/firefox.png\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Expand the <strong>Cookies</strong> section</p>\r\n        </li>\r\n        <li>\r\n            <p>Check the <strong>Enable cookies</strong> and <strong>Accept cookies normally</strong> checkboxes</p>\r\n        </li>\r\n        <li>\r\n            <p>Save changes by clicking <strong>Ok</strong>.</p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n    <h3><a name=\"opera\"></a>Opera 7.x</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Click on the <strong>Tools</strong> menu in Opera</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Preferences...</strong> item in the menu - a new window open</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Privacy</strong> selection near the bottom left of the window. (See image below)</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/opera.png\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>The <strong>Enable cookies</strong> checkbox must be checked, and <strong>Accept all cookies</strong> should be selected in the &quot;<strong>Normal cookies</strong>&quot; drop-down</p>\r\n        </li>\r\n        <li>\r\n            <p>Save changes by clicking <strong>Ok</strong></p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n</div>\r\n',	'2013-09-04 04:21:54',	'2013-09-04 04:21:54',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(6,	'Privacy Policy',	'one_column',	NULL,	NULL,	'privacy-policy-cookie-restriction-mode',	'Privacy Policy',	'<p style=\"color: #ff0000; font-weight: bold; font-size: 13px\">\n    Please replace this text with you Privacy Policy.\n    Please add any additional cookies your website uses below (e.g., Google Analytics)\n</p>\n<p>\n    This privacy policy sets out how {{config path=\"general/store_information/name\"}} uses and protects any information\n    that you give {{config path=\"general/store_information/name\"}} when you use this website.\n    {{config path=\"general/store_information/name\"}} is committed to ensuring that your privacy is protected.\n    Should we ask you to provide certain information by which you can be identified when using this website,\n    then you can be assured that it will only be used in accordance with this privacy statement.\n    {{config path=\"general/store_information/name\"}} may change this policy from time to time by updating this page.\n    You should check this page from time to time to ensure that you are happy with any changes.\n</p>\n<h2>What we collect</h2>\n<p>We may collect the following information:</p>\n<ul>\n    <li>name</li>\n    <li>contact information including email address</li>\n    <li>demographic information such as postcode, preferences and interests</li>\n    <li>other information relevant to customer surveys and/or offers</li>\n</ul>\n<p>\n    For the exhaustive list of cookies we collect see the <a href=\"#list\">List of cookies we collect</a> section.\n</p>\n<h2>What we do with the information we gather</h2>\n<p>\n    We require this information to understand your needs and provide you with a better service,\n    and in particular for the following reasons:\n</p>\n<ul>\n    <li>Internal record keeping.</li>\n    <li>We may use the information to improve our products and services.</li>\n    <li>\n        We may periodically send promotional emails about new products, special offers or other information which we\n        think you may find interesting using the email address which you have provided.\n    </li>\n    <li>\n        From time to time, we may also use your information to contact you for market research purposes.\n        We may contact you by email, phone, fax or mail. We may use the information to customise the website\n        according to your interests.\n    </li>\n</ul>\n<h2>Security</h2>\n<p>\n    We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure,\n    we have put in place suitable physical, electronic and managerial procedures to safeguard and secure\n    the information we collect online.\n</p>\n<h2>How we use cookies</h2>\n<p>\n    A cookie is a small file which asks permission to be placed on your computer\'s hard drive.\n    Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit\n    a particular site. Cookies allow web applications to respond to you as an individual. The web application\n    can tailor its operations to your needs, likes and dislikes by gathering and remembering information about\n    your preferences.\n</p>\n<p>\n    We use traffic log cookies to identify which pages are being used. This helps us analyse data about web page traffic\n    and improve our website in order to tailor it to customer needs. We only use this information for statistical\n    analysis purposes and then the data is removed from the system.\n</p>\n<p>\n    Overall, cookies help us provide you with a better website, by enabling us to monitor which pages you find useful\n    and which you do not. A cookie in no way gives us access to your computer or any information about you,\n    other than the data you choose to share with us. You can choose to accept or decline cookies.\n    Most web browsers automatically accept cookies, but you can usually modify your browser setting\n    to decline cookies if you prefer. This may prevent you from taking full advantage of the website.\n</p>\n<h2>Links to other websites</h2>\n<p>\n    Our website may contain links to other websites of interest. However, once you have used these links\n    to leave our site, you should note that we do not have any control over that other website.\n    Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst\n    visiting such sites and such sites are not governed by this privacy statement.\n    You should exercise caution and look at the privacy statement applicable to the website in question.\n</p>\n<h2>Controlling your personal information</h2>\n<p>You may choose to restrict the collection or use of your personal information in the following ways:</p>\n<ul>\n    <li>\n        whenever you are asked to fill in a form on the website, look for the box that you can click to indicate\n        that you do not want the information to be used by anybody for direct marketing purposes\n    </li>\n    <li>\n        if you have previously agreed to us using your personal information for direct marketing purposes,\n        you may change your mind at any time by writing to or emailing us at\n        {{config path=\"trans_email/ident_general/email\"}}\n    </li>\n</ul>\n<p>\n    We will not sell, distribute or lease your personal information to third parties unless we have your permission\n    or are required by law to do so. We may use your personal information to send you promotional information\n    about third parties which we think you may find interesting if you tell us that you wish this to happen.\n</p>\n<p>\n    You may request details of personal information which we hold about you under the Data Protection Act 1998.\n    A small fee will be payable. If you would like a copy of the information held on you please write to\n    {{config path=\"general/store_information/address\"}}.\n</p>\n<p>\n    If you believe that any information we are holding on you is incorrect or incomplete,\n    please write to or email us as soon as possible, at the above address.\n    We will promptly correct any information found to be incorrect.\n</p>\n<h2><a name=\"list\"></a>List of cookies we collect</h2>\n<p>The table below lists the cookies we collect and what information they store.</p>\n<table class=\"data-table\">\n    <thead>\n        <tr>\n            <th>COOKIE name</th>\n            <th>COOKIE Description</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <th>CART</th>\n            <td>The association with your shopping cart.</td>\n        </tr>\n        <tr>\n            <th>CATEGORY_INFO</th>\n            <td>Stores the category info on the page, that allows to display pages more quickly.</td>\n        </tr>\n        <tr>\n            <th>COMPARE</th>\n            <td>The items that you have in the Compare Products list.</td>\n        </tr>\n        <tr>\n            <th>CURRENCY</th>\n            <td>Your preferred currency</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER</th>\n            <td>An encrypted version of your customer id with the store.</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER_AUTH</th>\n            <td>An indicator if you are currently logged into the store.</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER_INFO</th>\n            <td>An encrypted version of the customer group you belong to.</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER_SEGMENT_IDS</th>\n            <td>Stores the Customer Segment ID</td>\n        </tr>\n        <tr>\n            <th>EXTERNAL_NO_CACHE</th>\n            <td>A flag, which indicates whether caching is disabled or not.</td>\n        </tr>\n        <tr>\n            <th>FRONTEND</th>\n            <td>You sesssion ID on the server.</td>\n        </tr>\n        <tr>\n            <th>GUEST-VIEW</th>\n            <td>Allows guests to edit their orders.</td>\n        </tr>\n        <tr>\n            <th>LAST_CATEGORY</th>\n            <td>The last category you visited.</td>\n        </tr>\n        <tr>\n            <th>LAST_PRODUCT</th>\n            <td>The most recent product you have viewed.</td>\n        </tr>\n        <tr>\n            <th>NEWMESSAGE</th>\n            <td>Indicates whether a new message has been received.</td>\n        </tr>\n        <tr>\n            <th>NO_CACHE</th>\n            <td>Indicates whether it is allowed to use cache.</td>\n        </tr>\n        <tr>\n            <th>PERSISTENT_SHOPPING_CART</th>\n            <td>A link to information about your cart and viewing history if you have asked the site.</td>\n        </tr>\n        <tr>\n            <th>POLL</th>\n            <td>The ID of any polls you have recently voted in.</td>\n        </tr>\n        <tr>\n            <th>POLLN</th>\n            <td>Information on what polls you have voted on.</td>\n        </tr>\n        <tr>\n            <th>RECENTLYCOMPARED</th>\n            <td>The items that you have recently compared.            </td>\n        </tr>\n        <tr>\n            <th>STF</th>\n            <td>Information on products you have emailed to friends.</td>\n        </tr>\n        <tr>\n            <th>STORE</th>\n            <td>The store view or language you have selected.</td>\n        </tr>\n        <tr>\n            <th>USER_ALLOWED_SAVE_COOKIE</th>\n            <td>Indicates whether a customer allowed to use cookies.</td>\n        </tr>\n        <tr>\n            <th>VIEWED_PRODUCT_IDS</th>\n            <td>The products that you have recently viewed.</td>\n        </tr>\n        <tr>\n            <th>WISHLIST</th>\n            <td>An encrypted list of products added to your Wishlist.</td>\n        </tr>\n        <tr>\n            <th>WISHLIST_CNT</th>\n            <td>The number of items in your Wishlist.</td>\n        </tr>\n    </tbody>\n</table>',	'2013-09-04 04:21:54',	'2013-09-04 04:21:54',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
+(1,	'404 Not Found 1',	'two_columns_right',	'Page keywords',	'Page description',	'no-route',	NULL,	'<div class=\"page-title\"><h1>Whoops, our bad...</h1></div>\r\n<dl>\r\n<dt>The page you requested was not found, and we have a fine guess why.</dt>\r\n<dd>\r\n<ul class=\"disc\">\r\n<li>If you typed the URL directly, please make sure the spelling is correct.</li>\r\n<li>If you clicked on a link to get here, the link is outdated.</li>\r\n</ul></dd>\r\n</dl>\r\n<dl>\r\n<dt>What can you do?</dt>\r\n<dd>Have no fear, help is near! There are many ways you can get back on track with Magento Store.</dd>\r\n<dd>\r\n<ul class=\"disc\">\r\n<li><a href=\"#\" onclick=\"history.go(-1); return false;\">Go back</a> to the previous page.</li>\r\n<li>Use the search bar at the top of the page to search for your products.</li>\r\n<li>Follow these links to get you back on track!<br /><a href=\"{{store url=\"\"}}\">Store Home</a> <span class=\"separator\">|</span> <a href=\"{{store url=\"customer/account\"}}\">My Account</a></li></ul></dd></dl>\r\n',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(2,	'Home page',	'two_columns_right',	NULL,	NULL,	'home',	NULL,	'<div class=\"page-title\"><h2>Home Page</h2></div>\r\n',	'2013-09-07 12:59:16',	'2013-09-07 12:59:17',	1,	0,	'<!--<reference name=\"content\">\n        <block type=\"catalog/product_new\" name=\"home.catalog.product.new\" alias=\"product_new\" template=\"catalog/product/new.phtml\" after=\"cms_page\">\n            <action method=\"addPriceBlockType\">\n                <type>bundle</type>\n                <block>bundle/catalog_product_price</block>\n                <template>bundle/catalog/product/price.phtml</template>\n            </action>\n        </block>\n        <block type=\"reports/product_viewed\" name=\"home.reports.product.viewed\" alias=\"product_viewed\" template=\"reports/home_product_viewed.phtml\" after=\"product_new\">\n            <action method=\"addPriceBlockType\">\n                <type>bundle</type>\n                <block>bundle/catalog_product_price</block>\n                <template>bundle/catalog/product/price.phtml</template>\n            </action>\n        </block>\n        <block type=\"reports/product_compared\" name=\"home.reports.product.compared\" template=\"reports/home_product_compared.phtml\" after=\"product_viewed\">\n            <action method=\"addPriceBlockType\">\n                <type>bundle</type>\n                <block>bundle/catalog_product_price</block>\n                <template>bundle/catalog/product/price.phtml</template>\n            </action>\n        </block>\n    </reference>\n    <reference name=\"right\">\n        <action method=\"unsetChild\"><alias>right.reports.product.viewed</alias></action>\n        <action method=\"unsetChild\"><alias>right.reports.product.compared</alias></action>\n    </reference>-->',	NULL,	NULL,	NULL,	NULL,	NULL),
+(3,	'About Us',	'two_columns_right',	NULL,	NULL,	'about-magento-demo-store',	NULL,	'<div class=\"page-title\">\r\n<h1>About Magento Store</h1>\r\n</div>\r\n<div class=\"col3-set\">\r\n<div class=\"col-1\"><p><a href=\"http://www.varien.com/\"><img src=\"{{skin url=\'images/media/about_us_img.jpg\'}}\" title=\"Varien\" alt=\"Varien\" /></a></p><p style=\"line-height:1.2em;\"><small>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede.</small></p>\r\n<p style=\"color:#888; font:1.2em/1.4em georgia, serif;\">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta.</p></div>\r\n<div class=\"col-2\">\r\n<p><strong style=\"color:#de036f;\">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit.</strong></p>\r\n<p>Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo. </p>\r\n<p>Maecenas ullamcorper, odio vel tempus egestas, dui orci faucibus orci, sit amet aliquet lectus dolor et quam. Pellentesque consequat luctus purus. Nunc et risus. Etiam a nibh. Phasellus dignissim metus eget nisi. Vestibulum sapien dolor, aliquet nec, porta ac, malesuada a, libero. Praesent feugiat purus eget est. Nulla facilisi. Vestibulum tincidunt sapien eu velit. Mauris purus. Maecenas eget mauris eu orci accumsan feugiat. Pellentesque eget velit. Nunc tincidunt.</p></div>\r\n<div class=\"col-3\">\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper </p>\r\n<p><strong style=\"color:#de036f;\">Maecenas ullamcorper, odio vel tempus egestas, dui orci faucibus orci, sit amet aliquet lectus dolor et quam. Pellentesque consequat luctus purus.</strong></p>\r\n<p>Nunc et risus. Etiam a nibh. Phasellus dignissim metus eget nisi.</p>\r\n<div class=\"divider\"></div>\r\n<p>To all of you, from all of us at Magento Store - Thank you and Happy eCommerce!</p>\r\n<p style=\"line-height:1.2em;\"><strong style=\"font:italic 2em Georgia, serif;\">John Doe</strong><br /><small>Some important guy</small></p></div>\r\n</div>',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(4,	'Customer Service',	'three_columns',	NULL,	NULL,	'customer-service',	NULL,	'<div class=\"page-title\">\r\n<h1>Customer Service</h1>\r\n</div>\r\n<ul class=\"disc\">\r\n<li><a href=\"#answer1\">Shipping &amp; Delivery</a></li>\r\n<li><a href=\"#answer2\">Privacy &amp; Security</a></li>\r\n<li><a href=\"#answer3\">Returns &amp; Replacements</a></li>\r\n<li><a href=\"#answer4\">Ordering</a></li>\r\n<li><a href=\"#answer5\">Payment, Pricing &amp; Promotions</a></li>\r\n<li><a href=\"#answer6\">Viewing Orders</a></li>\r\n<li><a href=\"#answer7\">Updating Account Information</a></li>\r\n</ul>\r\n<dl>\r\n<dt id=\"answer1\">Shipping &amp; Delivery</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer2\">Privacy &amp; Security</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer3\">Returns &amp; Replacements</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer4\">Ordering</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer5\">Payment, Pricing &amp; Promotions</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer6\">Viewing Orders</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n<dt id=\"answer7\">Updating Account Information</dt>\r\n<dd>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi luctus. Duis lobortis. Nulla nec velit. Mauris pulvinar erat non massa. Suspendisse tortor turpis, porta nec, tempus vitae, iaculis semper, pede. Cras vel libero id lectus rhoncus porta. Suspendisse convallis felis ac enim. Vivamus tortor nisl, lobortis in, faucibus et, tempus at, dui. Nunc risus. Proin scelerisque augue. Nam ullamcorper. Phasellus id massa. Pellentesque nisl. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc augue. Aenean sed justo non leo vehicula laoreet. Praesent ipsum libero, auctor ac, tempus nec, tempor nec, justo.</dd>\r\n</dl>',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(5,	'Enable Cookies',	'one_column',	NULL,	NULL,	'enable-cookies',	NULL,	'<div class=\"std\">\r\n    <ul class=\"messages\">\r\n        <li class=\"notice-msg\">\r\n            <ul>\r\n                <li>Please enable cookies in your web browser to continue.</li>\r\n            </ul>\r\n        </li>\r\n    </ul>\r\n    <div class=\"page-title\">\r\n        <h1><a name=\"top\"></a>What are Cookies?</h1>\r\n    </div>\r\n    <p>Cookies are short pieces of data that are sent to your computer when you visit a website. On later visits, this data is then returned to that website. Cookies allow us to recognize you automatically whenever you visit our site so that we can personalize your experience and provide you with better service. We also use cookies (and similar browser data, such as Flash cookies) for fraud prevention and other purposes. If your web browser is set to refuse cookies from our website, you will not be able to complete a purchase or take advantage of certain features of our website, such as storing items in your Shopping Cart or receiving personalized recommendations. As a result, we strongly encourage you to configure your web browser to accept cookies from our website.</p>\r\n    <h2 class=\"subtitle\">Enabling Cookies</h2>\r\n    <ul class=\"disc\">\r\n        <li><a href=\"#ie7\">Internet Explorer 7.x</a></li>\r\n        <li><a href=\"#ie6\">Internet Explorer 6.x</a></li>\r\n        <li><a href=\"#firefox\">Mozilla/Firefox</a></li>\r\n        <li><a href=\"#opera\">Opera 7.x</a></li>\r\n    </ul>\r\n    <h3><a name=\"ie7\"></a>Internet Explorer 7.x</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Start Internet Explorer</p>\r\n        </li>\r\n        <li>\r\n            <p>Under the <strong>Tools</strong> menu, click <strong>Internet Options</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-1.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click the <strong>Privacy</strong> tab</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-2.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click the <strong>Advanced</strong> button</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-3.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Put a check mark in the box for <strong>Override Automatic Cookie Handling</strong>, put another check mark in the <strong>Always accept session cookies </strong>box</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-4.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click <strong>OK</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-5.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click <strong>OK</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie7-6.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Restart Internet Explore</p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n    <h3><a name=\"ie6\"></a>Internet Explorer 6.x</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Select <strong>Internet Options</strong> from the Tools menu</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie6-1.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Privacy</strong> tab</p>\r\n        </li>\r\n        <li>\r\n            <p>Click the <strong>Default</strong> button (or manually slide the bar down to <strong>Medium</strong>) under <strong>Settings</strong>. Click <strong>OK</strong></p>\r\n            <p><img src=\"{{skin url=\"images/cookies/ie6-2.gif\"}}\" alt=\"\" /></p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n    <h3><a name=\"firefox\"></a>Mozilla/Firefox</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Click on the <strong>Tools</strong>-menu in Mozilla</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Options...</strong> item in the menu - a new window open</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Privacy</strong> selection in the left part of the window. (See image below)</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/firefox.png\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>Expand the <strong>Cookies</strong> section</p>\r\n        </li>\r\n        <li>\r\n            <p>Check the <strong>Enable cookies</strong> and <strong>Accept cookies normally</strong> checkboxes</p>\r\n        </li>\r\n        <li>\r\n            <p>Save changes by clicking <strong>Ok</strong>.</p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n    <h3><a name=\"opera\"></a>Opera 7.x</h3>\r\n    <ol>\r\n        <li>\r\n            <p>Click on the <strong>Tools</strong> menu in Opera</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Preferences...</strong> item in the menu - a new window open</p>\r\n        </li>\r\n        <li>\r\n            <p>Click on the <strong>Privacy</strong> selection near the bottom left of the window. (See image below)</p>\r\n            <p><img src=\"{{skin url=\"images/cookies/opera.png\"}}\" alt=\"\" /></p>\r\n        </li>\r\n        <li>\r\n            <p>The <strong>Enable cookies</strong> checkbox must be checked, and <strong>Accept all cookies</strong> should be selected in the &quot;<strong>Normal cookies</strong>&quot; drop-down</p>\r\n        </li>\r\n        <li>\r\n            <p>Save changes by clicking <strong>Ok</strong></p>\r\n        </li>\r\n    </ol>\r\n    <p class=\"a-top\"><a href=\"#top\">Back to Top</a></p>\r\n</div>\r\n',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
+(6,	'Privacy Policy',	'one_column',	NULL,	NULL,	'privacy-policy-cookie-restriction-mode',	'Privacy Policy',	'<p style=\"color: #ff0000; font-weight: bold; font-size: 13px\">\n    Please replace this text with you Privacy Policy.\n    Please add any additional cookies your website uses below (e.g., Google Analytics)\n</p>\n<p>\n    This privacy policy sets out how {{config path=\"general/store_information/name\"}} uses and protects any information\n    that you give {{config path=\"general/store_information/name\"}} when you use this website.\n    {{config path=\"general/store_information/name\"}} is committed to ensuring that your privacy is protected.\n    Should we ask you to provide certain information by which you can be identified when using this website,\n    then you can be assured that it will only be used in accordance with this privacy statement.\n    {{config path=\"general/store_information/name\"}} may change this policy from time to time by updating this page.\n    You should check this page from time to time to ensure that you are happy with any changes.\n</p>\n<h2>What we collect</h2>\n<p>We may collect the following information:</p>\n<ul>\n    <li>name</li>\n    <li>contact information including email address</li>\n    <li>demographic information such as postcode, preferences and interests</li>\n    <li>other information relevant to customer surveys and/or offers</li>\n</ul>\n<p>\n    For the exhaustive list of cookies we collect see the <a href=\"#list\">List of cookies we collect</a> section.\n</p>\n<h2>What we do with the information we gather</h2>\n<p>\n    We require this information to understand your needs and provide you with a better service,\n    and in particular for the following reasons:\n</p>\n<ul>\n    <li>Internal record keeping.</li>\n    <li>We may use the information to improve our products and services.</li>\n    <li>\n        We may periodically send promotional emails about new products, special offers or other information which we\n        think you may find interesting using the email address which you have provided.\n    </li>\n    <li>\n        From time to time, we may also use your information to contact you for market research purposes.\n        We may contact you by email, phone, fax or mail. We may use the information to customise the website\n        according to your interests.\n    </li>\n</ul>\n<h2>Security</h2>\n<p>\n    We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure,\n    we have put in place suitable physical, electronic and managerial procedures to safeguard and secure\n    the information we collect online.\n</p>\n<h2>How we use cookies</h2>\n<p>\n    A cookie is a small file which asks permission to be placed on your computer\'s hard drive.\n    Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit\n    a particular site. Cookies allow web applications to respond to you as an individual. The web application\n    can tailor its operations to your needs, likes and dislikes by gathering and remembering information about\n    your preferences.\n</p>\n<p>\n    We use traffic log cookies to identify which pages are being used. This helps us analyse data about web page traffic\n    and improve our website in order to tailor it to customer needs. We only use this information for statistical\n    analysis purposes and then the data is removed from the system.\n</p>\n<p>\n    Overall, cookies help us provide you with a better website, by enabling us to monitor which pages you find useful\n    and which you do not. A cookie in no way gives us access to your computer or any information about you,\n    other than the data you choose to share with us. You can choose to accept or decline cookies.\n    Most web browsers automatically accept cookies, but you can usually modify your browser setting\n    to decline cookies if you prefer. This may prevent you from taking full advantage of the website.\n</p>\n<h2>Links to other websites</h2>\n<p>\n    Our website may contain links to other websites of interest. However, once you have used these links\n    to leave our site, you should note that we do not have any control over that other website.\n    Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst\n    visiting such sites and such sites are not governed by this privacy statement.\n    You should exercise caution and look at the privacy statement applicable to the website in question.\n</p>\n<h2>Controlling your personal information</h2>\n<p>You may choose to restrict the collection or use of your personal information in the following ways:</p>\n<ul>\n    <li>\n        whenever you are asked to fill in a form on the website, look for the box that you can click to indicate\n        that you do not want the information to be used by anybody for direct marketing purposes\n    </li>\n    <li>\n        if you have previously agreed to us using your personal information for direct marketing purposes,\n        you may change your mind at any time by writing to or emailing us at\n        {{config path=\"trans_email/ident_general/email\"}}\n    </li>\n</ul>\n<p>\n    We will not sell, distribute or lease your personal information to third parties unless we have your permission\n    or are required by law to do so. We may use your personal information to send you promotional information\n    about third parties which we think you may find interesting if you tell us that you wish this to happen.\n</p>\n<p>\n    You may request details of personal information which we hold about you under the Data Protection Act 1998.\n    A small fee will be payable. If you would like a copy of the information held on you please write to\n    {{config path=\"general/store_information/address\"}}.\n</p>\n<p>\n    If you believe that any information we are holding on you is incorrect or incomplete,\n    please write to or email us as soon as possible, at the above address.\n    We will promptly correct any information found to be incorrect.\n</p>\n<h2><a name=\"list\"></a>List of cookies we collect</h2>\n<p>The table below lists the cookies we collect and what information they store.</p>\n<table class=\"data-table\">\n    <thead>\n        <tr>\n            <th>COOKIE name</th>\n            <th>COOKIE Description</th>\n        </tr>\n    </thead>\n    <tbody>\n        <tr>\n            <th>CART</th>\n            <td>The association with your shopping cart.</td>\n        </tr>\n        <tr>\n            <th>CATEGORY_INFO</th>\n            <td>Stores the category info on the page, that allows to display pages more quickly.</td>\n        </tr>\n        <tr>\n            <th>COMPARE</th>\n            <td>The items that you have in the Compare Products list.</td>\n        </tr>\n        <tr>\n            <th>CURRENCY</th>\n            <td>Your preferred currency</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER</th>\n            <td>An encrypted version of your customer id with the store.</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER_AUTH</th>\n            <td>An indicator if you are currently logged into the store.</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER_INFO</th>\n            <td>An encrypted version of the customer group you belong to.</td>\n        </tr>\n        <tr>\n            <th>CUSTOMER_SEGMENT_IDS</th>\n            <td>Stores the Customer Segment ID</td>\n        </tr>\n        <tr>\n            <th>EXTERNAL_NO_CACHE</th>\n            <td>A flag, which indicates whether caching is disabled or not.</td>\n        </tr>\n        <tr>\n            <th>FRONTEND</th>\n            <td>You sesssion ID on the server.</td>\n        </tr>\n        <tr>\n            <th>GUEST-VIEW</th>\n            <td>Allows guests to edit their orders.</td>\n        </tr>\n        <tr>\n            <th>LAST_CATEGORY</th>\n            <td>The last category you visited.</td>\n        </tr>\n        <tr>\n            <th>LAST_PRODUCT</th>\n            <td>The most recent product you have viewed.</td>\n        </tr>\n        <tr>\n            <th>NEWMESSAGE</th>\n            <td>Indicates whether a new message has been received.</td>\n        </tr>\n        <tr>\n            <th>NO_CACHE</th>\n            <td>Indicates whether it is allowed to use cache.</td>\n        </tr>\n        <tr>\n            <th>PERSISTENT_SHOPPING_CART</th>\n            <td>A link to information about your cart and viewing history if you have asked the site.</td>\n        </tr>\n        <tr>\n            <th>POLL</th>\n            <td>The ID of any polls you have recently voted in.</td>\n        </tr>\n        <tr>\n            <th>POLLN</th>\n            <td>Information on what polls you have voted on.</td>\n        </tr>\n        <tr>\n            <th>RECENTLYCOMPARED</th>\n            <td>The items that you have recently compared.            </td>\n        </tr>\n        <tr>\n            <th>STF</th>\n            <td>Information on products you have emailed to friends.</td>\n        </tr>\n        <tr>\n            <th>STORE</th>\n            <td>The store view or language you have selected.</td>\n        </tr>\n        <tr>\n            <th>USER_ALLOWED_SAVE_COOKIE</th>\n            <td>Indicates whether a customer allowed to use cookies.</td>\n        </tr>\n        <tr>\n            <th>VIEWED_PRODUCT_IDS</th>\n            <td>The products that you have recently viewed.</td>\n        </tr>\n        <tr>\n            <th>WISHLIST</th>\n            <td>An encrypted list of products added to your Wishlist.</td>\n        </tr>\n        <tr>\n            <th>WISHLIST_CNT</th>\n            <td>The number of items in your Wishlist.</td>\n        </tr>\n    </tbody>\n</table>',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	1,	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
 
 DROP TABLE IF EXISTS `cms_page_store`;
 CREATE TABLE `cms_page_store` (
@@ -2041,7 +2245,14 @@ INSERT INTO `core_config_data` (`config_id`, `scope`, `scope_id`, `path`, `value
 (1,	'default',	0,	'general/region/display_all',	'1'),
 (2,	'default',	0,	'general/region/state_required',	'AT,CA,CH,DE,EE,ES,FI,FR,LT,LV,RO,US'),
 (3,	'default',	0,	'catalog/category/root_id',	'2'),
-(4,	'default',	0,	'admin/dashboard/enable_charts',	'0');
+(4,	'default',	0,	'admin/dashboard/enable_charts',	'1'),
+(5,	'default',	0,	'web/unsecure/base_url',	'http://magento.domain.my/'),
+(6,	'default',	0,	'web/secure/base_url',	'http://magento.domain.my/'),
+(7,	'default',	0,	'general/locale/code',	'en_US'),
+(8,	'default',	0,	'general/locale/timezone',	'Europe/Berlin'),
+(9,	'default',	0,	'currency/options/base',	'DKK'),
+(10,	'default',	0,	'currency/options/default',	'DKK'),
+(11,	'default',	0,	'currency/options/allow',	'DKK');
 
 DROP TABLE IF EXISTS `core_email_template`;
 CREATE TABLE `core_email_template` (
@@ -2076,7 +2287,8 @@ CREATE TABLE `core_flag` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Flag';
 
 INSERT INTO `core_flag` (`flag_id`, `flag_code`, `state`, `flag_data`, `last_update`) VALUES
-(1,	'admin_notification_survey',	0,	'a:1:{s:13:\"survey_viewed\";b:1;}',	'2013-09-04 04:22:41');
+(1,	'admin_notification_survey',	0,	'a:1:{s:13:\"survey_viewed\";b:1;}',	'2013-09-07 13:00:20'),
+(2,	'catalog_product_flat',	0,	'a:1:{s:8:\"is_built\";b:1;}',	'2013-09-07 13:00:55');
 
 DROP TABLE IF EXISTS `core_layout_link`;
 CREATE TABLE `core_layout_link` (
@@ -2255,6 +2467,8 @@ CREATE TABLE `core_url_rewrite` (
   CONSTRAINT `FK_CORE_URL_REWRITE_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Url Rewrites';
 
+INSERT INTO `core_url_rewrite` (`url_rewrite_id`, `store_id`, `id_path`, `request_path`, `target_path`, `is_system`, `options`, `description`, `category_id`, `product_id`) VALUES
+(1,	1,	'category/3',	'test1-category.html',	'catalog/category/view/id/3',	1,	NULL,	NULL,	3,	NULL);
 
 DROP TABLE IF EXISTS `core_variable`;
 CREATE TABLE `core_variable` (
@@ -2870,12 +3084,12 @@ CREATE TABLE `dataflow_profile` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dataflow Profile';
 
 INSERT INTO `dataflow_profile` (`profile_id`, `name`, `created_at`, `updated_at`, `actions_xml`, `gui_data`, `direction`, `entity_type`, `store_id`, `data_transfer`) VALUES
-(1,	'Export All Products',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	'<action type=\"catalog/convert_adapter_product\" method=\"load\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"catalog/convert_parser_product\" method=\"unparse\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_mapper_column\" method=\"map\">\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_parser_csv\" method=\"unparse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_adapter_io\" method=\"save\">\\r\\n    <var name=\"type\">file</var>\\r\\n    <var name=\"path\">var/export</var>\\r\\n    <var name=\"filename\"><![CDATA[export_all_products.csv]]></var>\\r\\n</action>\\r\\n\\r\\n',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:23:\"export_all_products.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'export',	'product',	0,	'file'),
-(2,	'Export Product Stocks',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	'<action type=\"catalog/convert_adapter_product\" method=\"load\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"catalog/convert_parser_product\" method=\"unparse\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_mapper_column\" method=\"map\">\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_parser_csv\" method=\"unparse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_adapter_io\" method=\"save\">\\r\\n    <var name=\"type\">file</var>\\r\\n    <var name=\"path\">var/export</var>\\r\\n    <var name=\"filename\"><![CDATA[export_all_products.csv]]></var>\\r\\n</action>\\r\\n\\r\\n',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:25:\"export_product_stocks.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:4:\"true\";s:7:\"product\";a:2:{s:2:\"db\";a:4:{i:1;s:5:\"store\";i:2;s:3:\"sku\";i:3;s:3:\"qty\";i:4;s:11:\"is_in_stock\";}s:4:\"file\";a:4:{i:1;s:5:\"store\";i:2;s:3:\"sku\";i:3;s:3:\"qty\";i:4;s:11:\"is_in_stock\";}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'export',	'product',	0,	'file'),
-(3,	'Import All Products',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	'<action type=\"dataflow/convert_parser_csv\" method=\"parse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"adapter\">catalog/convert_adapter_product</var>\\r\\n    <var name=\"method\">parse</var>\\r\\n</action>',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:23:\"export_all_products.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'import',	'product',	0,	'interactive'),
-(4,	'Import Product Stocks',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	'<action type=\"dataflow/convert_parser_csv\" method=\"parse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"adapter\">catalog/convert_adapter_product</var>\\r\\n    <var name=\"method\">parse</var>\\r\\n</action>',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:18:\"export_product.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'import',	'product',	0,	'interactive'),
-(5,	'Export Customers',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	'<action type=\"customer/convert_adapter_customer\" method=\"load\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"filter/adressType\"><![CDATA[default_billing]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"customer/convert_parser_customer\" method=\"unparse\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_mapper_column\" method=\"map\">\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_parser_csv\" method=\"unparse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_adapter_io\" method=\"save\">\\r\\n    <var name=\"type\">file</var>\\r\\n    <var name=\"path\">var/export</var>\\r\\n    <var name=\"filename\"><![CDATA[export_customers.csv]]></var>\\r\\n</action>\\r\\n\\r\\n',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:20:\"export_customers.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'export',	'customer',	0,	'file'),
-(6,	'Import Customers',	'2013-09-04 04:21:53',	'2013-09-04 04:21:53',	'<action type=\"dataflow/convert_parser_csv\" method=\"parse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"adapter\">customer/convert_adapter_customer</var>\\r\\n    <var name=\"method\">parse</var>\\r\\n</action>',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:19:\"export_customer.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'import',	'customer',	0,	'interactive');
+(1,	'Export All Products',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	'<action type=\"catalog/convert_adapter_product\" method=\"load\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"catalog/convert_parser_product\" method=\"unparse\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_mapper_column\" method=\"map\">\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_parser_csv\" method=\"unparse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_adapter_io\" method=\"save\">\\r\\n    <var name=\"type\">file</var>\\r\\n    <var name=\"path\">var/export</var>\\r\\n    <var name=\"filename\"><![CDATA[export_all_products.csv]]></var>\\r\\n</action>\\r\\n\\r\\n',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:23:\"export_all_products.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'export',	'product',	0,	'file'),
+(2,	'Export Product Stocks',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	'<action type=\"catalog/convert_adapter_product\" method=\"load\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"catalog/convert_parser_product\" method=\"unparse\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_mapper_column\" method=\"map\">\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_parser_csv\" method=\"unparse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_adapter_io\" method=\"save\">\\r\\n    <var name=\"type\">file</var>\\r\\n    <var name=\"path\">var/export</var>\\r\\n    <var name=\"filename\"><![CDATA[export_all_products.csv]]></var>\\r\\n</action>\\r\\n\\r\\n',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:25:\"export_product_stocks.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:4:\"true\";s:7:\"product\";a:2:{s:2:\"db\";a:4:{i:1;s:5:\"store\";i:2;s:3:\"sku\";i:3;s:3:\"qty\";i:4;s:11:\"is_in_stock\";}s:4:\"file\";a:4:{i:1;s:5:\"store\";i:2;s:3:\"sku\";i:3;s:3:\"qty\";i:4;s:11:\"is_in_stock\";}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'export',	'product',	0,	'file'),
+(3,	'Import All Products',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	'<action type=\"dataflow/convert_parser_csv\" method=\"parse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"adapter\">catalog/convert_adapter_product</var>\\r\\n    <var name=\"method\">parse</var>\\r\\n</action>',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:23:\"export_all_products.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'import',	'product',	0,	'interactive'),
+(4,	'Import Product Stocks',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	'<action type=\"dataflow/convert_parser_csv\" method=\"parse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"adapter\">catalog/convert_adapter_product</var>\\r\\n    <var name=\"method\">parse</var>\\r\\n</action>',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:18:\"export_product.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'import',	'product',	0,	'interactive'),
+(5,	'Export Customers',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	'<action type=\"customer/convert_adapter_customer\" method=\"load\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"filter/adressType\"><![CDATA[default_billing]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"customer/convert_parser_customer\" method=\"unparse\">\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_mapper_column\" method=\"map\">\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_parser_csv\" method=\"unparse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n</action>\\r\\n\\r\\n<action type=\"dataflow/convert_adapter_io\" method=\"save\">\\r\\n    <var name=\"type\">file</var>\\r\\n    <var name=\"path\">var/export</var>\\r\\n    <var name=\"filename\"><![CDATA[export_customers.csv]]></var>\\r\\n</action>\\r\\n\\r\\n',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:20:\"export_customers.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'export',	'customer',	0,	'file'),
+(6,	'Import Customers',	'2013-09-07 12:59:16',	'2013-09-07 12:59:16',	'<action type=\"dataflow/convert_parser_csv\" method=\"parse\">\\r\\n    <var name=\"delimiter\"><![CDATA[,]]></var>\\r\\n    <var name=\"enclose\"><![CDATA[\"]]></var>\\r\\n    <var name=\"fieldnames\">true</var>\\r\\n    <var name=\"store\"><![CDATA[0]]></var>\\r\\n    <var name=\"adapter\">customer/convert_adapter_customer</var>\\r\\n    <var name=\"method\">parse</var>\\r\\n</action>',	'a:5:{s:4:\"file\";a:7:{s:4:\"type\";s:4:\"file\";s:8:\"filename\";s:19:\"export_customer.csv\";s:4:\"path\";s:10:\"var/export\";s:4:\"host\";s:0:\"\";s:4:\"user\";s:0:\"\";s:8:\"password\";s:0:\"\";s:7:\"passive\";s:0:\"\";}s:5:\"parse\";a:5:{s:4:\"type\";s:3:\"csv\";s:12:\"single_sheet\";s:0:\"\";s:9:\"delimiter\";s:1:\",\";s:7:\"enclose\";s:1:\"\"\";s:10:\"fieldnames\";s:4:\"true\";}s:3:\"map\";a:3:{s:14:\"only_specified\";s:0:\"\";s:7:\"product\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}s:8:\"customer\";a:2:{s:2:\"db\";a:0:{}s:4:\"file\";a:0:{}}}s:7:\"product\";a:1:{s:6:\"filter\";a:8:{s:4:\"name\";s:0:\"\";s:3:\"sku\";s:0:\"\";s:4:\"type\";s:1:\"0\";s:13:\"attribute_set\";s:0:\"\";s:5:\"price\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:3:\"qty\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}s:10:\"visibility\";s:1:\"0\";s:6:\"status\";s:1:\"0\";}}s:8:\"customer\";a:1:{s:6:\"filter\";a:10:{s:9:\"firstname\";s:0:\"\";s:8:\"lastname\";s:0:\"\";s:5:\"email\";s:0:\"\";s:5:\"group\";s:1:\"0\";s:10:\"adressType\";s:15:\"default_billing\";s:9:\"telephone\";s:0:\"\";s:8:\"postcode\";s:0:\"\";s:7:\"country\";s:0:\"\";s:6:\"region\";s:0:\"\";s:10:\"created_at\";a:2:{s:4:\"from\";s:0:\"\";s:2:\"to\";s:0:\"\";}}}}',	'import',	'customer',	0,	'interactive');
 
 DROP TABLE IF EXISTS `dataflow_profile_history`;
 CREATE TABLE `dataflow_profile_history` (
@@ -2890,12 +3104,12 @@ CREATE TABLE `dataflow_profile_history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Dataflow Profile History';
 
 INSERT INTO `dataflow_profile_history` (`history_id`, `profile_id`, `action_code`, `user_id`, `performed_at`) VALUES
-(1,	1,	'create',	0,	'2013-09-04 04:21:53'),
-(2,	2,	'create',	0,	'2013-09-04 04:21:53'),
-(3,	3,	'create',	0,	'2013-09-04 04:21:53'),
-(4,	4,	'create',	0,	'2013-09-04 04:21:53'),
-(5,	5,	'create',	0,	'2013-09-04 04:21:53'),
-(6,	6,	'create',	0,	'2013-09-04 04:21:53');
+(1,	1,	'create',	0,	'2013-09-07 12:59:16'),
+(2,	2,	'create',	0,	'2013-09-07 12:59:16'),
+(3,	3,	'create',	0,	'2013-09-07 12:59:16'),
+(4,	4,	'create',	0,	'2013-09-07 12:59:16'),
+(5,	5,	'create',	0,	'2013-09-07 12:59:16'),
+(6,	6,	'create',	0,	'2013-09-07 12:59:16');
 
 DROP TABLE IF EXISTS `dataflow_session`;
 CREATE TABLE `dataflow_session` (
@@ -5095,8 +5309,9 @@ CREATE TABLE `index_event` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Index Event';
 
 INSERT INTO `index_event` (`event_id`, `type`, `entity`, `entity_pk`, `created_at`, `old_data`, `new_data`) VALUES
-(1,	'save',	'catalog_category',	1,	'2013-09-04 04:22:02',	NULL,	'a:5:{s:35:\"cataloginventory_stock_match_result\";b:0;s:34:\"catalog_product_price_match_result\";b:0;s:24:\"catalog_url_match_result\";b:1;s:37:\"catalog_category_product_match_result\";b:1;s:35:\"catalogsearch_fulltext_match_result\";b:1;}'),
-(2,	'save',	'catalog_category',	2,	'2013-09-04 04:22:03',	NULL,	'a:5:{s:35:\"cataloginventory_stock_match_result\";b:0;s:34:\"catalog_product_price_match_result\";b:0;s:24:\"catalog_url_match_result\";b:1;s:37:\"catalog_category_product_match_result\";b:1;s:35:\"catalogsearch_fulltext_match_result\";b:1;}');
+(1,	'save',	'catalog_category',	1,	'2013-09-07 12:59:17',	NULL,	'a:5:{s:35:\"cataloginventory_stock_match_result\";b:0;s:34:\"catalog_product_price_match_result\";b:0;s:24:\"catalog_url_match_result\";b:1;s:37:\"catalog_category_product_match_result\";b:1;s:35:\"catalogsearch_fulltext_match_result\";b:1;}'),
+(2,	'save',	'catalog_category',	2,	'2013-09-07 12:59:17',	NULL,	'a:5:{s:35:\"cataloginventory_stock_match_result\";b:0;s:34:\"catalog_product_price_match_result\";b:0;s:24:\"catalog_url_match_result\";b:1;s:37:\"catalog_category_product_match_result\";b:1;s:35:\"catalogsearch_fulltext_match_result\";b:1;}'),
+(3,	'save',	'catalog_category',	3,	'2013-09-07 13:01:54',	NULL,	'a:6:{s:35:\"cataloginventory_stock_match_result\";b:0;s:34:\"catalog_product_price_match_result\";b:0;s:24:\"catalog_url_match_result\";b:1;s:33:\"catalog_product_flat_match_result\";b:0;s:37:\"catalog_category_product_match_result\";b:1;s:35:\"catalogsearch_fulltext_match_result\";b:1;}');
 
 DROP TABLE IF EXISTS `index_process`;
 CREATE TABLE `index_process` (
@@ -5111,15 +5326,15 @@ CREATE TABLE `index_process` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Index Process';
 
 INSERT INTO `index_process` (`process_id`, `indexer_code`, `status`, `started_at`, `ended_at`, `mode`) VALUES
-(1,	'catalog_product_attribute',	'require_reindex',	NULL,	NULL,	'real_time'),
-(2,	'catalog_product_price',	'require_reindex',	NULL,	NULL,	'real_time'),
-(3,	'catalog_url',	'require_reindex',	'2013-09-04 04:22:03',	'2013-09-04 04:22:03',	'real_time'),
-(4,	'catalog_product_flat',	'require_reindex',	NULL,	NULL,	'real_time'),
-(5,	'catalog_category_flat',	'require_reindex',	NULL,	NULL,	'real_time'),
-(6,	'catalog_category_product',	'require_reindex',	'2013-09-04 04:22:03',	'2013-09-04 04:22:03',	'real_time'),
-(7,	'catalogsearch_fulltext',	'require_reindex',	'2013-09-04 04:22:03',	'2013-09-04 04:22:03',	'real_time'),
-(8,	'cataloginventory_stock',	'require_reindex',	NULL,	NULL,	'real_time'),
-(9,	'tag_summary',	'require_reindex',	NULL,	NULL,	'real_time');
+(1,	'catalog_product_attribute',	'pending',	'2013-09-07 13:00:55',	'2013-09-07 13:00:55',	'real_time'),
+(2,	'catalog_product_price',	'pending',	'2013-09-07 13:00:55',	'2013-09-07 13:00:55',	'real_time'),
+(3,	'catalog_url',	'pending',	'2013-09-07 13:01:54',	'2013-09-07 13:01:54',	'real_time'),
+(4,	'catalog_product_flat',	'pending',	'2013-09-07 13:00:55',	'2013-09-07 13:00:55',	'real_time'),
+(5,	'catalog_category_flat',	'pending',	'2013-09-07 13:00:55',	'2013-09-07 13:00:55',	'real_time'),
+(6,	'catalog_category_product',	'pending',	'2013-09-07 13:01:54',	'2013-09-07 13:01:54',	'real_time'),
+(7,	'catalogsearch_fulltext',	'pending',	'2013-09-07 13:01:54',	'2013-09-07 13:01:54',	'real_time'),
+(8,	'cataloginventory_stock',	'pending',	'2013-09-07 13:00:54',	'2013-09-07 13:00:55',	'real_time'),
+(9,	'tag_summary',	'pending',	'2013-09-07 13:00:55',	'2013-09-07 13:00:55',	'real_time');
 
 DROP TABLE IF EXISTS `index_process_event`;
 CREATE TABLE `index_process_event` (
@@ -5191,7 +5406,9 @@ CREATE TABLE `log_url` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Log URL Table';
 
 INSERT INTO `log_url` (`url_id`, `visitor_id`, `visit_time`) VALUES
-(1,	1,	'2013-09-04 04:22:46');
+(1,	1,	'2013-09-07 13:00:22'),
+(2,	1,	'2013-09-07 13:02:16'),
+(3,	1,	'2013-09-07 13:02:19');
 
 DROP TABLE IF EXISTS `log_url_info`;
 CREATE TABLE `log_url_info` (
@@ -5202,7 +5419,9 @@ CREATE TABLE `log_url_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Log URL Info Table';
 
 INSERT INTO `log_url_info` (`url_id`, `url`, `referer`) VALUES
-(1,	'http://localhost/Importer/magento/index.php/',	'http://localhost/Importer/magento/index.php/install/wizard/end/');
+(1,	'http://magento.domain.my/index.php/',	'http://magento.domain.my/index.php/install/wizard/end/'),
+(2,	'http://magento.domain.my/index.php/',	NULL),
+(3,	'http://magento.domain.my/index.php/',	NULL);
 
 DROP TABLE IF EXISTS `log_visitor`;
 CREATE TABLE `log_visitor` (
@@ -5216,7 +5435,7 @@ CREATE TABLE `log_visitor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Log Visitors Table';
 
 INSERT INTO `log_visitor` (`visitor_id`, `session_id`, `first_visit_at`, `last_visit_at`, `last_url_id`, `store_id`) VALUES
-(1,	'r7p9e6tqkesrmcn7c1ujs546e7',	'2013-09-04 04:22:45',	'2013-09-04 04:22:46',	1,	1);
+(1,	'snd91mri8qjeeu79vf0kinnkd0',	'2013-09-07 13:00:22',	'2013-09-07 13:02:19',	3,	1);
 
 DROP TABLE IF EXISTS `log_visitor_info`;
 CREATE TABLE `log_visitor_info` (
@@ -5231,7 +5450,7 @@ CREATE TABLE `log_visitor_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Log Visitor Info Table';
 
 INSERT INTO `log_visitor_info` (`visitor_id`, `http_referer`, `http_user_agent`, `http_accept_charset`, `http_accept_language`, `server_addr`, `remote_addr`) VALUES
-(1,	'http://localhost/Importer/magento/index.php/install/wizard/end/',	'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36',	NULL,	'en-US,en;q=0.8,da;q=0.6',	2130706433,	2130706433);
+(1,	'http://magento.domain.my/index.php/install/wizard/end/',	'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/28.0.1500.71 Chrome/28.0.1500.71 Safari/537.36',	NULL,	'en-US,en;q=0.8,da;q=0.6',	2130706433,	2130706433);
 
 DROP TABLE IF EXISTS `log_visitor_online`;
 CREATE TABLE `log_visitor_online` (
@@ -5493,7 +5712,7 @@ CREATE TABLE `poll` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Poll';
 
 INSERT INTO `poll` (`poll_id`, `poll_title`, `votes_count`, `store_id`, `date_posted`, `date_closed`, `active`, `closed`, `answers_display`) VALUES
-(1,	'What is your favorite color',	7,	0,	'2013-09-04 06:22:03',	NULL,	1,	0,	NULL);
+(1,	'What is your favorite color',	7,	0,	'2013-09-07 14:59:17',	NULL,	1,	0,	NULL);
 
 DROP TABLE IF EXISTS `poll_answer`;
 CREATE TABLE `poll_answer` (
@@ -5916,6 +6135,140 @@ CREATE TABLE `review_store` (
   CONSTRAINT `FK_REVIEW_STORE_REVIEW_ID_REVIEW_REVIEW_ID` FOREIGN KEY (`review_id`) REFERENCES `review` (`review_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_REVIEW_STORE_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Review Store';
+
+
+DROP TABLE IF EXISTS `salesrule`;
+CREATE TABLE `salesrule` (
+  `rule_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Id',
+  `name` varchar(255) DEFAULT NULL COMMENT 'Name',
+  `description` text COMMENT 'Description',
+  `from_date` date DEFAULT NULL,
+  `to_date` date DEFAULT NULL,
+  `uses_per_customer` int(11) NOT NULL DEFAULT '0' COMMENT 'Uses Per Customer',
+  `is_active` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Is Active',
+  `conditions_serialized` mediumtext COMMENT 'Conditions Serialized',
+  `actions_serialized` mediumtext COMMENT 'Actions Serialized',
+  `stop_rules_processing` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Stop Rules Processing',
+  `is_advanced` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Is Advanced',
+  `product_ids` text COMMENT 'Product Ids',
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
+  `simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action',
+  `discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount',
+  `discount_qty` decimal(12,4) DEFAULT NULL COMMENT 'Discount Qty',
+  `discount_step` int(10) unsigned NOT NULL COMMENT 'Discount Step',
+  `simple_free_shipping` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Simple Free Shipping',
+  `apply_to_shipping` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Apply To Shipping',
+  `times_used` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
+  `is_rss` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Is Rss',
+  `coupon_type` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Coupon Type',
+  `use_auto_generation` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Use Auto Generation',
+  `uses_per_coupon` int(11) NOT NULL DEFAULT '0' COMMENT 'Uses Per Coupon',
+  PRIMARY KEY (`rule_id`),
+  KEY `IDX_SALESRULE_IS_ACTIVE_SORT_ORDER_TO_DATE_FROM_DATE` (`is_active`,`sort_order`,`to_date`,`from_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule';
+
+
+DROP TABLE IF EXISTS `salesrule_coupon`;
+CREATE TABLE `salesrule_coupon` (
+  `coupon_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Coupon Id',
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `code` varchar(255) DEFAULT NULL COMMENT 'Code',
+  `usage_limit` int(10) unsigned DEFAULT NULL COMMENT 'Usage Limit',
+  `usage_per_customer` int(10) unsigned DEFAULT NULL COMMENT 'Usage Per Customer',
+  `times_used` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
+  `expiration_date` timestamp NULL DEFAULT NULL COMMENT 'Expiration Date',
+  `is_primary` smallint(5) unsigned DEFAULT NULL COMMENT 'Is Primary',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Coupon Code Creation Date',
+  `type` smallint(6) DEFAULT '0' COMMENT 'Coupon Code Type',
+  PRIMARY KEY (`coupon_id`),
+  UNIQUE KEY `UNQ_SALESRULE_COUPON_CODE` (`code`),
+  UNIQUE KEY `UNQ_SALESRULE_COUPON_RULE_ID_IS_PRIMARY` (`rule_id`,`is_primary`),
+  KEY `IDX_SALESRULE_COUPON_RULE_ID` (`rule_id`),
+  CONSTRAINT `FK_SALESRULE_COUPON_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Coupon';
+
+
+DROP TABLE IF EXISTS `salesrule_coupon_usage`;
+CREATE TABLE `salesrule_coupon_usage` (
+  `coupon_id` int(10) unsigned NOT NULL COMMENT 'Coupon Id',
+  `customer_id` int(10) unsigned NOT NULL COMMENT 'Customer Id',
+  `times_used` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
+  PRIMARY KEY (`coupon_id`,`customer_id`),
+  KEY `IDX_SALESRULE_COUPON_USAGE_COUPON_ID` (`coupon_id`),
+  KEY `IDX_SALESRULE_COUPON_USAGE_CUSTOMER_ID` (`customer_id`),
+  CONSTRAINT `FK_SALESRULE_COUPON_USAGE_COUPON_ID_SALESRULE_COUPON_COUPON_ID` FOREIGN KEY (`coupon_id`) REFERENCES `salesrule_coupon` (`coupon_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_SALESRULE_COUPON_USAGE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID` FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Coupon Usage';
+
+
+DROP TABLE IF EXISTS `salesrule_customer`;
+CREATE TABLE `salesrule_customer` (
+  `rule_customer_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Customer Id',
+  `rule_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Rule Id',
+  `customer_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Id',
+  `times_used` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
+  PRIMARY KEY (`rule_customer_id`),
+  KEY `IDX_SALESRULE_CUSTOMER_RULE_ID_CUSTOMER_ID` (`rule_id`,`customer_id`),
+  KEY `IDX_SALESRULE_CUSTOMER_CUSTOMER_ID_RULE_ID` (`customer_id`,`rule_id`),
+  CONSTRAINT `FK_SALESRULE_CUSTOMER_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID` FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_SALESRULE_CUSTOMER_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Customer';
+
+
+DROP TABLE IF EXISTS `salesrule_customer_group`;
+CREATE TABLE `salesrule_customer_group` (
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `customer_group_id` smallint(5) unsigned NOT NULL COMMENT 'Customer Group Id',
+  PRIMARY KEY (`rule_id`,`customer_group_id`),
+  KEY `IDX_SALESRULE_CUSTOMER_GROUP_RULE_ID` (`rule_id`),
+  KEY `IDX_SALESRULE_CUSTOMER_GROUP_CUSTOMER_GROUP_ID` (`customer_group_id`),
+  CONSTRAINT `FK_SALESRULE_CUSTOMER_GROUP_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_SALESRULE_CSTR_GROUP_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Sales Rules To Customer Groups Relations';
+
+
+DROP TABLE IF EXISTS `salesrule_label`;
+CREATE TABLE `salesrule_label` (
+  `label_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Label Id',
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `store_id` smallint(5) unsigned NOT NULL COMMENT 'Store Id',
+  `label` varchar(255) DEFAULT NULL COMMENT 'Label',
+  PRIMARY KEY (`label_id`),
+  UNIQUE KEY `UNQ_SALESRULE_LABEL_RULE_ID_STORE_ID` (`rule_id`,`store_id`),
+  KEY `IDX_SALESRULE_LABEL_STORE_ID` (`store_id`),
+  KEY `IDX_SALESRULE_LABEL_RULE_ID` (`rule_id`),
+  CONSTRAINT `FK_SALESRULE_LABEL_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_SALESRULE_LABEL_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Label';
+
+
+DROP TABLE IF EXISTS `salesrule_product_attribute`;
+CREATE TABLE `salesrule_product_attribute` (
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  `customer_group_id` smallint(5) unsigned NOT NULL COMMENT 'Customer Group Id',
+  `attribute_id` smallint(5) unsigned NOT NULL COMMENT 'Attribute Id',
+  PRIMARY KEY (`rule_id`,`website_id`,`customer_group_id`,`attribute_id`),
+  KEY `IDX_SALESRULE_PRODUCT_ATTRIBUTE_WEBSITE_ID` (`website_id`),
+  KEY `IDX_SALESRULE_PRODUCT_ATTRIBUTE_CUSTOMER_GROUP_ID` (`customer_group_id`),
+  KEY `IDX_SALESRULE_PRODUCT_ATTRIBUTE_ATTRIBUTE_ID` (`attribute_id`),
+  CONSTRAINT `FK_SALESRULE_PRD_ATTR_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SALESRULE_PRD_ATTR_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SALESRULE_PRODUCT_ATTRIBUTE_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `FK_SALESRULE_PRD_ATTR_WS_ID_CORE_WS_WS_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Product Attribute';
+
+
+DROP TABLE IF EXISTS `salesrule_website`;
+CREATE TABLE `salesrule_website` (
+  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
+  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
+  PRIMARY KEY (`rule_id`,`website_id`),
+  KEY `IDX_SALESRULE_WEBSITE_RULE_ID` (`rule_id`),
+  KEY `IDX_SALESRULE_WEBSITE_WEBSITE_ID` (`website_id`),
+  CONSTRAINT `FK_SALESRULE_WEBSITE_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_SALESRULE_WEBSITE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Sales Rules To Websites Relations';
 
 
 DROP TABLE IF EXISTS `sales_bestsellers_aggregated_daily`;
@@ -7454,140 +7807,6 @@ CREATE TABLE `sales_shipping_aggregated_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Sales Shipping Aggregated Order';
 
 
-DROP TABLE IF EXISTS `salesrule`;
-CREATE TABLE `salesrule` (
-  `rule_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Id',
-  `name` varchar(255) DEFAULT NULL COMMENT 'Name',
-  `description` text COMMENT 'Description',
-  `from_date` date DEFAULT NULL,
-  `to_date` date DEFAULT NULL,
-  `uses_per_customer` int(11) NOT NULL DEFAULT '0' COMMENT 'Uses Per Customer',
-  `is_active` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Is Active',
-  `conditions_serialized` mediumtext COMMENT 'Conditions Serialized',
-  `actions_serialized` mediumtext COMMENT 'Actions Serialized',
-  `stop_rules_processing` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Stop Rules Processing',
-  `is_advanced` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Is Advanced',
-  `product_ids` text COMMENT 'Product Ids',
-  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Sort Order',
-  `simple_action` varchar(32) DEFAULT NULL COMMENT 'Simple Action',
-  `discount_amount` decimal(12,4) NOT NULL DEFAULT '0.0000' COMMENT 'Discount Amount',
-  `discount_qty` decimal(12,4) DEFAULT NULL COMMENT 'Discount Qty',
-  `discount_step` int(10) unsigned NOT NULL COMMENT 'Discount Step',
-  `simple_free_shipping` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Simple Free Shipping',
-  `apply_to_shipping` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Apply To Shipping',
-  `times_used` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
-  `is_rss` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Is Rss',
-  `coupon_type` smallint(5) unsigned NOT NULL DEFAULT '1' COMMENT 'Coupon Type',
-  `use_auto_generation` smallint(6) NOT NULL DEFAULT '0' COMMENT 'Use Auto Generation',
-  `uses_per_coupon` int(11) NOT NULL DEFAULT '0' COMMENT 'Uses Per Coupon',
-  PRIMARY KEY (`rule_id`),
-  KEY `IDX_SALESRULE_IS_ACTIVE_SORT_ORDER_TO_DATE_FROM_DATE` (`is_active`,`sort_order`,`to_date`,`from_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule';
-
-
-DROP TABLE IF EXISTS `salesrule_coupon`;
-CREATE TABLE `salesrule_coupon` (
-  `coupon_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Coupon Id',
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `code` varchar(255) DEFAULT NULL COMMENT 'Code',
-  `usage_limit` int(10) unsigned DEFAULT NULL COMMENT 'Usage Limit',
-  `usage_per_customer` int(10) unsigned DEFAULT NULL COMMENT 'Usage Per Customer',
-  `times_used` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
-  `expiration_date` timestamp NULL DEFAULT NULL COMMENT 'Expiration Date',
-  `is_primary` smallint(5) unsigned DEFAULT NULL COMMENT 'Is Primary',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Coupon Code Creation Date',
-  `type` smallint(6) DEFAULT '0' COMMENT 'Coupon Code Type',
-  PRIMARY KEY (`coupon_id`),
-  UNIQUE KEY `UNQ_SALESRULE_COUPON_CODE` (`code`),
-  UNIQUE KEY `UNQ_SALESRULE_COUPON_RULE_ID_IS_PRIMARY` (`rule_id`,`is_primary`),
-  KEY `IDX_SALESRULE_COUPON_RULE_ID` (`rule_id`),
-  CONSTRAINT `FK_SALESRULE_COUPON_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Coupon';
-
-
-DROP TABLE IF EXISTS `salesrule_coupon_usage`;
-CREATE TABLE `salesrule_coupon_usage` (
-  `coupon_id` int(10) unsigned NOT NULL COMMENT 'Coupon Id',
-  `customer_id` int(10) unsigned NOT NULL COMMENT 'Customer Id',
-  `times_used` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
-  PRIMARY KEY (`coupon_id`,`customer_id`),
-  KEY `IDX_SALESRULE_COUPON_USAGE_COUPON_ID` (`coupon_id`),
-  KEY `IDX_SALESRULE_COUPON_USAGE_CUSTOMER_ID` (`customer_id`),
-  CONSTRAINT `FK_SALESRULE_COUPON_USAGE_COUPON_ID_SALESRULE_COUPON_COUPON_ID` FOREIGN KEY (`coupon_id`) REFERENCES `salesrule_coupon` (`coupon_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_SALESRULE_COUPON_USAGE_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID` FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Coupon Usage';
-
-
-DROP TABLE IF EXISTS `salesrule_customer`;
-CREATE TABLE `salesrule_customer` (
-  `rule_customer_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Rule Customer Id',
-  `rule_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Rule Id',
-  `customer_id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'Customer Id',
-  `times_used` smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Times Used',
-  PRIMARY KEY (`rule_customer_id`),
-  KEY `IDX_SALESRULE_CUSTOMER_RULE_ID_CUSTOMER_ID` (`rule_id`,`customer_id`),
-  KEY `IDX_SALESRULE_CUSTOMER_CUSTOMER_ID_RULE_ID` (`customer_id`,`rule_id`),
-  CONSTRAINT `FK_SALESRULE_CUSTOMER_CUSTOMER_ID_CUSTOMER_ENTITY_ENTITY_ID` FOREIGN KEY (`customer_id`) REFERENCES `customer_entity` (`entity_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_SALESRULE_CUSTOMER_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Customer';
-
-
-DROP TABLE IF EXISTS `salesrule_customer_group`;
-CREATE TABLE `salesrule_customer_group` (
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `customer_group_id` smallint(5) unsigned NOT NULL COMMENT 'Customer Group Id',
-  PRIMARY KEY (`rule_id`,`customer_group_id`),
-  KEY `IDX_SALESRULE_CUSTOMER_GROUP_RULE_ID` (`rule_id`),
-  KEY `IDX_SALESRULE_CUSTOMER_GROUP_CUSTOMER_GROUP_ID` (`customer_group_id`),
-  CONSTRAINT `FK_SALESRULE_CUSTOMER_GROUP_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_SALESRULE_CSTR_GROUP_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Sales Rules To Customer Groups Relations';
-
-
-DROP TABLE IF EXISTS `salesrule_label`;
-CREATE TABLE `salesrule_label` (
-  `label_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Label Id',
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `store_id` smallint(5) unsigned NOT NULL COMMENT 'Store Id',
-  `label` varchar(255) DEFAULT NULL COMMENT 'Label',
-  PRIMARY KEY (`label_id`),
-  UNIQUE KEY `UNQ_SALESRULE_LABEL_RULE_ID_STORE_ID` (`rule_id`,`store_id`),
-  KEY `IDX_SALESRULE_LABEL_STORE_ID` (`store_id`),
-  KEY `IDX_SALESRULE_LABEL_RULE_ID` (`rule_id`),
-  CONSTRAINT `FK_SALESRULE_LABEL_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_SALESRULE_LABEL_STORE_ID_CORE_STORE_STORE_ID` FOREIGN KEY (`store_id`) REFERENCES `core_store` (`store_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Label';
-
-
-DROP TABLE IF EXISTS `salesrule_product_attribute`;
-CREATE TABLE `salesrule_product_attribute` (
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  `customer_group_id` smallint(5) unsigned NOT NULL COMMENT 'Customer Group Id',
-  `attribute_id` smallint(5) unsigned NOT NULL COMMENT 'Attribute Id',
-  PRIMARY KEY (`rule_id`,`website_id`,`customer_group_id`,`attribute_id`),
-  KEY `IDX_SALESRULE_PRODUCT_ATTRIBUTE_WEBSITE_ID` (`website_id`),
-  KEY `IDX_SALESRULE_PRODUCT_ATTRIBUTE_CUSTOMER_GROUP_ID` (`customer_group_id`),
-  KEY `IDX_SALESRULE_PRODUCT_ATTRIBUTE_ATTRIBUTE_ID` (`attribute_id`),
-  CONSTRAINT `FK_SALESRULE_PRD_ATTR_ATTR_ID_EAV_ATTR_ATTR_ID` FOREIGN KEY (`attribute_id`) REFERENCES `eav_attribute` (`attribute_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SALESRULE_PRD_ATTR_CSTR_GROUP_ID_CSTR_GROUP_CSTR_GROUP_ID` FOREIGN KEY (`customer_group_id`) REFERENCES `customer_group` (`customer_group_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SALESRULE_PRODUCT_ATTRIBUTE_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `FK_SALESRULE_PRD_ATTR_WS_ID_CORE_WS_WS_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Salesrule Product Attribute';
-
-
-DROP TABLE IF EXISTS `salesrule_website`;
-CREATE TABLE `salesrule_website` (
-  `rule_id` int(10) unsigned NOT NULL COMMENT 'Rule Id',
-  `website_id` smallint(5) unsigned NOT NULL COMMENT 'Website Id',
-  PRIMARY KEY (`rule_id`,`website_id`),
-  KEY `IDX_SALESRULE_WEBSITE_RULE_ID` (`rule_id`),
-  KEY `IDX_SALESRULE_WEBSITE_WEBSITE_ID` (`website_id`),
-  CONSTRAINT `FK_SALESRULE_WEBSITE_RULE_ID_SALESRULE_RULE_ID` FOREIGN KEY (`rule_id`) REFERENCES `salesrule` (`rule_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_SALESRULE_WEBSITE_WEBSITE_ID_CORE_WEBSITE_WEBSITE_ID` FOREIGN KEY (`website_id`) REFERENCES `core_website` (`website_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Sales Rules To Websites Relations';
-
-
 DROP TABLE IF EXISTS `sendfriend_log`;
 CREATE TABLE `sendfriend_log` (
   `log_id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'Log ID',
@@ -8032,4 +8251,4 @@ CREATE TABLE `xmlconnect_queue` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Xmlconnect Notification Queue';
 
 
--- 2013-09-04 06:23:07
+-- 2013-09-07 15:03:08

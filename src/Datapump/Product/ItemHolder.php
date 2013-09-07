@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product;
@@ -46,6 +45,7 @@ class ItemHolder
 
     /**
      * Setup Magmi
+     *
      * @param \Magmi_ProductImport_DataPump $magmi
      * @param string $profile
      * @param string $mode
@@ -66,6 +66,7 @@ class ItemHolder
 
     /**
      * Adds product to our item holder
+     *
      * @param ProductAbstract|array $product
      *
      * @return $this
@@ -108,6 +109,7 @@ class ItemHolder
 
     /**
      * Remove a product from our item holder
+     *
      * @param string $sku
      *
      * @return bool
@@ -128,6 +130,7 @@ class ItemHolder
 
     /**
      * Find a product in our item holder
+     *
      * @param string $sku
      *
      * @return bool|ProductAbstract
@@ -150,8 +153,16 @@ class ItemHolder
      */
     public function import()
     {
-        if (! $this->magmi instanceof \Magmi_ProductImport_DataPump) {
-            throw new Exception\MagmiHasNotBeenSetup('Magmi has not been setup yet, use setMagmi()');
+        if (!$this->magmi instanceof \Magmi_ProductImport_DataPump) {
+            throw new Exception\MagmiHasNotBeenSetup(
+                sprintf(
+                    'Magmi has not been setup yet, use setMagmi(%s, %s, %s. %s)',
+                    'Magmi_ProductImport_DataPump $magmi',
+                    'string $profile',
+                    'string $mode',
+                    'Datapump\Logger Logger $logger'
+                )
+            );
         }
 
         foreach ($this->products as $product) {
@@ -176,12 +187,13 @@ class ItemHolder
 
     /**
      * Inject our product to Magmi
+     *
      * @param ProductAbstract $product
      */
     private function inject(ProductAbstract $product)
     {
-        $product->beforeImport();
+        $product->import();
         $this->magmi->ingest($product->getData());
-        $product->afterImport();
+        $product->after();
     }
 }

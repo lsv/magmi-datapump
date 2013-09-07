@@ -28,10 +28,10 @@
 <config>
     <global>
         <install>
-            <date><![CDATA[Wed, 04 Sep 2013 04:22:41 +0000]]></date>
+            <date><![CDATA[Sat, 07 Sep 2013 13:00:20 +0000]]></date>
         </install>
         <crypt>
-            <key><![CDATA[abc703f47e0154c8a14256e731e58b74]]></key>
+            <key><![CDATA[58d67a05537bf567523c98aca064fdab]]></key>
         </crypt>
         <disable_local_modules>false</disable_local_modules>
         <resources>
@@ -42,7 +42,7 @@
                 <connection>
                     <host><![CDATA[localhost]]></host>
                     <username><![CDATA[travis]]></username>
-                    <password><![CDATA[]]></password>
+                    <password><![CDATA[travis]]></password>
                     <dbname><![CDATA[magento_travis]]></dbname>
                     <initStatements><![CDATA[SET NAMES utf8]]></initStatements>
                     <model><![CDATA[mysql4]]></model>

@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product;
@@ -41,8 +40,12 @@ abstract class ProductAbstract
      */
     private $data = array();
 
+    abstract public function beforeImport();
+    abstract public function afterImport();
+
     /**
      * Build our product
+     *
      * @param RequiredData $data
      */
     public function __construct(RequiredData $data)
@@ -53,6 +56,7 @@ abstract class ProductAbstract
 
     /**
      * Inject data into our product
+     *
      * @param DataInterface $data
      *
      * @return $this
@@ -81,6 +85,7 @@ abstract class ProductAbstract
 
     /**
      * Add data to our product
+     *
      * @param string $key
      * @param mixed $value
      *
@@ -95,6 +100,7 @@ abstract class ProductAbstract
 
     /**
      * Add data to our product
+     *
      * @param string $key
      * @param mixed $value
      *
@@ -107,6 +113,7 @@ abstract class ProductAbstract
 
     /**
      * Get data from our product
+     *
      * @param string $key
      *
      * @return mixed|null
@@ -118,6 +125,7 @@ abstract class ProductAbstract
 
     /**
      * Get data from our product
+     *
      * @param string $key
      *
      * @return mixed|null
@@ -134,12 +142,13 @@ abstract class ProductAbstract
      */
     public function check()
     {
+        $this->beforeImport();
         $missingFields = array();
 
         foreach ($this->requiredFields as $key => $msg) {
             $method = 'get' . ucfirst($key);
 
-            if (!$this->getRequiredData()->{$method}()) {
+            if ($this->getRequiredData()->{$method}() === null) {
                 $missingFields[] = $msg;
             }
         }
@@ -149,7 +158,7 @@ abstract class ProductAbstract
                 sprintf(
                     'Product with SKU: %s does not have the all the required data %s',
                     $this->getRequiredData()->getSku(),
-                    implode("\n<br />", $missingFields)
+                    "\n" . implode("\n", $missingFields)
                 )
             );
         }
@@ -161,17 +170,17 @@ abstract class ProductAbstract
      * Before import runner
      * @return $this
      */
-    public function beforeImport()
+    public function import()
     {
+        $this->beforeImport();
         $this->data = array_merge($this->data, $this->requiredData->getData());
-
         return $this;
     }
 
     /**
      * Do stuff after import
      */
-    public function afterImport()
+    public function after()
     {
     }
 
@@ -181,8 +190,7 @@ abstract class ProductAbstract
      */
     public function getData()
     {
-        $this->beforeImport();
-
+        $this->import();
         return $this->data;
     }
 }

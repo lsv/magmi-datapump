@@ -13,6 +13,9 @@ use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
 use Datapump\Product\Configurable;
 
+/**
+ * @requires extension mysqli
+ */
 class MagmiTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -25,8 +28,6 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
      * @var RequiredData
      */
     protected $simpleRequiredData;
-
-    private $products = array();
 
     private $itemholder;
 
@@ -71,21 +72,72 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
 
         $this->itemholder->addProduct($config);
 
-        $this->itemholder->addProduct(new Simple(clone $this->simpleRequiredData->setSku('simple-sku1')));
-        $this->itemholder->addProduct(new Simple(clone $this->simpleRequiredData->setSku('simple-sku2')));
-        $this->itemholder->addProduct(new Simple(clone $this->simpleRequiredData->setSku('simple-sku3')));
-        $this->itemholder->addProduct(new Simple(clone $this->simpleRequiredData->setSku('simple-sku4')));
+        $this->itemholder->addProduct(new Simple(
+            clone $this->simpleRequiredData->setSku('simple-sku1')
+                ->setQty(null)
+                ->setPrice(500)
+                ->setName('simple-sku1')
+        ));
+        $this->itemholder->addProduct(new Simple(
+            clone $this->simpleRequiredData->setSku('simple-sku2')
+                ->setQty(10)
+                ->setPrice(500)
+                ->setName('simple-sku2')
+        ));
+        $this->itemholder->addProduct(new Simple(
+            clone $this->simpleRequiredData->setSku('simple-sku3')
+                ->setQty(-10)
+                ->setPrice(500)
+                ->setName('simple-sku3')
+        ));
+        $this->itemholder->addProduct(new Simple(
+            clone $this->simpleRequiredData->setSku('simple-sku4')
+                ->setQty(0)
+                ->setPrice(500)
+                ->setName('simple-sku4')
+        ));
     }
 
-    public function test_CheckForMagmiIsSetup()
+    public function test_canTestForMagmi()
     {
-        $this->setExpectedException('Datapump/Exception/MagmiHasNotBeenSetup');
-        $this->itemholder->import();
+        $this->setExpectedException('Datapump\Exception\MagmiHasNotBeenSetup');
+        $holder = new ItemHolder;
+        $holder->import();
+    }
+
+    public function test_ProductsNotInserted()
+    {
+        $q = $this->pdo->query('SELECT COUNT(*) AS num FROM catalog_product_entity');
+        $q->execute();
+        $num = $q->fetch();
+        $this->assertEquals(0, $num['num']);
     }
 
     public function test_CanInjectData()
     {
-        $this->itemholder->setMagmi(new \Magmi_ProductImport_DataPump(), 'travis', ItemHolder::MAGMI_CREATE_UPDATE, new Log())->import();
+        $this->itemholder->setMagmi(
+            new \Magmi_ProductImport_DataPump(),
+            'travis',
+            ItemHolder::MAGMI_CREATE_UPDATE,
+            new Log()
+        )->import();
     }
 
+    public function test_ProductsInserted()
+    {
+        $q = $this->pdo->query('SELECT COUNT(*) AS num FROM catalog_product_entity');
+        $q->execute();
+        $num = $q->fetch();
+        $this->assertEquals(6, $num['num']);
+    }
+
+    public function test_checkProductsStock()
+    {
+
+    }
+
+    public function test_checkProductsPrice()
+    {
+
+    }
 }

@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product\Data;
@@ -45,15 +44,19 @@ interface DataInterface
 
     /**
      * Set a key to the product
+     *
      * @param string $key
      * @param mixed $value
+     *
      * @return DataAbstract
      */
     public function set($key, $value);
 
     /**
      * Get a key from the product
+     *
      * @param string $key
+     *
      * @return mixed
      */
     public function get($key);

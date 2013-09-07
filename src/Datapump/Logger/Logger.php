@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Logger;
@@ -15,6 +14,7 @@ interface Logger
 
     /**
      * Log data
+     *
      * @param string $data
      * @param string $type
      *

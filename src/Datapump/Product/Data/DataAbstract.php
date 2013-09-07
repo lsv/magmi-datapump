@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product\Data;
@@ -41,7 +40,9 @@ abstract class DataAbstract implements DataInterface
      */
     public function __set($key, $value)
     {
+        // @codeCoverageIgnoreStart
         return $this->set($key, $value);
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -68,7 +69,9 @@ abstract class DataAbstract implements DataInterface
      */
     public function __get($key)
     {
+        // @codeCoverageIgnoreStart
         return $this->get($key);
+        // @codeCoverageIgnoreEnd
     }
 
     /**

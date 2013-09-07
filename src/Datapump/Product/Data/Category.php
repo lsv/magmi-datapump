@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product\Data;
@@ -21,6 +20,7 @@ class Category extends DataAbstract
 
     /**
      * Add a category to the product
+     *
      * @param string $category Category name
      * @param bool $is_active Is the category active?
      * @param bool $is_anchor Is the category a anchor?
@@ -48,6 +48,7 @@ class Category extends DataAbstract
 
     /**
      * Returns the category array
+     *
      * @param string $category Category name
      * @param bool $is_active Is the category active?
      * @param bool $is_anchor Is the category a anchor?

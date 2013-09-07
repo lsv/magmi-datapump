@@ -85,7 +85,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         $this->product->getRequiredData()->setQty(0);
         $this->assertEquals(0, $this->product->getRequiredData()->getQty());
-        $data = $this->product->getData();
+        $data = $this->product->getRequiredData()->getData();
 
         $this->assertContains('is_in_stock', $data);
         $this->assertEquals(0, $data['is_in_stock']);
@@ -95,7 +95,7 @@ class ProductTest extends \PHPUnit_Framework_TestCase
     {
         $this->product->getRequiredData()->setQty(null);
         $this->assertEquals(0, $this->product->getRequiredData()->getQty());
-        $data = $this->product->getData();
+        $data = $this->product->getRequiredData()->getData();
 
         $this->assertContains('manage_stock', $data);
         $this->assertEquals(0, $data['manage_stock'], 'Could not set manage stock');
@@ -132,6 +132,10 @@ class ProductTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @covers Datapump\Product\Data\DataAbstract::__set()
+     * @covers Datapump\Product\Data\DataAbstract::__get()
+     */
     public function test_canSetDataAsObj()
     {
         $this->product->foobar = 'random';

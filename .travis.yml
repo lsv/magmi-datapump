@@ -5,21 +5,8 @@ php:
 
 before_script:
  - mysql -e 'create database magento_travis;'
- - mysql -u travis magento_travis < .travis/magento/magento.sql
- - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/releases/magmi_0.7.18.zip
- - wget http://downloads.sourceforge.net/project/magmi/magmi-0.7/plugins/packages/magmi_extra_plugins_20130131.zip
- - wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
- - unzip magmi_0.7.18.zip
- - mv magmi_extra_plugins_20130131.zip magmi/plugins/base
- - unzip magmi/plugins/base/magmi_extra_plugins_20130131.zip
- - tar xf magento-1.7.0.2.tar.gz
- - chmod 777 -R magento
- - mv .travis/magento/local.xml magento/app/etc
- - rm magento-1.7.0.2.tar.gz
- - rm magmi_0.7.18.zip
- - rm magmi/plugins/base/magmi_extra_plugins_20130131.zip
- - mv .travis/magmi/configuration/travis magmi/conf
- - mv .travis/magmi/configuration/magmi.ini magmi/conf
+ - echo "USE mysql;\nUPDATE user SET password=PASSWORD('travis') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
+ - ./.travistest.sh
  - mkdir -p build/logs
  - curl -s https://getcomposer.org/installer | php
  - php composer.phar selfupdate

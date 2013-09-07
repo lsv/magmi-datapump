@@ -1,7 +1,6 @@
 <?php
 /**
  * @author Martin Aarhof <martin.aarhof@gmail.com>
-
  * @version GIT: $Id$
  */
 namespace Datapump\Product;
@@ -39,4 +38,12 @@ class Simple extends ProductAbstract
         'Tax' => 'Missing tax class',
         'Qty' => 'Missing product quantity',
     );
+
+    public function beforeImport()
+    {
+    }
+
+    public function afterImport()
+    {
+    }
 }
