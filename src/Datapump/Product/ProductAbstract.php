@@ -108,7 +108,9 @@ abstract class ProductAbstract
      */
     public function __set($key, $value)
     {
+        // @codeCoverageIgnoreStart
         return $this->set($key, $value);
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -132,7 +134,9 @@ abstract class ProductAbstract
      */
     public function __get($key)
     {
+        // @codeCoverageIgnoreStart
         return $this->get($key);
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -182,6 +186,7 @@ abstract class ProductAbstract
      */
     public function after()
     {
+        $this->afterImport();
     }
 
     /**
