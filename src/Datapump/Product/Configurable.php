@@ -19,7 +19,7 @@ class Configurable extends ProductAbstract
     /**
      * Magmi confiurable attribute key
      */
-    const CONFIG_ATTR_KEY = 'configurable_attributes';
+    const CONFIG_ATTR_KEY = 'configurable_attributes_array';
 
     /**
      * Product type
@@ -156,12 +156,29 @@ class Configurable extends ProductAbstract
      */
     public function beforeImport()
     {
+        $this->setConfigurableAttribute();
+        $this->setSimpleSkus();
         $this->setConfigPrice();
     }
 
     public function afterImport()
     {
 
+    }
+
+    private function setConfigurableAttribute()
+    {
+        $this->set('configurable_attributes', implode(',', $this->get(self::CONFIG_ATTR_KEY)));
+    }
+
+    private function setSimpleSkus()
+    {
+        $p = array();
+        foreach($this->getSimpleProducts() AS $product) {
+            /** @var Simple $product */
+            $p[] = $product->get('sku');
+        }
+        $this->set('simples_skus', implode(',', $p));
     }
 
     /**

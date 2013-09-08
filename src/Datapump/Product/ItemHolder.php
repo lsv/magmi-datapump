@@ -174,6 +174,7 @@ class ItemHolder
                         /** @var Simple $simple */
                         $this->inject($simple);
                     }
+
                     $this->inject($product);
                     break;
                 default:
@@ -193,6 +194,7 @@ class ItemHolder
     private function inject(ProductAbstract $product)
     {
         $product->import();
+        var_dump($product->getData());
         $this->magmi->ingest($product->getData());
         $product->after();
     }

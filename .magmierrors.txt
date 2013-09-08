@@ -1,0 +1,22 @@
+Status: Open (72)
+
+Table: cataloginventory_stock_item
+Field: use_config_manage_stock
+Can not remove the tick from "Inventory > Manage Stock > Use Config Settings" and therefor its not possible to set "Manage Stock" to no
+
+Solution:
+$data['use_config_manage_stock'] = 0;
+Should set 0 in table cataloginventory_stock_item
+
+--
+Status: Open (73)
+
+Table: catalog_product_entity_int
+Attribute: tax_class_id
+AttributeId: 122
+
+Can not set tax class by ID.
+
+Solution:
+$data['tax_class_id'] = YY
+Should add a row to catalog_product_entity_int with attribute_id = 122 and value = YY

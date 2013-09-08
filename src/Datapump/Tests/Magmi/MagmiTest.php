@@ -8,6 +8,7 @@
 namespace Datapump\Tests\Magmi;
 
 use Datapump\Logger\Log;
+use Datapump\Product\Data\Category;
 use Datapump\Product\Data\RequiredData;
 use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
@@ -45,55 +46,71 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
         $this->itemholder = new ItemHolder;
 
         $this->simpleRequiredData = new RequiredData();
-        $this->simpleRequiredData->setSku('sku')
-            ->setName('name')
-            ->setPrice(100)
-            ->setQty(100)
+        $this->simpleRequiredData
             ->setShortDescription('short description')
             ->setDescription('long description')
-            ->setTax(1)
+            ->setTax(0)
             ->setWeight(100);
 
         $this->configRequiredData = new RequiredData();
-        $this->configRequiredData->setSku('config-sku1')
-            ->setName('name')
+        $this->configRequiredData
             ->setShortDescription('short description')
             ->setDescription('long description');
 
-        $config = new Configurable($this->configRequiredData, 'color');
+        $config = new Configurable(
+            clone $this->configRequiredData
+                ->setSku('config1')
+                ->setName('config1')
+        , 'color');
 
-        $simpleproduct1 = new Simple(clone $this->simpleRequiredData->setSku('configsimple-sku1'));
-        $simpleproduct1->set('color', 'blue');
-        $config->addSimpleProduct($simpleproduct1);
+        $category = new Category();
+        $category->set('active-config');
+        $category->set('inactive-config', false);
+        $category->set('level01/level02/level03');
+        $config->injectData($category);
 
-        $simpleproduct2 = new Simple(clone $this->simpleRequiredData->setSku('configsimple-sku2'));
-        $simpleproduct2->set('color', 'green');
-        $config->addSimpleProduct($simpleproduct2);
+        $config->addSimpleProduct(new Simple(
+            clone $this->simpleRequiredData
+                ->setSku('configsimple-sku1')
+                ->setName('configsimple-sku1')
+                ->setQty(12)
+                ->setPrice(120)
+                ->set('color', 'blue')
+        ));
+
+        $config->addSimpleProduct(new Simple(
+            clone $this->simpleRequiredData
+                ->setSku('configsimple-sku2')
+                ->setName('configsimple-sku2')
+                ->setQty(24)
+                ->setPrice(110)
+                ->set('color', 'green')
+        ));
 
         $this->itemholder->addProduct($config);
 
         $this->itemholder->addProduct(new Simple(
-            clone $this->simpleRequiredData->setSku('simple-sku1')
+            clone $this->simpleRequiredData->setSku('simple-sku1-dontmanagestock')
                 ->setQty(null)
                 ->setPrice(500)
-                ->setName('simple-sku1')
+                ->setName('simple-sku1-dontmanagestock')
         ));
         $this->itemholder->addProduct(new Simple(
             clone $this->simpleRequiredData->setSku('simple-sku2')
                 ->setQty(10)
-                ->setPrice(500)
+                ->setPrice(400)
                 ->setName('simple-sku2')
         ));
         $this->itemholder->addProduct(new Simple(
             clone $this->simpleRequiredData->setSku('simple-sku3')
                 ->setQty(-10)
-                ->setPrice(500)
+                ->setPrice(300)
                 ->setName('simple-sku3')
         ));
         $this->itemholder->addProduct(new Simple(
             clone $this->simpleRequiredData->setSku('simple-sku4')
                 ->setQty(0)
-                ->setPrice(500)
+                ->setPrice(200)
                 ->setName('simple-sku4')
         ));
     }
@@ -116,7 +133,7 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
     public function test_CanInjectData()
     {
         $this->itemholder->setMagmi(
-            new \Magmi_ProductImport_DataPump(),
+            \Magmi_DataPumpFactory::getDataPumpInstance("productimport"),
             'travis',
             ItemHolder::MAGMI_CREATE_UPDATE,
             new Log()
@@ -128,7 +145,7 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
         $q = $this->pdo->query('SELECT COUNT(*) AS num FROM catalog_product_entity');
         $q->execute();
         $num = $q->fetch();
-        $this->assertEquals(6, $num['num']);
+        $this->assertEquals(7, $num['num']);
     }
 
     public function test_checkProductsStock()
@@ -140,4 +157,5 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
     {
 
     }
+
 }

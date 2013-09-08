@@ -6,7 +6,7 @@ php:
 before_script:
  - mysql -e 'create database magento_travis;'
  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('travis') WHERE user='travis';\nFLUSH PRIVILEGES;\n" | mysql -u root
- - ./.travistest.sh
+ - ./.travisload.sh
  - mkdir -p build/logs
  - curl -s https://getcomposer.org/installer | php
  - php composer.phar selfupdate

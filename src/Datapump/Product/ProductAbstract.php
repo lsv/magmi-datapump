@@ -142,7 +142,7 @@ abstract class ProductAbstract
      */
     public function check()
     {
-        $this->beforeImport();
+        $this->import();
         $missingFields = array();
 
         foreach ($this->requiredFields as $key => $msg) {

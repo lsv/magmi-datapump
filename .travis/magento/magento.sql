@@ -163,7 +163,7 @@ CREATE TABLE `admin_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Admin User Table';
 
 INSERT INTO `admin_user` (`user_id`, `firstname`, `lastname`, `email`, `username`, `password`, `created`, `modified`, `logdate`, `lognum`, `reload_acl_flag`, `is_active`, `extra`, `rp_token`, `rp_token_created_at`) VALUES
-(1,	'travis',	'travis',	'travis@foo.com',	'travis',	'e2f461c803f97f55cb38f1c5a64aee72:VR',	'2013-09-07 15:00:35',	'2013-09-07 13:00:19',	'2013-09-07 13:00:35',	1,	0,	1,	'N;',	NULL,	NULL);
+(1,	'travis',	'travis',	'travis@foo.com',	'travis',	'7985139ae9b6efb45373e3e36e444224',	'2013-09-07 15:00:35',	'2013-09-07 13:00:19',	'2013-09-07 13:00:35',	1,	0,	1,	'N;',	NULL,	NULL);
 
 DROP TABLE IF EXISTS `api2_acl_attribute`;
 CREATE TABLE `api2_acl_attribute` (
@@ -2246,8 +2246,8 @@ INSERT INTO `core_config_data` (`config_id`, `scope`, `scope_id`, `path`, `value
 (2,	'default',	0,	'general/region/state_required',	'AT,CA,CH,DE,EE,ES,FI,FR,LT,LV,RO,US'),
 (3,	'default',	0,	'catalog/category/root_id',	'2'),
 (4,	'default',	0,	'admin/dashboard/enable_charts',	'1'),
-(5,	'default',	0,	'web/unsecure/base_url',	'http://magento.domain.my/'),
-(6,	'default',	0,	'web/secure/base_url',	'http://magento.domain.my/'),
+(5,	'default',	0,	'web/unsecure/base_url',	'http://localhost/magmi-datapump/magento/'),
+(6,	'default',	0,	'web/secure/base_url',	'http://localhost/magmi-datapump/magento/'),
 (7,	'default',	0,	'general/locale/code',	'en_US'),
 (8,	'default',	0,	'general/locale/timezone',	'Europe/Berlin'),
 (9,	'default',	0,	'currency/options/base',	'DKK'),

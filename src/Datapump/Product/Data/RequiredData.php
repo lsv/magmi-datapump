@@ -349,6 +349,7 @@ class RequiredData extends DataAbstract
     public function setQty($qty)
     {
         if ($qty === null) {
+            $this->set('use_config_manage_stock', 0);
             $this->set('manage_stock', 0);
             $this->set('is_in_stock', 1);
             $this->set('qty', (int)0);

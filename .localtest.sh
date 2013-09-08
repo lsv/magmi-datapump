@@ -1,5 +1,5 @@
 #!/bin/sh
-./.travistest.sh
+./.travisload.sh
 
 if [ ! -d build/logs ]; then
 	mkdir -p build/logs

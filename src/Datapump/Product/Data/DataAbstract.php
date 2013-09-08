@@ -51,7 +51,7 @@ abstract class DataAbstract implements DataInterface
      * @param string $key
      * @param mixed $value
      *
-     * @return DataAbstract
+     * @return RequiredData
      */
     public function set($key, $value)
     {
