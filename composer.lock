@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "342cb4e097ec243e2b54029a456b9a6d",
+    "hash": "4ed612e1e1f5b3760be0d6ede2026491",
     "packages": [
 
     ],
@@ -305,16 +305,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.7.2",
+            "version": "v3.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "eaef90d27bb1d682e1f6ab2d77606dc0159049e6"
+                "reference": "0f16aad385528b5cf790392cb4a4d16cf600e944"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/eaef90d27bb1d682e1f6ab2d77606dc0159049e6",
-                "reference": "eaef90d27bb1d682e1f6ab2d77606dc0159049e6",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/0f16aad385528b5cf790392cb4a4d16cf600e944",
+                "reference": "0f16aad385528b5cf790392cb4a4d16cf600e944",
                 "shasum": ""
             },
             "require": {
@@ -393,7 +393,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2013-08-02 18:31:05"
+            "time": "2013-09-08 21:09:18"
         },
         {
             "name": "jms/metadata",
@@ -816,16 +816,16 @@
         },
         {
             "name": "phpdocumentor/phpdocumentor",
-            "version": "v2.0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/phpDocumentor2.git",
-                "reference": "e8f728707be7870163d0a28696fbffd6822a8d52"
+                "reference": "f171926a7185e9723c53b626853a31c03782cf3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/e8f728707be7870163d0a28696fbffd6822a8d52",
-                "reference": "e8f728707be7870163d0a28696fbffd6822a8d52",
+                "url": "https://api.github.com/repos/phpDocumentor/phpDocumentor2/zipball/f171926a7185e9723c53b626853a31c03782cf3c",
+                "reference": "f171926a7185e9723c53b626853a31c03782cf3c",
                 "shasum": ""
             },
             "require": {
@@ -890,7 +890,7 @@
                 "documentation",
                 "phpdoc"
             ],
-            "time": "2013-08-09 14:31:14"
+            "time": "2013-09-09 06:16:48"
         },
         {
             "name": "phpdocumentor/reflection",
@@ -1279,17 +1279,20 @@
         },
         {
             "name": "phpdocumentor/unified-asset-installer",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/UnifiedAssetInstaller.git",
-                "reference": "769daf20345494ae00f166a9a649086545c0cd79"
+                "reference": "241fb036268cd9da7d76da3db66e3eda66259c52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/UnifiedAssetInstaller/zipball/769daf20345494ae00f166a9a649086545c0cd79",
-                "reference": "769daf20345494ae00f166a9a649086545c0cd79",
+                "url": "https://api.github.com/repos/phpDocumentor/UnifiedAssetInstaller/zipball/241fb036268cd9da7d76da3db66e3eda66259c52",
+                "reference": "241fb036268cd9da7d76da3db66e3eda66259c52",
                 "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "1.0.0"
             },
             "require-dev": {
                 "composer/composer": "~1.0@dev",
@@ -1319,24 +1322,24 @@
                 "plugins",
                 "templates"
             ],
-            "time": "2013-08-02 06:40:32"
+            "time": "2013-09-09 06:13:02"
         },
         {
             "name": "phpmd/phpmd",
-            "version": "1.4.1",
+            "version": "1.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "7d03a50e937811970751697ad1aea33a1089d66f"
+                "reference": "692b7b1b64518091b2b1bea91b489dbb13598c07"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/7d03a50e937811970751697ad1aea33a1089d66f",
-                "reference": "7d03a50e937811970751697ad1aea33a1089d66f",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/692b7b1b64518091b2b1bea91b489dbb13598c07",
+                "reference": "692b7b1b64518091b2b1bea91b489dbb13598c07",
                 "shasum": ""
             },
             "require": {
-                "pdepend/pdepend": "*",
+                "pdepend/pdepend": ">=1.1.1",
                 "php": ">=5.3.0"
             },
             "bin": [
@@ -1349,7 +1352,7 @@
                 "src/main/php"
             ],
             "description": "Official version of PHPMD handled with Composer.",
-            "time": "2012-12-14 12:25:09"
+            "time": "2013-07-26 14:47:02"
         },
         {
             "name": "phpoption/phpoption",
@@ -3015,9 +3018,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "phpdocumentor/phpdocumentor": 20
+    },
     "platform": {
         "php": ">=5.3.0"
     },
