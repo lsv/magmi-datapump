@@ -1,5 +1,5 @@
 {
-    "name": "maa/magmi-datapump",
+    "name": "lsv/magmi-datapump",
     "description": "Magmi Datapump API",
     "type": "library",
     "keywords": ["magento", "magmi"],
