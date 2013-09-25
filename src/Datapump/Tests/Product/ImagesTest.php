@@ -11,7 +11,7 @@ use Datapump\Product\Data\Images;
 use Datapump\Product\Data\RequiredData;
 use Datapump\Product\Simple;
 
-class ImagesTest extends \PHPUnit_Framework_TestCase
+class ImagesTest extends Booter
 {
 
     /**
@@ -26,6 +26,9 @@ class ImagesTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
+
+        parent::__construct();
+
         $this->simpleRequiredData = new RequiredData();
         $this->simpleRequiredData->setSku('sku')
             ->setName('name')
@@ -41,6 +44,7 @@ class ImagesTest extends \PHPUnit_Framework_TestCase
             ->setName('name')
             ->setShortDescription('short description')
             ->setDescription('long description');
+
     }
 
     public function test_canAddImage()

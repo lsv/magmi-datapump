@@ -13,7 +13,7 @@ use Datapump\Product\ProductAbstract;
 use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
 
-class ProductTest extends \PHPUnit_Framework_TestCase
+class ProductTest extends Booter
 {
 
     /**
@@ -28,6 +28,8 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->productholder = new ItemHolder();
 
         $requiredData = new RequiredData();
@@ -42,7 +44,6 @@ class ProductTest extends \PHPUnit_Framework_TestCase
 
         $this->product = new Simple($requiredData);
 
-        parent::__construct();
     }
 
     public function test_CanCreateSimpleProduct()

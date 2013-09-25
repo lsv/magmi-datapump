@@ -11,7 +11,7 @@ use Datapump\Product\Data\RequiredData;
 use Datapump\Product\Simple;
 use Datapump\Product\ItemHolder;
 
-class ProductsHolderTest extends \PHPUnit_Framework_TestCase
+class ProductsHolderTest extends Booter
 {
 
     /**
@@ -21,6 +21,7 @@ class ProductsHolderTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
+        parent::__construct();
 
         $this->requiredData = new RequiredData();
         $this->requiredData->setSku('sku')
@@ -32,7 +33,6 @@ class ProductsHolderTest extends \PHPUnit_Framework_TestCase
             ->setTax(1)
             ->setWeight(100);
 
-        parent::__construct();
     }
 
     public function test_canRemoveProduct()

@@ -13,11 +13,12 @@ use Datapump\Product\Data\RequiredData;
 use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
 use Datapump\Product\Configurable;
+use Datapump\Tests\Booter;
 
 /**
  * @requires extension mysqli
  */
-class MagmiTest extends \PHPUnit_Framework_TestCase
+class MagmiTest extends Booter
 {
 
     /**
@@ -32,16 +33,11 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
 
     private $itemholder;
 
-    /**
-     * @var \PDO
-     */
-    private $pdo;
-
     public function __construct()
     {
-        $this->pdo = new \PDO(sprintf('mysql:host=%s;dbname=%s', 'localhost', 'magento_travis'), 'travis', 'travis',
-            array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES UTF8')
-        );
+
+        parent::__construct();
+        parent::initializeDatabase();
 
         $this->itemholder = new ItemHolder;
 
@@ -113,6 +109,7 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
                 ->setPrice(200)
                 ->setName('simple-sku4')
         ));
+
     }
 
     public function test_canTestForMagmi()
@@ -124,10 +121,10 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
 
     public function test_ProductsNotInserted()
     {
-        $q = $this->pdo->query('SELECT COUNT(*) AS num FROM catalog_product_entity');
+        $q = parent::getDatabase()->prepare('SELECT COUNT(*) AS num FROM catalog_product_entity');
         $q->execute();
         $num = $q->fetch();
-        $this->assertEquals(0, $num['num']);
+        $this->assertEquals(2, $num['num']);
     }
 
     public function test_CanInjectData()
@@ -142,10 +139,10 @@ class MagmiTest extends \PHPUnit_Framework_TestCase
 
     public function test_ProductsInserted()
     {
-        $q = $this->pdo->query('SELECT COUNT(*) AS num FROM catalog_product_entity');
+        $q = parent::getDatabase()->prepare('SELECT COUNT(*) AS num FROM catalog_product_entity');
         $q->execute();
         $num = $q->fetch();
-        $this->assertEquals(7, $num['num']);
+        $this->assertEquals(9, $num['num']);
     }
 
     public function test_checkProductsStock()

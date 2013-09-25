@@ -11,7 +11,7 @@ use Datapump\Product\Data\Category;
 use Datapump\Product\Data\RequiredData;
 use Datapump\Product\Simple;
 
-class CategoryTest extends \PHPUnit_Framework_TestCase
+class CategoryTest extends Booter
 {
 
     /**
@@ -26,6 +26,8 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->simpleRequiredData = new RequiredData();
         $this->simpleRequiredData->setSku('sku')
             ->setName('name')
@@ -41,6 +43,7 @@ class CategoryTest extends \PHPUnit_Framework_TestCase
             ->setName('name')
             ->setShortDescription('short description')
             ->setDescription('long description');
+
     }
 
     public function test_canAddCategory()

@@ -174,8 +174,7 @@ class Configurable extends ProductAbstract
     private function setSimpleSkus()
     {
         $p = array();
-        foreach($this->getSimpleProducts() AS $product) {
-            /** @var Simple $product */
+        foreach($this->getSimpleProducts() as $product /** @var Simple $product */) {
             $p[] = $product->get('sku');
         }
         $this->set('simples_skus', implode(',', $p));

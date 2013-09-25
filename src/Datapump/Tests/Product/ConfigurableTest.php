@@ -12,7 +12,7 @@ use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
 use Datapump\Product\Configurable;
 
-class ConfigurableTest extends \PHPUnit_Framework_TestCase
+class ConfigurableTest extends Booter
 {
 
     /**
@@ -27,6 +27,8 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
 
     public function __construct()
     {
+        parent::__construct();
+
         $this->simpleRequiredData = new RequiredData();
         $this->simpleRequiredData->setSku('sku')
             ->setName('name')
@@ -43,7 +45,6 @@ class ConfigurableTest extends \PHPUnit_Framework_TestCase
             ->setShortDescription('short description')
             ->setDescription('long description');
 
-        parent::__construct();
     }
 
     public function test_SimpleProductMissingKey()
