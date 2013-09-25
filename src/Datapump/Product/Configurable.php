@@ -168,7 +168,10 @@ class Configurable extends ProductAbstract
 
     private function setConfigurableAttribute()
     {
-        $this->set('configurable_attributes', implode(',', $this->get(self::CONFIG_ATTR_KEY)));
+        if (! $this->getRequiredData()->__isset('configurable_attributes')) {
+            $this->set('configurable_attributes', implode(',', $this->get(self::CONFIG_ATTR_KEY)));
+            $this->_unset(self::CONFIG_ATTR_KEY);
+        }
     }
 
     private function setSimpleSkus()
