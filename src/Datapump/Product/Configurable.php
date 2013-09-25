@@ -194,6 +194,19 @@ class Configurable extends ProductAbstract
         }
 
         $this->set('price', $price);
+
+        $specialprice = 0;
+        foreach($this->simpleProducts AS $p) {
+            /** @var Simple $p */
+            if ($p->get('special_price') !== null && $p->get('special_price') > $specialprice) {
+                $specialprice = $p->get('special_price');
+            }
+        }
+
+        if ($specialprice > 0) {
+            $this->set('special_price', $specialprice);
+        }
+
     }
 
     /**

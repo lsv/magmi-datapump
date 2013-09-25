@@ -71,6 +71,7 @@ class MagmiTest extends Booter
                 ->setName('configsimple-sku1')
                 ->setQty(12)
                 ->setPrice(120)
+                ->set('special_price', 100)
                 ->set('color', 'blue')
         ));
 
@@ -80,6 +81,7 @@ class MagmiTest extends Booter
                 ->setName('configsimple-sku2')
                 ->setQty(24)
                 ->setPrice(110)
+                ->set('special_price', 80)
                 ->set('color', 'green')
         ));
 
@@ -151,6 +153,11 @@ class MagmiTest extends Booter
     }
 
     public function test_checkProductsPrice()
+    {
+
+    }
+
+    public function test_checkProductsSpecialPrice()
     {
 
     }
