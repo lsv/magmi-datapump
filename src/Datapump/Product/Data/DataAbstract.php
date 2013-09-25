@@ -101,4 +101,18 @@ abstract class DataAbstract implements DataInterface
     {
         return isset($this->data[$key]);
     }
+
+    /**
+     * Unset data
+     *
+     * @param string $key
+     * @return $this
+     */
+    public function _unset($key)
+    {
+        if ($this->__isset($key)) {
+            unset($this->data[$key]);
+        }
+        return $this;
+    }
 }

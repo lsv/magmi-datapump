@@ -126,6 +126,17 @@ abstract class ProductAbstract
     }
 
     /**
+     * Unset data
+     *
+     * @param string $key
+     * @return $this
+     */
+    public function _unset($key)
+    {
+        return $this->getRequiredData()->_unset($key);
+    }
+
+    /**
      * Get data from our product
      *
      * @param string $key
