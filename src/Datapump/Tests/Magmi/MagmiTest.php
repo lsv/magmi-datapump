@@ -7,7 +7,6 @@
 
 namespace Datapump\Tests\Magmi;
 
-use Datapump\Logger\Log;
 use Datapump\Product\Data\Category;
 use Datapump\Product\Data\RequiredData;
 use Datapump\Product\ItemHolder;
@@ -39,7 +38,7 @@ class MagmiTest extends Booter
         parent::__construct();
         parent::initializeDatabase();
 
-        $this->itemholder = new ItemHolder;
+        $this->itemholder = new ItemHolder(self::getLogger());
 
         $this->simpleRequiredData = new RequiredData();
         $this->simpleRequiredData
@@ -117,7 +116,7 @@ class MagmiTest extends Booter
     public function test_canTestForMagmi()
     {
         $this->setExpectedException('Datapump\Exception\MagmiHasNotBeenSetup');
-        $holder = new ItemHolder;
+        $holder = new ItemHolder(self::getLogger());
         $holder->import();
     }
 
@@ -134,8 +133,7 @@ class MagmiTest extends Booter
         $this->itemholder->setMagmi(
             \Magmi_DataPumpFactory::getDataPumpInstance("productimport"),
             'travis',
-            ItemHolder::MAGMI_CREATE_UPDATE,
-            new Log()
+            ItemHolder::MAGMI_CREATE_UPDATE
         )->import();
     }
 

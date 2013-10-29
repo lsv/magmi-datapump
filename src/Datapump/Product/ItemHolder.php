@@ -44,23 +44,36 @@ class ItemHolder
     private $magmi;
 
     /**
+     * Logger instance
+     * @var \Datapump\Logger\Logger
+     */
+    private $logger;
+
+    /**
+     * Start our itemholder
+     * @param Logger $logger
+     */
+    public function __construct(Logger $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
      * Setup Magmi
      *
      * @param \Magmi_ProductImport_DataPump $magmi
      * @param string $profile
      * @param string $mode
-     * @param Logger $logger
      *
      * @return $this
      */
     public function setMagmi(
         \Magmi_ProductImport_DataPump $magmi,
         $profile,
-        $mode = self::MAGMI_CREATE_UPDATE,
-        Logger $logger = null
+        $mode = self::MAGMI_CREATE_UPDATE
     ) {
         $this->magmi = $magmi;
-        $this->magmi->beginImportSession($profile, $mode, $logger);
+        $this->magmi->beginImportSession($profile, $mode, $this->logger);
         return $this;
     }
 
@@ -194,7 +207,7 @@ class ItemHolder
     private function inject(ProductAbstract $product)
     {
         $product->import();
-        var_dump($product->getData());
+        //$product->debug();
         $this->magmi->ingest($product->getData());
         $product->after();
     }

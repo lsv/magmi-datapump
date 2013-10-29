@@ -19,7 +19,7 @@ class StockTest extends Booter
 
     public function __construct()
     {
-        $this->productholder = new ItemHolder();
+        $this->productholder = new ItemHolder(self::getLogger());
     }
 
     public function test_canAddStockChangeProduct()

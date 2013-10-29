@@ -316,13 +316,13 @@ class RequiredData extends DataAbstract
     /**
      * Set the tax ID (Magento ID)
      *
-     * @param int $tax
+     * @param string $tax
      *
      * @return RequiredData
      */
     public function setTax($tax)
     {
-        $this->set('tax_class_id', (int)$tax);
+        $this->set('tax_class_id', $tax);
 
         return $this;
     }

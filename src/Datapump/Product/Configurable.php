@@ -169,7 +169,7 @@ class Configurable extends ProductAbstract
     private function setConfigurableAttribute()
     {
         if (! $this->getRequiredData()->__isset('configurable_attributes')) {
-            $this->set('configurable_attributes', implode(',', $this->get(self::CONFIG_ATTR_KEY)));
+            $this->set('configurable_attributes', preg_replace('/[^a-z0-9,]/', '', strtolower(implode(',', $this->get(self::CONFIG_ATTR_KEY)))));
             $this->_unset(self::CONFIG_ATTR_KEY);
         }
     }

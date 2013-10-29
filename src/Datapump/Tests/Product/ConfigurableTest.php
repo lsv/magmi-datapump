@@ -115,7 +115,7 @@ class ConfigurableTest extends Booter
         $simpleproduct2->set('color', 'green');
         $product->addSimpleProduct($simpleproduct2);
 
-        $productholder = new ItemHolder;
+        $productholder = new ItemHolder(self::getLogger());
         $productholder->addProduct($simpleproduct1)
             ->addProduct($simpleproduct2);
     }

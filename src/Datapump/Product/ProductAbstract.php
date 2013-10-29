@@ -206,7 +206,15 @@ abstract class ProductAbstract
      */
     public function getData()
     {
-        $this->import();
         return $this->data;
+    }
+
+    public function debug($cli = true)
+    {
+        if ($cli) {
+            var_dump($this->getData());
+        } else {
+
+        }
     }
 }

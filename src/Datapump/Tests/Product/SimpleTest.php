@@ -30,7 +30,7 @@ class ProductTest extends Booter
     {
         parent::__construct();
 
-        $this->productholder = new ItemHolder();
+        $this->productholder = new ItemHolder(self::getLogger());
 
         $requiredData = new RequiredData();
         $requiredData->setSku('sku')

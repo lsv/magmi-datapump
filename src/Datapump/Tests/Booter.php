@@ -9,6 +9,8 @@
 namespace Datapump\Tests;
 
 
+use Datapump\Logger\Log;
+
 class Booter extends \PHPUnit_Framework_TestCase
 {
 
@@ -17,6 +19,11 @@ class Booter extends \PHPUnit_Framework_TestCase
     public function __construct()
     {
         parent::__construct();
+    }
+
+    static public function getLogger()
+    {
+        return new Log();
     }
 
     /**

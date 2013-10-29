@@ -37,7 +37,7 @@ class ProductsHolderTest extends Booter
 
     public function test_canRemoveProduct()
     {
-        $holder = new ItemHolder;
+        $holder = new ItemHolder(self::getLogger());
 
         $product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
         $product2 = new Simple(clone $this->requiredData->setSku('sku-2'));
@@ -57,7 +57,7 @@ class ProductsHolderTest extends Booter
 
     public function test_canFindProduct()
     {
-        $holder = new ItemHolder;
+        $holder = new ItemHolder(self::getLogger());
 
         $product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
         $product2 = new Simple(clone $this->requiredData->setSku('sku-2'));
@@ -72,7 +72,7 @@ class ProductsHolderTest extends Booter
 
     public function test_canNotAddMoreWithSameSku()
     {
-        $holder = new ItemHolder;
+        $holder = new ItemHolder(self::getLogger());
 
         $this->setExpectedException('Datapump\Exception\ProductSkuAlreadyAdded');
 
@@ -85,7 +85,7 @@ class ProductsHolderTest extends Booter
 
     public function test_canNotAddMoreWithSameSkuFromArray()
     {
-        $holder = new ItemHolder;
+        $holder = new ItemHolder(self::getLogger());
 
         $this->setExpectedException('Datapump\Exception\ProductSkuAlreadyAdded');
 
@@ -99,7 +99,7 @@ class ProductsHolderTest extends Booter
     {
         $this->setExpectedException('Datapump\Exception\ProductNotAnArrayOrProductAbstract');
 
-        $holder = new ItemHolder;
+        $holder = new ItemHolder(self::getLogger());
         $product1 = new \stdClass();
         $product2 = new \stdClass();
         $holder->addProduct($product1);
