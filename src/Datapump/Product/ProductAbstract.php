@@ -209,12 +209,8 @@ abstract class ProductAbstract
         return $this->data;
     }
 
-    public function debug($cli = true)
+    public function debug()
     {
-        if ($cli) {
-            var_dump($this->getData());
-        } else {
-
-        }
+        return $this->getData();
     }
 }

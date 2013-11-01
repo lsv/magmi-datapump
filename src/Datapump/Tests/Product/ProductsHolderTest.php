@@ -106,4 +106,18 @@ class ProductsHolderTest extends Booter
 
         $holder->addProduct(array($product1, $product2));
     }
+
+    public function test_canDebug()
+    {
+        $holder = new ItemHolder(self::getLogger());
+
+        $product1 = new Simple(clone $this->requiredData->setSku('sku-1'));
+        $product2 = new Simple(clone $this->requiredData->setSku('sku-2'));
+        $product3 = new Simple(clone $this->requiredData->setSku('sku-3'));
+
+        $holder->addProduct(array($product1, $product2, $product3));
+        $debug = $holder->import(true);
+        $this->assertTrue(is_array($debug));
+
+    }
 }

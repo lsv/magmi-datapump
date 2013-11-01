@@ -184,20 +184,24 @@ class ItemHolder
     public function import($debug = false)
     {
         $this->debugMode = $debug;
+        if ($debug === false) {
+            if (!$this->magmi instanceof \Magmi_ProductImport_DataPump) {
+                throw new Exception\MagmiHasNotBeenSetup(
+                    sprintf(
+                        'Magmi has not been setup yet, use setMagmi(%s, %s, %s. %s)',
+                        'Magmi_ProductImport_DataPump $magmi',
+                        'string $profile',
+                        'string $mode',
+                        'Datapump\Logger Logger $logger'
+                    )
+                );
+            }
 
-        if (!$this->magmi instanceof \Magmi_ProductImport_DataPump) {
-            throw new Exception\MagmiHasNotBeenSetup(
-                sprintf(
-                    'Magmi has not been setup yet, use setMagmi(%s, %s, %s. %s)',
-                    'Magmi_ProductImport_DataPump $magmi',
-                    'string $profile',
-                    'string $mode',
-                    'Datapump\Logger Logger $logger'
-                )
-            );
+            $this->magmi->beginImportSession($this->profile, $this->mode, $this->logger);
+
         }
 
-        $this->magmi->beginImportSession($this->profile, $this->mode, $this->logger);
+        $output = array();
         foreach ($this->products as $product) {
             /** @var ProductAbstract $product */
             switch ($product->getRequiredData()->getType()) {
@@ -205,29 +209,38 @@ class ItemHolder
                     /** @var Configurable $product */
                     foreach ($product->getSimpleProducts() as $simple) {
                         /** @var Simple $simple */
-                        $this->inject($simple);
+                        $output[] = $this->inject($simple);
                     }
 
-                    $this->inject($product);
+                    $output[] = $this->inject($product);
                     break;
                 default:
-                    $this->inject($product);
+                    $output[] = $this->inject($product);
                     break;
             }
         }
-        $this->magmi->endImportSession();
+
+        if ($debug === false) {
+            $this->magmi->endImportSession();
+        } else {
+            return $output;
+        }
+
+        return true;
+
     }
 
     /**
      * Inject our product to Magmi
      *
      * @param ProductAbstract $product
+     * @return array
      */
     private function inject(ProductAbstract $product)
     {
         $product->import();
         if ($this->debugMode) {
-            $product->debug();
+            return $product->debug();
         } else {
             $this->magmi->ingest($product->getData());
         }
