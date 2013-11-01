@@ -50,6 +50,24 @@ class ItemHolder
     private $logger;
 
     /**
+     * Magmi profile name
+     * @var string
+     */
+    private $profile;
+
+    /**
+     * Magmi mode
+     * @var string
+     */
+    private $mode;
+
+    /**
+     * Only debug
+     * @var bool
+     */
+    private $debugMode = false;
+
+    /**
      * Start our itemholder
      * @param Logger $logger
      */
@@ -67,13 +85,10 @@ class ItemHolder
      *
      * @return $this
      */
-    public function setMagmi(
-        \Magmi_ProductImport_DataPump $magmi,
-        $profile,
-        $mode = self::MAGMI_CREATE_UPDATE
-    ) {
+    public function setMagmi(\Magmi_ProductImport_DataPump $magmi, $profile, $mode = self::MAGMI_CREATE_UPDATE) {
         $this->magmi = $magmi;
-        $this->magmi->beginImportSession($profile, $mode, $this->logger);
+        $this->profile = $profile;
+        $this->mode = $mode;
         return $this;
     }
 
@@ -163,9 +178,13 @@ class ItemHolder
     /**
      * Do the actual import to our database
      * @todo rewrite this, so it can be overwritten - maybe add required import to product?
+     * @param bool $debug
+     * @throws Exception\MagmiHasNotBeenSetup
      */
-    public function import()
+    public function import($debug = false)
     {
+        $this->debugMode = $debug;
+
         if (!$this->magmi instanceof \Magmi_ProductImport_DataPump) {
             throw new Exception\MagmiHasNotBeenSetup(
                 sprintf(
@@ -178,6 +197,7 @@ class ItemHolder
             );
         }
 
+        $this->magmi->beginImportSession($this->profile, $this->mode, $this->logger);
         foreach ($this->products as $product) {
             /** @var ProductAbstract $product */
             switch ($product->getRequiredData()->getType()) {
@@ -195,7 +215,6 @@ class ItemHolder
                     break;
             }
         }
-
         $this->magmi->endImportSession();
     }
 
@@ -207,8 +226,11 @@ class ItemHolder
     private function inject(ProductAbstract $product)
     {
         $product->import();
-        //$product->debug();
-        $this->magmi->ingest($product->getData());
+        if ($this->debugMode) {
+            $product->debug();
+        } else {
+            $this->magmi->ingest($product->getData());
+        }
         $product->after();
     }
 }
