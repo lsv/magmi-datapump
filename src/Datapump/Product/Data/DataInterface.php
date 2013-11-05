@@ -61,9 +61,4 @@ interface DataInterface
      */
     public function get($key);
 
-    /**
-     * Get the data of the object
-     * @return array
-     */
-    public function getData();
 }
