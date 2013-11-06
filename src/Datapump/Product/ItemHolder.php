@@ -215,14 +215,14 @@ class ItemHolder
 
         $output = array();
 
-        if ($this->output instanceof OutputInterface) {
+        if ($this->output instanceof OutputInterface && $debug === false) {
             $progress = new ProgressHelper();
-            $this->output->writeln('Import progress');
+            $this->output->writeln("\nImport progress");
             $progress->start($this->output, count($this->products));
         }
 
         foreach ($this->products as $product) {
-            if ($this->output instanceof OutputInterface) {
+            if ($this->output instanceof OutputInterface && $debug === false) {
                 $progress->advance();
             }
 
@@ -245,6 +245,9 @@ class ItemHolder
 
         if ($debug === false) {
             $this->magmi->endImportSession();
+            if ($this->output instanceof OutputInterface) {
+                $progress->finish();
+            }
         } else {
             return $output;
         }
