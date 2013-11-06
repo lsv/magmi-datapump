@@ -8,6 +8,8 @@ namespace Datapump\Product;
 use Datapump\Exception;
 use Datapump\Logger\Logger;
 use Datapump\Product\Data\DataAbstract;
+use Symfony\Component\Console\Helper\ProgressHelper;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class ItemHolder
@@ -50,6 +52,11 @@ class ItemHolder
     private $logger;
 
     /**
+     * @var OutputInterface
+     */
+    private $output = null;
+
+    /**
      * Magmi profile name
      * @var string
      */
@@ -74,6 +81,11 @@ class ItemHolder
     public function __construct(Logger $logger)
     {
         $this->logger = $logger;
+    }
+
+    public function setOutput(OutputInterface $output)
+    {
+        $this->output = $output;
     }
 
     /**
@@ -202,7 +214,18 @@ class ItemHolder
         }
 
         $output = array();
+
+        if ($this->output instanceof OutputInterface) {
+            $progress = new ProgressHelper();
+            $this->output->writeln('Import progress');
+            $progress->start($this->output, count($this->products));
+        }
+
         foreach ($this->products as $product) {
+            if ($this->output instanceof OutputInterface) {
+                $progress->advance();
+            }
+
             /** @var ProductAbstract $product */
             switch ($product->getRequiredData()->getType()) {
                 case DataAbstract::TYPE_CONFIGURABLE:
@@ -240,10 +263,11 @@ class ItemHolder
     {
         $product->import();
         if ($this->debugMode) {
-            return $product->debug();
+            $output = $product->debug();
         } else {
-            $this->magmi->ingest($product->getData());
+            $output = $this->magmi->ingest($product->getData());
         }
         $product->after();
+        return $output;
     }
 }
