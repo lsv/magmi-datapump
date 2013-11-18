@@ -343,10 +343,11 @@ class RequiredData extends DataAbstract
      * * <=0 - the product is not in stock)
      *
      * @param null|int $qty
+     * @param boolean $alwaysInStock : Should be set to TRUE if you want backorders
      *
      * @return RequiredData
      */
-    public function setQty($qty)
+    public function setQty($qty, $alwaysInStock = false)
     {
         if ($qty === null) {
             $this->set('use_config_manage_stock', 0);
@@ -360,6 +361,10 @@ class RequiredData extends DataAbstract
         if ($qty <= 0) {
             $this->set('is_in_stock', 0);
         } else {
+            $this->set('is_in_stock', 1);
+        }
+
+        if ($alwaysInStock) {
             $this->set('is_in_stock', 1);
         }
 
