@@ -4,7 +4,7 @@
 
 Its quite easy to play with categories - Lets just start by creating a product
 
-````
+````php
 $data = new RequiredData();
 $data
     ->setSku('sku')
@@ -21,7 +21,7 @@ $product = new Simple($data);
 
 Now we have our product, all objects that extends [````DataAbstract````](https://github.com/lsv/magmi-datapump/blob/master/src/Datapump/Product/Data/DataAbstract.php) can be injected into products.
 
-````
+````php
 $category = new Category;
 $category->set('category-name');
 
@@ -30,7 +30,7 @@ $product->injectData($category);
 
 Lets play with more levels with our categories
 
-````
+````php
 $category = new Category;
 $category->set('category-name / level2 / level3');
 // Now the product will be in level3 category at third level

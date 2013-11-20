@@ -34,7 +34,7 @@ The simple product requires the following attributes else it wont get validated
 
 ### Creating a simple product
 
-````
+````php
 $data = new RequiredData();
 $data
     ->setSku('sku')
@@ -51,7 +51,7 @@ $product = new Simple($data);
 
 Now we actually have our product, and it could be inserted into Magento - but we could do some more.
 
-````
+````php
 $product->set('description', 'even longer description');
 // Just overwriting the description with a longer text
 ````
@@ -69,7 +69,7 @@ The confiurable product requires the following attributes else it wont get valid
 
 Lets create our configurable product first
 
-````
+````php
 $data = new RequiredData();
 $data
     ->setSku('config')
@@ -83,7 +83,7 @@ $config = new Configurable($data, 'color');
 
 Lets create 2 simple products and insert them into our configurable product
 
-````
+````php
 $data = new RequiredData();
 $data
     ->setSku('sku')
@@ -114,7 +114,7 @@ $config->addSimpleProduct($simple1)
 
 Out stock product only need two attributes, though we still need to use the requireddata
 
-````
+````php
 $data = new RequiredData;
 $data
     ->setSku('sku')
@@ -135,7 +135,7 @@ Lets do this now.
 
 Our [````ItemHolder````](https://github.com/lsv/magmi-datapump/blob/master/src/Datapump/Product/ItemHolder.php) object requires a logger, we could just parse in our [````Logger````](https://github.com/lsv/magmi-datapump/blob/master/src/Datapump/Logger/Logger.php) but we would like the sweet power of monolog, so we start by creating our very own logger object.
 
-````
+````php
 <?php
 // src/Acme/Logger/Log.php
 
@@ -164,7 +164,7 @@ class Log implements LoggerInterface
 
 With that created we can now create our ItemHolder object
 
-````
+````php
 $log = new Monolog\Logger('name');
 $log->pushHandler(new \Monolog\Handler\StreamHandler('path/to/your.log', Logger::WARNING));
 

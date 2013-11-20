@@ -7,8 +7,8 @@ magmi-datapump
 
 ## Documentation
 
- - [Install]()
- - [Anatomy]()
- - [More anatomy]()
- - [Example CSV]()
- - [Example XML]()
+ - [Install](https://github.com/lsv/magmi-datapump/blob/master/docs/1_install.md)
+ - [Anatomy](https://github.com/lsv/magmi-datapump/blob/master/docs/2_anatomy.md)
+ - [More anatomy](https://github.com/lsv/magmi-datapump/blob/master/docs/3_more_anatomy.md)
+ - [Example CSV](https://github.com/lsv/magmi-datapump/blob/master/docs/4_example_csv.md)
+ - [Example XML](https://github.com/lsv/magmi-datapump/blob/master/docs/5_example_xml.md)
