@@ -52,6 +52,7 @@ class ItemHolder
     private $logger;
 
     /**
+     * Output interface, so we can create progress
      * @var OutputInterface
      */
     private $output = null;
@@ -83,9 +84,15 @@ class ItemHolder
         $this->logger = $logger;
     }
 
+    /**
+     * Set the output interface
+     * @param OutputInterface $output
+     * @return $this
+     */
     public function setOutput(OutputInterface $output)
     {
         $this->output = $output;
+        return $this;
     }
 
     /**

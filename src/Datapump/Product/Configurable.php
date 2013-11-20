@@ -151,8 +151,7 @@ class Configurable extends ProductAbstract
     }
 
     /**
-     * This will be runned before the importer
-     * @return $this
+     * {@inheritdoc}
      */
     public function beforeImport()
     {
@@ -161,23 +160,35 @@ class Configurable extends ProductAbstract
         $this->setConfigPrice();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function afterImport()
     {
 
     }
 
+    /**
+     * Setting the configurable attribute
+     */
     private function setConfigurableAttribute()
     {
         if (! $this->getRequiredData()->__isset('configurable_attributes')) {
-            $this->set('configurable_attributes', preg_replace('/[^a-z0-9,]/', '', strtolower(implode(',', $this->get(self::CONFIG_ATTR_KEY)))));
+            $this->set(
+                'configurable_attributes',
+                preg_replace('/[^a-z0-9,]/', '', strtolower(implode(',', $this->get(self::CONFIG_ATTR_KEY))))
+            );
             $this->_unset(self::CONFIG_ATTR_KEY);
         }
     }
 
+    /**
+     * Sets the simple products sku array
+     */
     private function setSimpleSkus()
     {
         $p = array();
-        foreach($this->getSimpleProducts() as $product /** @var Simple $product */) {
+        foreach ($this->getSimpleProducts() as $product /** @var Simple $product */) {
             $p[] = $product->get('sku');
         }
         $this->set('simples_skus', implode(',', $p));
@@ -199,7 +210,7 @@ class Configurable extends ProductAbstract
         $this->set('price', $price);
 
         $specialprice = 0;
-        foreach($this->simpleProducts AS $p) {
+        foreach ($this->simpleProducts as $p) {
             /** @var Simple $p */
             if ($p->get('special_price') !== null && $p->get('special_price') > $specialprice) {
                 $specialprice = $p->get('special_price');

@@ -40,7 +40,14 @@ abstract class ProductAbstract
      */
     private $data = array();
 
+    /**
+     * This will be runned after import
+     */
     abstract public function beforeImport();
+
+    /**
+     * This will be runned just before import
+     */
     abstract public function afterImport();
 
     /**
@@ -133,7 +140,7 @@ abstract class ProductAbstract
      */
     public function _unset($key)
     {
-        return $this->getRequiredData()->_unset($key);
+        return $this->getRequiredData()->unsetKey($key);
     }
 
     /**
@@ -209,6 +216,10 @@ abstract class ProductAbstract
         return $this->data;
     }
 
+    /**
+     * Gets the debug data
+     * @return array
+     */
     public function debug()
     {
         return $this->getData();

@@ -31,10 +31,16 @@ class Stock extends ProductAbstract
         'Qty' => 'Missing product quantity',
     );
 
+    /**
+     * {@inheritdoc}
+     */
     public function beforeImport()
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function afterImport()
     {
     }

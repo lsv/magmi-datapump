@@ -21,17 +21,36 @@ class Imageproduct extends ProductAbstract
      */
     protected $type = DataInterface::TYPE_SIMPLE;
 
+    /**
+     * {@inheritdoc}
+     */
     protected $requiredFields = array(
         'Type' => 'Missing product type',
         'Sku' => 'Missing SKU number',
     );
 
+    /**
+     * {@inheritdoc}
+     */
     public function __construct(RequiredData $data)
     {
         parent::__construct($data);
     }
 
-    public function beforeImport() {}
-    public function afterImport() {}
+    /**
+     * {@inheritdoc}
+     */
+    public function beforeImport()
+    {
+
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function afterImport()
+    {
+
+    }
 
 }

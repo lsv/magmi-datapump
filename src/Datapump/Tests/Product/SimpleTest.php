@@ -184,7 +184,7 @@ class ProductTest extends Booter
     public function test_canUnsetData()
     {
         $this->product->getRequiredData()->setStore('mystore');
-        $this->product->getRequiredData()->_unset('store');
+        $this->product->getRequiredData()->unsetKey('store');
         $this->assertNull($this->product->getRequiredData()->getStore());
     }
 }
