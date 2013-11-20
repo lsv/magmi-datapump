@@ -45,8 +45,8 @@ class StockTest extends Booter
         $product1 = new Stock($req);
 
         $this->assertEquals(0, $product1->getRequiredData()->getQty());
-        $this->assertTrue($product1->getRequiredData()->get('is_in_stock'));
-        
+        $this->assertEquals(1, $product1->getRequiredData()->get('is_in_stock'));
+
     }
 
 } 

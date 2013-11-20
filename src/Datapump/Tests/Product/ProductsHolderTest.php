@@ -7,6 +7,7 @@
 
 namespace Datapump\Tests;
 
+use Datapump\Product\Configurable;
 use Datapump\Product\Data\RequiredData;
 use Datapump\Product\Simple;
 use Datapump\Product\ItemHolder;
@@ -105,6 +106,27 @@ class ProductsHolderTest extends Booter
         $holder->addProduct($product1);
 
         $holder->addProduct(array($product1, $product2));
+    }
+
+    public function test_canCountProducts()
+    {
+        $holder = new ItemHolder(self::getLogger());
+        $product1 = new Simple(clone $this->requiredData->setSku('sku-1')->set('color', 'blue'));
+        $product2 = new Simple(clone $this->requiredData->setSku('sku-2')->set('color', 'red'));
+        $product3 = new Simple(clone $this->requiredData->setSku('sku-3'));
+
+        $req = new RequiredData();
+        $req->setSku('sku')
+            ->setName('name')
+            ->setShortDescription('short description')
+            ->setDescription('long description');
+        $product4 = new Configurable($req, 'color');
+        $product4->addSimpleProduct($product1)
+            ->addSimpleProduct($product2);
+
+        $holder->addProduct(array($product3, $product4));
+
+        $this->assertEquals(4, $holder->countProducts());
     }
 
     public function test_canDebug()

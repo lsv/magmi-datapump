@@ -9,9 +9,11 @@ namespace Datapump\Tests\Magmi;
 
 use Datapump\Product\Data\Category;
 use Datapump\Product\Data\RequiredData;
+use Datapump\Product\Imageproduct;
 use Datapump\Product\ItemHolder;
 use Datapump\Product\Simple;
 use Datapump\Product\Configurable;
+use Datapump\Product\Stock;
 use Datapump\Tests\Booter;
 
 /**
@@ -30,7 +32,12 @@ class MagmiTest extends Booter
      */
     protected $simpleRequiredData;
 
+    /**
+     * @var \Datapump\Product\ItemHolder
+     */
     private $itemholder;
+
+    private $itemsInserted = 0;
 
     public function __construct()
     {
@@ -111,6 +118,23 @@ class MagmiTest extends Booter
                 ->setName('simple-sku4')
         ));
 
+        $req = new RequiredData();
+        $req
+            ->setType(RequiredData::TYPE_SIMPLE)
+            ->setSku('foobar');
+        $this->itemholder->addProduct(new Imageproduct($req));
+
+
+        $product1 = new Stock(new RequiredData());
+        $product1->set('sku', 'stock-sku1')->set('qty', 10);
+
+        $product2 = new Stock(new RequiredData());
+        $product2->set('sku', 'stock-sku2')->set('qty', 30);
+
+        $this->itemholder->addProduct($product1)->addProduct($product2);
+
+        $this->itemsInserted = $this->itemholder->countProducts();
+
     }
 
     public function test_canTestForMagmi()
@@ -125,7 +149,7 @@ class MagmiTest extends Booter
         $q = parent::getDatabase()->prepare('SELECT COUNT(*) AS num FROM catalog_product_entity');
         $q->execute();
         $num = $q->fetch();
-        $this->assertEquals(2, $num['num']);
+        $this->assertEquals(0, $num['num']);
     }
 
     public function test_CanInjectData()
@@ -142,7 +166,7 @@ class MagmiTest extends Booter
         $q = parent::getDatabase()->prepare('SELECT COUNT(*) AS num FROM catalog_product_entity');
         $q->execute();
         $num = $q->fetch();
-        $this->assertEquals(9, $num['num']);
+        $this->assertEquals($this->itemsInserted, $num['num']);
     }
 
     public function test_checkProductsStock()

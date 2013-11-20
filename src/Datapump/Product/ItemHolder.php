@@ -188,6 +188,35 @@ class ItemHolder
     }
 
     /**
+     * Count the number of products
+     *
+     * @return int
+     */
+    public function countProducts()
+    {
+        $count = 0;
+        foreach($this->products as $product) {
+            /** @var ProductAbstract $product */
+            switch ($product->getRequiredData()->getType()) {
+                case DataAbstract::TYPE_CONFIGURABLE:
+                    /** @var Configurable $product */
+                    foreach ($product->getSimpleProducts() as $simple) {
+                        /** @var Simple $simple */
+                        $count++;
+                    }
+
+                    $count++;
+                    break;
+                default:
+                    $count++;
+                    break;
+            }
+        }
+
+        return $count;
+    }
+
+    /**
      * Do the actual import to our database
      * @todo rewrite this, so it can be overwritten - maybe add required import to product?
      * @param bool $debug

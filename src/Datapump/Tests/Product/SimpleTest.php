@@ -180,4 +180,11 @@ class ProductTest extends Booter
         $this->product->getRequiredData()->setQty(25);
         $this->assertEquals(25, $this->product->getRequiredData()->getQty(), 'qty');
     }
+
+    public function test_canUnsetData()
+    {
+        $this->product->getRequiredData()->setStore('mystore');
+        $this->product->getRequiredData()->_unset('store');
+        $this->assertNull($this->product->getRequiredData()->getStore());
+    }
 }
