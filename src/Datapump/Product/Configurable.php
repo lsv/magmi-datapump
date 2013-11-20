@@ -178,7 +178,7 @@ class Configurable extends ProductAbstract
                 'configurable_attributes',
                 preg_replace('/[^a-z0-9,]/', '', strtolower(implode(',', $this->get(self::CONFIG_ATTR_KEY))))
             );
-            $this->_unset(self::CONFIG_ATTR_KEY);
+            $this->unsetKey(self::CONFIG_ATTR_KEY);
         }
     }
 
