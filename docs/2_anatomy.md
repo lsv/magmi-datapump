@@ -127,7 +127,7 @@ $stock = new Stock($data);
 
 @todo write documentation for image product
 
-## ImageHolder
+## ItemHolder
 
 Now we have created our products but we havent added nor imported it into Magento yet.
 
