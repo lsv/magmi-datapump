@@ -17,3 +17,5 @@ magmi-datapump
 
  - Better debugging
  - Real dependency injection
+ - Not found images handling, and import
+ - Image handling in general
