@@ -12,3 +12,9 @@ magmi-datapump
  - [More anatomy](https://github.com/lsv/magmi-datapump/blob/master/docs/3_more_anatomy.md)
  - [Example CSV](https://github.com/lsv/magmi-datapump/blob/master/docs/4_example_csv.md)
  - [Example XML](https://github.com/lsv/magmi-datapump/blob/master/docs/5_example_xml.md)
+ - 
+ 
+## TODO
+
+ - Better debugging
+ - Real dependency injection
