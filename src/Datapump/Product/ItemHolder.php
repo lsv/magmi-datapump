@@ -94,6 +94,16 @@ class ItemHolder
         $this->output = $output;
         return $this;
     }
+    
+    /**
+     * Resets products
+     * @return @this
+     */
+    public function resetProducts()
+    {
+        $this->products = array();
+        return $this;
+    }
 
     /**
      * Setup Magmi
@@ -287,6 +297,8 @@ class ItemHolder
         } else {
             return $output;
         }
+        
+        $this->resetProducts();
 
         return true;
 
