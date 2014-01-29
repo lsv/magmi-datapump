@@ -12,6 +12,8 @@ namespace Datapump\Product\Data;
 class Category extends DataAbstract
 {
 
+    const DEFAULT_CATEGORY_SEPARATOR = '/';
+
     /**
      * Required Magmi plugins
      * @var array
@@ -29,18 +31,29 @@ class Category extends DataAbstract
      *
      * @return $this|DataAbstract
      */
-    public function set($category, $is_active = true, $is_anchor = true, $include_in_menu = true, $levelDemiliter = '/')
+    public function set($category, $is_active = true, $is_anchor = true, $include_in_menu = true, $levelDemiliter = self::DEFAULT_CATEGORY_SEPARATOR)
     {
         if (!is_array($category)) {
-            $category = array($category);
+            $categories = array($category);
+        } else {
+            $categories = $category;
         }
 
-        foreach ($category as $cat) {
-            if ($levelDemiliter != '/') {
-                $cat = str_replace($levelDemiliter, '/', $cat);
+        foreach ($categories as &$category) {
+            if (strpos($category, $levelDemiliter) !== false) {
+                $levels = explode($levelDemiliter, $category);
+            } else {
+                $levels = array($category);
             }
 
-            $this->data['categories'][] = $this->addCategory($cat, $is_active, $is_anchor, $include_in_menu);
+            foreach($levels as &$level) {
+                if (strpos($level, self::DEFAULT_CATEGORY_SEPARATOR) !== false) {
+                    $level = str_replace(self::DEFAULT_CATEGORY_SEPARATOR, '\\' . self::DEFAULT_CATEGORY_SEPARATOR, $level);
+                }
+            }
+
+            $category = implode(self::DEFAULT_CATEGORY_SEPARATOR, $levels);
+            $this->data['categories'][] = $this->addCategory($category, $is_active, $is_anchor, $include_in_menu);
         }
 
         return $this;
