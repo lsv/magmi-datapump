@@ -97,7 +97,7 @@ class ItemHolder
     
     /**
      * Resets products
-     * @return @this
+     * @return $this
      */
     public function resetProducts()
     {
@@ -217,11 +217,12 @@ class ItemHolder
             switch ($product->getRequiredData()->getType()) {
                 case DataAbstract::TYPE_CONFIGURABLE:
                     /** @var Configurable $product */
-                    foreach ($product->getSimpleProducts() as $simple) {
-                        /** @var Simple $simple */
-                        $count++;
+                    if (method_exists($product, 'getSimpleProducts')) {
+                        foreach ($product->getSimpleProducts() as $simple) {
+                            /** @var Simple $simple */
+                            $count++;
+                        }
                     }
-
                     $count++;
                     break;
                 default:
@@ -237,6 +238,7 @@ class ItemHolder
      * Do the actual import to our database
      * @todo rewrite this, so it can be overwritten - maybe add required import to product?
      * @param bool $debug
+     * @return array|boolean
      * @throws Exception\MagmiHasNotBeenSetup
      */
     public function import($debug = false)
@@ -276,9 +278,11 @@ class ItemHolder
             switch ($product->getRequiredData()->getType()) {
                 case DataAbstract::TYPE_CONFIGURABLE:
                     /** @var Configurable $product */
-                    foreach ($product->getSimpleProducts() as $simple) {
-                        /** @var Simple $simple */
-                        $output[] = $this->inject($simple);
+                    if (method_exists($product, 'getSimpleProducts')) {
+                        foreach ($product->getSimpleProducts() as $simple) {
+                            /** @var Simple $simple */
+                            $output[] = $this->inject($simple);
+                        }
                     }
 
                     $output[] = $this->inject($product);
@@ -291,7 +295,7 @@ class ItemHolder
 
         if ($debug === false) {
             $this->magmi->endImportSession();
-            if ($this->output instanceof OutputInterface) {
+            if ($this->output instanceof OutputInterface && $progress instanceof ProgressHelper) {
                 $progress->finish();
             }
         } else {
@@ -312,11 +316,12 @@ class ItemHolder
      */
     private function inject(ProductAbstract $product)
     {
+        $output = '';
         $product->import();
         if ($this->debugMode) {
             $output = $product->debug();
         } else {
-            $output = $this->magmi->ingest($product->getData());
+            $this->magmi->ingest($product->getData());
         }
         $product->after();
         return $output;
