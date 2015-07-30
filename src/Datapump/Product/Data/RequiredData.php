@@ -72,6 +72,28 @@ class RequiredData extends DataAbstract
     }
 
     /**
+     * Get the created at time
+     * @return int|null
+     */
+    public function getCreatedAt()
+    {
+        return $this->get('created_at');
+    }
+
+    /**
+     * Sets the created at attribute
+     * @param int $time
+     *
+     * @return RequiredData
+     */
+    public function setCreatedAt($time)
+    {
+        $this->set('created_at',(int) $time);
+
+        return $this;
+    }
+
+    /**
      * Sets the type of the product
      *
      * @param string $type
@@ -291,6 +313,103 @@ class RequiredData extends DataAbstract
     }
 
     /**
+     * Gets the meta information for the product
+     * @return object
+     */
+    public function getMetaInformation()
+    {
+        $meta = new \stdClass();
+        $meta->title = $this->get('meta_title');
+        $meta->description = $this->get('meta_description');
+        $meta->keywords = $this->get('meta_keywords');
+
+        return $meta;
+    }
+
+    /**
+     * Set Manufacturer attribute
+     *
+     * @param string|null $title
+     * @param string|null $description
+     * @param string|null $keywords
+     * @return RequiredData
+     */
+    public function setMetaInformation($title,$description,$keywords)
+    {
+        $this->set('meta_title',$title);
+        $this->set('meta_description',$description);
+        $this->set('meta_keywords',$keywords);
+
+        return $this;
+    }
+
+    /**
+     * Gets the manufacturer
+     * @return string|null
+     */
+    public function getManufacturer()
+    {
+        return $this->get('manufacturer');
+    }
+
+    /**
+     * Set Manufacturer attribute
+     *
+     * @param string $manufacturer
+     * @return RequiredData
+     */
+    public function setManufacturer($manufacturer)
+    {
+        $this->set('manufacturer',$manufacturer);
+
+        return $this;
+    }
+
+    /**
+     * Gets the MSRP
+     * @return float|null
+     */
+    public function getMsrp()
+    {
+        return $this->get('msrp');
+    }
+
+    /**
+     * Set MSRP attribute
+     *
+     * @param float $msrp
+     * @return RequiredData
+     */
+    public function setMsrp($msrp)
+    {
+        $this->set('msrp',(float) $msrp);
+
+        return $this;
+    }
+
+    /**
+     * Gets the Country of Manufacture country code
+     * @return string|null
+     */
+    public function getCountryOfManufacture()
+    {
+        return $this->get('country_of_manufacture');
+    }
+
+    /**
+     * Set Country of Manufacture attribute
+     *
+     * @param $country
+     * @return RequiredData
+     */
+    public function setCountryOfManufacture($country)
+    {
+        $this->set('country_of_manufacture',$country);
+
+        return $this;
+    }
+
+    /**
      * Sets the price
      *
      * @param float $price
@@ -311,6 +430,52 @@ class RequiredData extends DataAbstract
     public function getPrice()
     {
         return $this->get('price');
+    }
+
+    /**
+     * Sets the Special Price
+     *
+     * @param float $price
+     *
+     * @return RequiredData
+     */
+    public function setSpecialPrice($price)
+    {
+        $this->set('special_price', (float) $price);
+
+        return $this;
+    }
+
+    /**
+     * Gets the special price
+     * @return float|null
+     */
+    public function getSpecialPrice()
+    {
+        return $this->get('special_price');
+    }
+
+    /**
+     * Sets the special price from date
+     *
+     * @param int $date
+     *
+     * @return RequiredData
+     */
+    public function setSpecialFromDate($date)
+    {
+        $this->set('special_from_date', (int) $date);
+
+        return $this;
+    }
+
+    /**
+     * Gets the special price from date
+     * @return int|null
+     */
+    public function getSpecialFromDate()
+    {
+        return $this->get('special_from_date');
     }
 
     /**
@@ -388,7 +553,7 @@ class RequiredData extends DataAbstract
      */
     public function getUpdatedAt()
     {
-        return $this->get('updatedAt');
+        return $this->get('updated_at');
     }
 
     /**
@@ -399,7 +564,30 @@ class RequiredData extends DataAbstract
      */
     public function setUpdatedAt($time)
     {
-        $this->set('updatedAt',(int) $time);
+        $this->set('updated_at',(int) $time);
+
+        return $this;
+    }
+
+    /**
+     * Get array of website ids
+     *
+     * @return array
+     */
+    public function getWebsiteIds()
+    {
+        return $this->get('website_ids');
+    }
+
+    /**
+     * Set website ids for product
+     *
+     * @param $ids
+     * @return RequiredData
+     */
+    public function setWebsiteIds($ids)
+    {
+        $this->set('website_ids',$ids);
 
         return $this;
     }
