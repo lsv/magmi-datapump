@@ -373,11 +373,6 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
-    public function setUpdatedAt($time)
-    {
-        $this->set('updatedAt',(int) $time);
-    }
-
     /**
      * Get the quantity
      * @return int|null
@@ -385,6 +380,28 @@ class RequiredData extends DataAbstract
     public function getQty()
     {
         return $this->get('qty');
+    }
+
+    /**
+     * Get the Updated At time
+     * @return int|null
+     */
+    public function getUpdatedAt()
+    {
+        return $this->get('updatedAt');
+    }
+
+    /**
+     * Sets the Update At attribute
+     * @param int $time
+     *
+     * @return RequiredData
+     */
+    public function setUpdatedAt($time)
+    {
+        $this->set('updatedAt',(int) $time);
+
+        return $this;
     }
 
     /**
