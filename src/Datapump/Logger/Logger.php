@@ -12,6 +12,8 @@ namespace Datapump\Logger;
 interface Logger
 {
 
+    const WARNING = '---WARNING---';
+
     /**
      * Log data
      *
