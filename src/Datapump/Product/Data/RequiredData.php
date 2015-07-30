@@ -373,6 +373,11 @@ class RequiredData extends DataAbstract
         return $this;
     }
 
+    public function setUpdatedAt($time)
+    {
+        $this->set('updatedAt',(int) $time);
+    }
+
     /**
      * Get the quantity
      * @return int|null
