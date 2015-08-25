@@ -441,7 +441,10 @@ class RequiredData extends DataAbstract
      */
     public function setSpecialPrice($price)
     {
-        $this->set('special_price', (float) $price);
+        if ($price != '' || $price !== null)
+            $price = (float) $price;
+
+        $this->set('special_price', $price);
 
         return $this;
     }
@@ -464,7 +467,10 @@ class RequiredData extends DataAbstract
      */
     public function setSpecialFromDate($date)
     {
-        $this->set('special_from_date', (int) $date);
+        if ($date != '' || $date !== null)
+            $date = (int) $date;
+
+        $this->set('special_from_date', $date);
 
         return $this;
     }
