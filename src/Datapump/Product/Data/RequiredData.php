@@ -554,6 +554,28 @@ class RequiredData extends DataAbstract
     }
 
     /**
+     * Sets Qty for Item's Status to Become Out of Stock
+     *
+     * @param null $qty
+     * @return $this
+     */
+    public function setMinQtyForOutOfStockThreshold($qty = null)
+    {
+        if ($qty === null)
+        {
+            $this->set('min_qty',0);
+            $this->set('use_config_min_qty',1);
+        }
+        else
+        {
+            $this->set('min_qty',$qty);
+            $this->set('use_config_min_qty',0);
+        }
+
+        return $this;
+    }
+
+    /**
      * Get the Updated At time
      * @return int|null
      */
