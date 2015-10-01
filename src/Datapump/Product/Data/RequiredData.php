@@ -336,9 +336,12 @@ class RequiredData extends DataAbstract
      */
     public function setMetaInformation($title,$description,$keywords)
     {
-        $this->set('meta_title',$title);
-        $this->set('meta_description',$description);
-        $this->set('meta_keywords',$keywords);
+        if ($title !== null)
+            $this->set('meta_title',$title);
+        if ($description !== null)
+            $this->set('meta_description',$description);
+        if ($keywords !== null)
+            $this->set('meta_keywords',$keywords);
 
         return $this;
     }
