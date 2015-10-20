@@ -136,8 +136,55 @@ class RequiredData extends DataAbstract
      */
     public function getSku()
     {
-        return $this->get('sku');
+        return $this->get('dept');
     }
+
+    /**
+     * Sets the Dept of the product
+     *
+     * @param string $dept
+     *
+     * @return RequiredData
+     */
+    public function setDept($dept)
+    {
+        $this->set('dept', $dept);
+
+        return $this;
+    }
+
+    /**
+     * Gets the Dept of the product
+     * @return string|null
+     */
+    public function getDept()
+    {
+        return $this->get('dept');
+    }
+
+    /**
+     * Sets the Dept of the product
+     *
+     * @param $winretailId
+     * @return RequiredData
+     *
+     */
+    public function setWinRetailId($winretailId)
+    {
+        $this->set('winretail_id', $winretailId);
+
+        return $this;
+    }
+
+    /**
+     * Gets the Dept of the product
+     * @return string|null
+     */
+    public function getWinRetailId()
+    {
+        return $this->get('winretail_id');
+    }
+
 
     /**
      * Sets the visibility of the product
