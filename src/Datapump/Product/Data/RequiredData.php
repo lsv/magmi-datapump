@@ -626,6 +626,29 @@ class RequiredData extends DataAbstract
     }
 
     /**
+     * Get array of website ids
+     *
+     * @return array
+     */
+    public function getUrlKey()
+    {
+        return $this->get('url_key');
+    }
+
+    /**
+     * Set website ids for product
+     *
+     * @param $urlKey
+     * @return RequiredData
+     */
+    public function setUrlKey($urlKey)
+    {
+        $this->set('url_key',$urlKey);
+
+        return $this;
+    }
+
+    /**
      * Get the Updated At time
      * @return int|null
      */
