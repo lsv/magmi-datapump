@@ -38,6 +38,11 @@ interface DataInterface
     const TYPE_CONFIGURABLE = 'configurable';
 
     /**
+     * Magento type grouped
+     */
+    const TYPE_GROUPED = 'grouped';
+
+    /**
      * Magento type simple
      */
     const TYPE_SIMPLE = 'simple';
