@@ -146,7 +146,7 @@ class ItemHolder
                 $sku = $product->get('sku');
                 foreach ($this->products as $p) {
                     /** @var ProductAbstract $p */
-                    if ($p->get('sku') == $sku) {
+                    if (strcmp($p->get('sku'), $sku) === 0) {
                         throw new Exception\ProductSkuAlreadyAdded(
                             sprintf(
                                 'Product with SKU: %s is already added',
